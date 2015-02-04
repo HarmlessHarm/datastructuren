@@ -1,4 +1,8 @@
-public abstract class CollectionTimer extends java.lang.Object
-{
-// Test comment
+
+import java.util.*;
+ 
+
+public abstract class CollectionTimer {
+
+	
 }

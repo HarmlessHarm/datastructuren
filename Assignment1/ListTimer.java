@@ -1,6 +1,7 @@
 
+import java.util.*;
 
-public class ListTimer extends CollectionTimer
-{
+
+public class ListTimer extends CollectionTimer {
 
 }
