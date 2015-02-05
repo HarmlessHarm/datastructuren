@@ -1,3 +1,9 @@
+/*
+ * File: Assignment1.java
+ * Collaborators: Maartje ter Hoeve, Harm Manders
+ * Course: Datastructuren KI 2015
+ */
+ 
 
 import java.util.*;
  
