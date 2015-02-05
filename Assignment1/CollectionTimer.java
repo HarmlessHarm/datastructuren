@@ -6,6 +6,7 @@
  
 
 import java.util.*;
+import java.lang.*;
  
 
 public abstract class CollectionTimer extends java.lang.Object {
@@ -23,28 +24,28 @@ public abstract class CollectionTimer extends java.lang.Object {
         object generator with the specified seed. */
     }
     
-    public abstract void addElement(Integer elem) {
+    public abstract void addElement(Integer elem);
         /* Adds the given object to the data structure */
-    }
     
-    public abstract void removeElement() {
+    
+    public abstract void removeElement();
         /* Removes some object from the data structure */
         
         /* Throws: java.lang.RuntimeException if no element can be removed from
         the underlying data structure */
-    }
     
-    public abstract int getSize() {
+    
+    public abstract int getSize();
         /* Determines the size of the data structure that is being timed */
         
         /* Returns: the size of the data structure */
-    }
     
-    public abstract boolean isEmpty() {
+    
+    public abstract boolean isEmpty();
         /* Tests whether the data structure that is being timed is empty. */
         
         /* Returns: true if the data structure is empty, false otherwise */
-    }
+    
     
     public void insert(int amount) {
         /* Inserts a specified number of Integer objects into the data structure.
