@@ -11,7 +11,7 @@ import java.lang.*;
 
 public abstract class CollectionTimer extends java.lang.Object {
 
-    public static final int[] DEFEAULT_MUTATIONS = {3,4};
+    public static final int[] DEFEAULT_MUTATIONS = {10000, -10000};
     private Random elemGen;
 	
 	public CollectionTimer() {

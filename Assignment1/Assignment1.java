@@ -47,11 +47,18 @@ public class Assignment1 extends java.lang.Object {
 
 	public void benchmark() {
 		ListTimer listTimer;
+		QueueTimer queueTimer;
 
-		for (List<Integer> i : lists ) {
-			System.out.println(i);
-			listTimer = new ListTimer(i);
+		for (List<Integer> l : lists ) {
+			listTimer = new ListTimer(l);
+			System.out.println(listTimer.DEFAULT_MUTATIONS[0]);
+			// listTimer.insert(listTimer.DEFAULT_MUTATIONS[0]);
 		}
+
+		for (Queue<Integer> q : queues ) {
+			queueTimer = new QueueTimer(q);
+		}
+
 		/*
 		 * Performs benchmark with random seed 0 to populate the data structures and with mutations as in 
 		 * CollectionTimer.DEFAULT_MUTATIONS. The result is printed to stdout.
