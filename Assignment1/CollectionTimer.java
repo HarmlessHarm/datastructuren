@@ -11,7 +11,7 @@ import java.lang.*;
 
 public abstract class CollectionTimer extends java.lang.Object {
 
-    public static final int[] DEFAULT_MUTATIONS = {10, -10};
+    public static final int[] DEFAULT_MUTATIONS = {10000, -10000};
     private Random elemGen;
     private long seed = 0;
 	
@@ -62,13 +62,43 @@ public abstract class CollectionTimer extends java.lang.Object {
     }
     
     public boolean extract(int amount) {
+
+        amount = amount * -1; // Makes the negative a mount to 
+
+        for (int i=0; i < amount ;  i++) {
+            try {
+                removeElement();
+            }
+            catch (IndexOutOfBoundsException e) {
+                System.err.println("IndexOutOfBoundsException: " + e.getMessage());
+                return false;
+            }
+            catch (UnsupportedOperationException e) {
+                System.err.println("UnsupportedOperationException: " + e.getMessage());
+                return false;
+            }
+        }
+        return true;
+
+
         /* Removes a specified number of objcts from the data structure */
         
         /* Returns: true if sufficient elements were present, false otheriwse */
-        return true;
+        // return true;
     }
     
     public long time() {
+
+        long start = System.currentTimeMillis();
+        insert(DEFAULT_MUTATIONS[0]);
+        extract(DEFAULT_MUTATIONS[1]);
+        long stop = System.currentTimeMillis();
+        long diff = stop - start;
+        System.out.println(diff);
+        return diff;
+
+// Stop time
+// return stop - start;
         /* Times a sequence of operations on the underlying data structure. This
         method performs mutations defined by DEFAULT_MUTATIONS. Timing takes
         place subtracting the number of milisecondssince the UNIX epoch before
@@ -77,7 +107,7 @@ public abstract class CollectionTimer extends java.lang.Object {
         running on the host machine. */
         
         /* Returns: elapsed time in milliseconds */
-        return 3;
+        // return 3;
     }
     
     public long time(int[] mutations) {

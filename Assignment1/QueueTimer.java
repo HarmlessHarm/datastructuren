@@ -16,6 +16,7 @@ public class QueueTimer extends CollectionTimer {
     private Queue<Integer> queue;
 
     private QueueTimer(Queue<Integer> queue) {
+        this.queue = queue;
     	/*
     	 * Constructor that creates a QueueTimer instance for the given queue.
     	 */

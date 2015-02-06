@@ -37,7 +37,23 @@ public class ListTimer extends CollectionTimer {
         /* Adds an Integer to the object list */
     }
     
-    public void removeElement() {
+    public void removeElement() throws IndexOutOfBoundsException, 
+                                        UnsupportedOperationException {
+        int size = getSize();
+        // if( size == 0 ) {
+        //     throw new IndexOutOfBoundsException();
+        // }
+        // else {
+            // try {
+                int index = list.size() - 1; // Not so nice code to remove last element in list.
+                list.remove(index);
+            // }
+            // catch (UnsupportedOperationException e) {
+            //     throw new UnsupportedOperationException();
+            // }
+        // }
+
+
         /* Remoevs an object from the list */
         
         /* Throws: java.lang.IndexOutOfBoundsException if the list is empty
@@ -46,10 +62,11 @@ public class ListTimer extends CollectionTimer {
     }
     
     public int getSize() {
-        /* Returns the size of the list */
+        
+        int size = list.size();
         
         /* Returns: the size of the list */
-        return 3;
+        return size;
    } 
    
    public boolean isEmpty() {

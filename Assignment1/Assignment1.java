@@ -46,18 +46,7 @@ public class Assignment1 extends java.lang.Object {
 	}
 
 	public void benchmark() {
-		ListTimer listTimer;
-		QueueTimer queueTimer;
-
-		for (List<Integer> l : lists ) {
-			listTimer = new ListTimer(l);
-			listTimer.insert(listTimer.DEFAULT_MUTATIONS[0]);
-			System.out.println(l);
-		}
-
-		//for (Queue<Integer> q : queues ) {
-		//	queueTimer = new QueueTimer(q);
-		//}
+		benchmark(0, CollectionTimer.DEFAULT_MUTATIONS);
 
 		/*
 		 * Performs benchmark with random seed 0 to populate the data structures and with mutations as in 
@@ -66,6 +55,8 @@ public class Assignment1 extends java.lang.Object {
 	}
 
 	public void benchmark(long elemGenSeed) {
+		benchmark(elemGenSeed, CollectionTimer.DEFAULT_MUTATIONS);
+
 		/*
 		 * Performs benchmark with given seed to populate the data structures and with mutations as in 
 		 * CollectionTimer.DEFAULT_MUTATIONS. The result is printed to stdout.
@@ -73,6 +64,15 @@ public class Assignment1 extends java.lang.Object {
 	}
 
 	public void benchmark(long elemGenSeed, int[] mutations) {
+		ListTimer listTimer;
+		QueueTimer queueTimer;
+
+		for (List<Integer> l : lists ) {
+			listTimer = new ListTimer(l);
+			listTimer.time();
+			// System.out.println(l);
+		}
+
 		/*
 		 * Performs benchmark by applying the specified mutations and using the given seed to
 		 * populate the data structures. The result is printed to stdout.
@@ -83,8 +83,7 @@ public class Assignment1 extends java.lang.Object {
 
         Assignment1 assignment = new Assignment1();
         assignment.benchmark();
-		//benchmark();
-		System.out.println("check");
+
 
 
 
