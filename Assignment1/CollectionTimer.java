@@ -11,7 +11,7 @@ import java.lang.*;
 
 public abstract class CollectionTimer extends java.lang.Object {
 
-    public static final int[] DEFEAULT_MUTATIONS;
+    public static final int[] DEFEAULT_MUTATIONS = {3,4};
     private Random elemGen;
 	
 	public CollectionTimer() {
@@ -58,6 +58,7 @@ public abstract class CollectionTimer extends java.lang.Object {
         /* Removes a specified number of objcts from the data structure */
         
         /* Returns: true if sufficient elements were present, false otheriwse */
+        return true;
     }
     
     public long time() {
@@ -69,6 +70,7 @@ public abstract class CollectionTimer extends java.lang.Object {
         running on the host machine. */
         
         /* Returns: elapsed time in milliseconds */
+        return 3;
     }
     
     public long time(int[] mutations) {
@@ -80,5 +82,6 @@ public abstract class CollectionTimer extends java.lang.Object {
         are performed. Rest: see description above. */
         
         /* Returns: elapsed time in milliseconds */
+        return 3;
     }
 }

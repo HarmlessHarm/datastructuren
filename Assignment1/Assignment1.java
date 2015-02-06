@@ -11,23 +11,34 @@ import java.lang.*;
 /*
  * Main class
  */
-public class Assignment1 {
+public class Assignment1 extends java.lang.Object {
 
 	/*
 	 * Global variables 
 	 */
-	private ArrayList<List<Integer>> lists = new ArrayList<List<Integer>>;
-	private ArrayList<Queues<Integer>> queues = new ArrayList<Queues<Integer>>;
+	private ArrayList<List<Integer>> lists = new ArrayList<List<Integer>>();
+	private ArrayList<Queue<Integer>> queues = new ArrayList<Queue<Integer>>();
+
 
 	public Assignment1() {
+    
+        ArrayList<Integer> arrayList = new ArrayList<Integer>();
+        LinkedList<Integer> linkedListList = new LinkedList<Integer>();
+        Stack<Integer> stack = new Stack<Integer>();
+        Vector<Integer> vector = new Vector<Integer>();
+        
+        lists.add(arrayList);
+        lists.add(linkedListList);
+        lists.add(stack);
+        lists.add(vector);
+        
+        LinkedList<Integer> linkedListQueue = new LinkedList<Integer>();
+        PriorityQueue<Integer> priorityQueue = new PriorityQueue<Integer>();
+        
+        queues.add(linkedListQueue);
+        queues.add(priorityQueue);
 
-		lists[0] = new ArrayList<Integer>;
-		lists[1] = new LinkedList<Integer>;
-		lists[2] = new Stack<Integer>;
-		lists[3] = new Vector<Integer>;
-
-		queues[0] = new LinkedList<Integer>;
-		queues[1] = new PriorityQueue<Integer>;
+		
 		/*
 		 * Default constructor. Creates an empty instance of each of the data structures that are 
 		 * to be benchmarked.
@@ -61,9 +72,12 @@ public class Assignment1 {
 		 */
 	}
 
-	main(String[] args) {
+	public static void main(String[] args) {
 
-		benchmark();
+        Assignment1 assignment = new Assignment1();
+        assignment.benchmark();
+		//benchmark();
+		System.out.println("check");
 
 
 

@@ -14,7 +14,7 @@ public class ListTimer extends CollectionTimer {
     private List<Integer> list;
     
     public ListTimer(List<Integer> list) {
-        /* Constructor that creates a ListTimer instance for the give list */
+        /* Constructor that creates a ListTimer instance for the given list */
     }
     
     public ListTimer (List<Integer> list, long elemGenSeed) {
@@ -45,11 +45,13 @@ public class ListTimer extends CollectionTimer {
         /* Returns the size of the list */
         
         /* Returns: the size of the list */
-    }
+        return 3;
+   } 
    
-    public boolean isEmpty() {
+   public boolean isEmpty() {
         /* Tells whether the list is empty */
         
         /* Returns: true if the list is empty, false otherwise */
-    }
+        return true;
+   }
 }
