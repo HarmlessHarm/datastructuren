@@ -1,5 +1,12 @@
+/*
+ * File: Assignment1.java
+ * Collaborators: Maartje ter Hoeve, Harm Manders
+ * Course: Datastructuren KI 2015
+ */
 
 import java.util.*;
+import java.lang.*;
+
 
 /*
  * Queue timer class
@@ -22,7 +29,7 @@ public class QueueTimer extends CollectionTimer {
     }
 
     public QueueTimer(Queue<Integer> queue, Long elemGenSeed) {
-    	/*
+        	/*
     	 * Constructor that creates a QueueTimer instance for the
     	 * given queue that will populate it with data generated using the specified seed.
     	 */
