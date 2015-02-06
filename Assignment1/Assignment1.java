@@ -38,6 +38,7 @@ public class Assignment1 {
 		ListTimer listTimer;
 
 		for (List<Integer> i : lists ) {
+			System.out.println(i);
 			listTimer = new ListTimer(i);
 		}
 		/*
@@ -62,6 +63,7 @@ public class Assignment1 {
 
 	main(String[] args) {
 
+		benchmark();
 
 
 
