@@ -51,13 +51,13 @@ public class Assignment1 extends java.lang.Object {
 
 		for (List<Integer> l : lists ) {
 			listTimer = new ListTimer(l);
-			System.out.println(listTimer.DEFAULT_MUTATIONS[0]);
-			// listTimer.insert(listTimer.DEFAULT_MUTATIONS[0]);
+			listTimer.insert(listTimer.DEFAULT_MUTATIONS[0]);
+			System.out.println(l);
 		}
 
-		for (Queue<Integer> q : queues ) {
-			queueTimer = new QueueTimer(q);
-		}
+		//for (Queue<Integer> q : queues ) {
+		//	queueTimer = new QueueTimer(q);
+		//}
 
 		/*
 		 * Performs benchmark with random seed 0 to populate the data structures and with mutations as in 

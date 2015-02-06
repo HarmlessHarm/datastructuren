@@ -55,12 +55,14 @@ public class QueueTimer extends CollectionTimer {
     	/*
     	 * Returns the size of the queue.
     	 */
+        return 1;
     }
 
     public boolean isEmpty() {
     	/*
     	 * Tells whether the queue is empty.
     	 */
+        return true;
     }
 
 }

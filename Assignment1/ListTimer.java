@@ -14,6 +14,7 @@ public class ListTimer extends CollectionTimer {
     private List<Integer> list;
     
     public ListTimer(List<Integer> list) {
+        this.list = list;
         /* Constructor that creates a ListTimer instance for the given list */
     }
     
@@ -30,6 +31,9 @@ public class ListTimer extends CollectionTimer {
     }
     
     public void addElement(Integer elem) {
+        // System.out.println(elem);
+        // System.out.println(list);
+        list.add(elem);
         /* Adds an Integer to the object list */
     }
     

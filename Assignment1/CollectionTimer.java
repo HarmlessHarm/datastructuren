@@ -11,8 +11,9 @@ import java.lang.*;
 
 public abstract class CollectionTimer extends java.lang.Object {
 
-    public static final int[] DEFEAULT_MUTATIONS = {10000, -10000};
+    public static final int[] DEFAULT_MUTATIONS = {10, -10};
     private Random elemGen;
+    private long seed = 0;
 	
 	public CollectionTimer() {
         /* Default constructor. Creates a CollectionTimer instance 
@@ -20,7 +21,8 @@ public abstract class CollectionTimer extends java.lang.Object {
     }
     
     public CollectionTimer(long elemGenSeed) {
-        /* Constructor that createsa CollectioTimer instance with a random
+        seed = elemGenSeed;
+        /* Constructor that creates a CollectioTimer instance with a random
         object generator with the specified seed. */
     }
     
@@ -48,6 +50,11 @@ public abstract class CollectionTimer extends java.lang.Object {
     
     
     public void insert(int amount) {
+        elemGen = new Random(seed);
+        for (int i=0; i < amount; i++) {
+            addElement(elemGen.nextInt());
+            // System.out.println(elemGen.nextInt());
+        }
         /* Inserts a specified number of Integer objects into the data structure.
         This method assumes that the underlying data structure supports the
         insertion of the required number of objects. If such is not the case then
