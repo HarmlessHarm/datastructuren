@@ -83,7 +83,7 @@ public class Assignment1 extends java.lang.Object {
         
         long elemGenSeed;
         ArrayList<Integer> mutations = new ArrayList<Integer>();
-        int[] mutationsArray;   
+        
         Assignment1 assignment = new Assignment1();
 
 
@@ -100,8 +100,10 @@ public class Assignment1 extends java.lang.Object {
                 }
             }
             
+            elemGenSeed = Integer.parseInt(args[1]); 
+            
             if (args.length == 2) {
-                elemGenSeed = Integer.parseInt(args[1]); //not very neat; twice this line
+                //elemGenSeed = Integer.parseInt(args[1]); //not very neat; twice this line
                 assignment.benchmark(elemGenSeed);
             }
             else if (args.length > 2) {
@@ -111,8 +113,17 @@ public class Assignment1 extends java.lang.Object {
                     mutations.add(mutation);
                 }
                 
+                int[] mutationsArray
+                for (int j=0; j<=mutations.size(); j++) {
+                    int mutationsArray[j]
+                }
+                
                 //System.out.println(mutations.get(0));
-                mutationsArray = mutations.toArray(); 
+                Integer mutationsArray[] = new Integer[mutations.size()];
+                mutationsArray = mutations.toArray(mutationsArray);
+                
+               // int[] check = new int[]{1,2,3};
+                assignment.benchmark(elemGenSeed, mutationsArray);
             }
         }
         
