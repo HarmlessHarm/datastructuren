@@ -64,6 +64,8 @@ public class Assignment1 extends java.lang.Object {
 	}
 
 	public void benchmark(long elemGenSeed, int[] mutations) {
+	    // Guess you will have to write all the methods anyway, as the type of constructor depends on whether
+	    // a seed or mutations are given.
 		ListTimer listTimer;
 		QueueTimer queueTimer;
 
