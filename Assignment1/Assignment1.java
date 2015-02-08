@@ -79,15 +79,20 @@ public class Assignment1 extends java.lang.Object {
 		 */
 	}
 
+    /* Too much double code, still to be deleted */
 	public static void main(String[] args) {
         
-        long elemGenSeed;
+        long elemGenSeed = 0;
+        int mutation;
         ArrayList<Integer> mutations = new ArrayList<Integer>();
         
         Assignment1 assignment = new Assignment1();
 
-
-        if (args[0].equals("-s")) {
+        if (args.length == 0) {
+            assignment.benchmark();
+        }
+        
+        else if (args[0].equals("-s")) {
             if (args.length < 2) {
                 System.out.println("Error: Please enter a seed.");
             }
@@ -107,31 +112,38 @@ public class Assignment1 extends java.lang.Object {
                 assignment.benchmark(elemGenSeed);
             }
             else if (args.length > 2) {
-                int mutation;
+                //int mutation;
                 for (int i = 2; i<args.length; i++) {
                     mutation = Integer.parseInt(args[i]);
                     mutations.add(mutation);
                 }
                 
-                int[] mutationsArray
-                for (int j=0; j<=mutations.size(); j++) {
-                    int mutationsArray[j]
+                int[] mutationsArray = new int[mutations.size()];
+                for (int j=0; j<mutations.size(); j++) {
+                    mutationsArray[j] = j;
                 }
                 
-                //System.out.println(mutations.get(0));
-                Integer mutationsArray[] = new Integer[mutations.size()];
-                mutationsArray = mutations.toArray(mutationsArray);
-                
-               // int[] check = new int[]{1,2,3};
                 assignment.benchmark(elemGenSeed, mutationsArray);
             }
         }
         
+        else {
+            //int mutation;
+            for (int i=0; i < args.length; i++) {                
+                mutation = Integer.parseInt(args[i]);
+                mutations.add(mutation);
+            }
+            
+            int[] mutationsArray = new int[mutations.size()];
+            for (int j=0; j<mutations.size(); j++) {
+                mutationsArray[j] = j;
+            }
+                
+            assignment.benchmark(elemGenSeed, mutationsArray);
+        }
         
-       
         
         
-        //assignment.benchmark();
 
 
 
