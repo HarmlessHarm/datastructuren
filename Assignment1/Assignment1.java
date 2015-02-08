@@ -80,9 +80,47 @@ public class Assignment1 extends java.lang.Object {
 	}
 
 	public static void main(String[] args) {
-
+        
+        long elemGenSeed;
+        ArrayList<Integer> mutations = new ArrayList<Integer>();
+        int[] mutationsArray;   
         Assignment1 assignment = new Assignment1();
-        assignment.benchmark();
+
+
+        if (args[0].equals("-s")) {
+            if (args.length < 2) {
+                System.out.println("Error: Please enter a seed.");
+            }
+            else {
+                try {
+                    elemGenSeed = Integer.parseInt(args[1]);                    
+                }
+                catch (NumberFormatException e) {
+                    System.out.println("Error: Seed has to be of type integer.");
+                }
+            }
+            
+            if (args.length == 2) {
+                elemGenSeed = Integer.parseInt(args[1]); //not very neat; twice this line
+                assignment.benchmark(elemGenSeed);
+            }
+            else if (args.length > 2) {
+                int mutation;
+                for (int i = 2; i<args.length; i++) {
+                    mutation = Integer.parseInt(args[i]);
+                    mutations.add(mutation);
+                }
+                
+                //System.out.println(mutations.get(0));
+                mutationsArray = mutations.toArray(); 
+            }
+        }
+        
+        
+       
+        
+        
+        //assignment.benchmark();
 
 
 
