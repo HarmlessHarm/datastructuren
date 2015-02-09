@@ -13,7 +13,7 @@ public abstract class CollectionTimer extends java.lang.Object {
 
     public static final int[] DEFAULT_MUTATIONS = {10000, -10000};
     private Random elemGen;
-    private long elemdGendSeed = 0;
+    private long elemGenSeed = 0;
 	
 	public CollectionTimer() {
         /* Default constructor. Creates a CollectionTimer instance 
@@ -21,8 +21,9 @@ public abstract class CollectionTimer extends java.lang.Object {
     }
     
     public CollectionTimer(long elemGenSeed) {
-        this.elemGenSeed = elemGenSeed;
-        elemGen = new Random(this.elemGenSeed);
+        // this.elemGenSeed = elemGenSeed;
+        // System.out.println(elemGenSeed);
+        elemGen = new Random(elemGenSeed);
         
         /* Constructor that creates a CollectioTimer instance with a random
         object generator with the specified seed. */
@@ -52,7 +53,7 @@ public abstract class CollectionTimer extends java.lang.Object {
     
     
     public void insert(int amount) {
-        elemGen = new Random(seed);
+        // elemGen = new Random(seed);
         for (int i=0; i < amount; i++) {
             addElement(elemGen.nextInt());
             // System.out.println(elemGen.nextInt());
@@ -91,16 +92,8 @@ public abstract class CollectionTimer extends java.lang.Object {
     
     public long time() {
 
-        long start = System.currentTimeMillis();
-        insert(DEFAULT_MUTATIONS[0]);
-        extract(DEFAULT_MUTATIONS[1]);
-        long stop = System.currentTimeMillis();
-        long diff = stop - start;
-        System.out.println(diff);
-        return diff;
+        return time(DEFAULT_MUTATIONS);
 
-// Stop time
-// return stop - start;
         /* Times a sequence of operations on the underlying data structure. This
         method performs mutations defined by DEFAULT_MUTATIONS. Timing takes
         place subtracting the number of milisecondssince the UNIX epoch before
@@ -125,16 +118,20 @@ public abstract class CollectionTimer extends java.lang.Object {
         long start = System.currentTimeMillis();
         
         for (int i=0; i<mutations.length; i++) {
-            if (i<0) {
-                extract(i);
+
+            // System.out.println(mutations[i]); // Mutations
+            
+            if (mutations[i]<0) {
+                extract(mutations[i]);
             }
-            else if (i>0) {
-                insert(i);
+            else if (mutations[i]>0) {
+                insert(mutations[i]);
             }
         }
         
         long stop = System.currentTimeMillis();
         long diff = stop - start;
+        System.out.println("Took "+diff+" milliseconds");
         return diff;
 
     }

@@ -19,8 +19,8 @@ public class ListTimer extends CollectionTimer {
     }
     
     public ListTimer (List<Integer> list, long elemGenSeed) {
-        this.list = list;
         super(elemGenSeed);
+        this.list = list;
         /* Constructor that creates a ListTimer instance for the given list that
         will populate it with data generated using the specified seed. */
     }
@@ -56,16 +56,22 @@ public class ListTimer extends CollectionTimer {
     
     public int getSize() {
         
-        int size = list.size();
+        return list.size();
         
         /* Returns: the size of the list */
-        return size;
    } 
    
    public boolean isEmpty() {
+
+        int size = list.size();
+        if (size == 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
         /* Tells whether the list is empty */
         
         /* Returns: true if the list is empty, false otherwise */
-        return true;
    }
 }

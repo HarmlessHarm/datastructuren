@@ -71,6 +71,7 @@ public class Assignment1 extends java.lang.Object {
 
 		for (List<Integer> l : lists ) {
 			listTimer = new ListTimer(l, elemGenSeed); // gives a random generator with seed 500 as well
+			System.out.println(l.getClass().getSimpleName());
 			listTimer.time(mutations);
 			// System.out.println(l);
 		}
@@ -86,7 +87,7 @@ public class Assignment1 extends java.lang.Object {
         
         long elemGenSeed = 0;
         int mutation;
-        ArrayList<Integer> mutations = new ArrayList<Integer>();
+        // ArrayList<Integer> mutations = new ArrayList<Integer>();
         
         Assignment1 assignment = new Assignment1();
 
@@ -97,6 +98,7 @@ public class Assignment1 extends java.lang.Object {
         else if (args[0].equals("-s")) {
             if (args.length < 2) {
                 System.out.println("Error: Please enter a seed.");
+                return;
             }
             else {
                 try {
@@ -104,44 +106,49 @@ public class Assignment1 extends java.lang.Object {
                 }
                 catch (NumberFormatException e) {
                     System.out.println("Error: Seed has to be of type integer.");
+                    return;
                 }
             }
-            
-            elemGenSeed = Integer.parseInt(args[1]); 
-            
+
             if (args.length == 2) {
                 //elemGenSeed = Integer.parseInt(args[1]); //not very neat; twice this line
                 assignment.benchmark(elemGenSeed);
             }
             else if (args.length > 2) {
                 //int mutation;
-                for (int i = 2; i<args.length; i++) {
-                    mutation = Integer.parseInt(args[i]);
-                    mutations.add(mutation);
-                }
-                
-                int[] mutationsArray = new int[mutations.size()];
-                for (int j=0; j<mutations.size(); j++) {
-                    mutationsArray[j] = j;
-                }
-                
-                assignment.benchmark(elemGenSeed, mutationsArray);
+            	int[] mutations = new int[args.length - 2];
+            	for (int i = 2; i<args.length; i++ ) {
+            		mutation = Integer.parseInt(args[i]);
+            		mutations[i - 2] = mutation;
+            	}
+                assignment.benchmark(elemGenSeed, mutations);                
             }
         }
         
         else {
+        	// System.out.println("HOI");
             //int mutation;
-            for (int i=0; i < args.length; i++) {                
-                mutation = Integer.parseInt(args[i]);
-                mutations.add(mutation);
-            }
+        	int[] mutations = new int[args.length];
+        	for (int i = 0; i<args.length; i++ ) {
+        		mutation = Integer.parseInt(args[i]);
+        		mutations[i] = mutation;
+        		// System.out.println(mutation);
+        	}
+            assignment.benchmark(0, mutations);
+
+
+
+            // for (int i=0; i < args.length; i++) {                
+            //     mutation = Integer.parseInt(args[i]);
+            //     mutations.add(mutation);
+            // }
             
-            int[] mutationsArray = new int[mutations.size()];
-            for (int j=0; j<mutations.size(); j++) {
-                mutationsArray[j] = j;
-            }
+            // int[] mutationsArray = new int[mutations.size()];
+            // for (int j=0; j<mutations.size(); j++) {
+            //     mutationsArray[j] = j;
+            // }
                 
-            assignment.benchmark(elemGenSeed, mutationsArray);
+            // assignment.benchmark(elemGenSeed, mutationsArray);
         }
         
         
