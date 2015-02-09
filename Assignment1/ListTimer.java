@@ -22,7 +22,7 @@ public class ListTimer extends CollectionTimer {
     
     /* Constructor that creates a ListTimer instance for the given list, with
      * a given seed */
-    public ListTimer (List<Integer> list, long elemGenSeed) {
+    public ListTimer(List<Integer> list, long elemGenSeed) {
         super(elemGenSeed);
         this.list = list;
     }

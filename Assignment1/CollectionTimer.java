@@ -51,9 +51,9 @@ public abstract class CollectionTimer extends java.lang.Object {
     public boolean extract(int amount) {
         amount = amount * -1; 
 
-        // if(amount < getSize()) {
+        if (amount <= getSize()) {
             
-            for (int i=0; i<amount ;  i++) {
+            for (int i=0; i<amount;  i++) {
                     try {
                         removeElement();
                     }
@@ -71,13 +71,11 @@ public abstract class CollectionTimer extends java.lang.Object {
                     }
             }
             return true;
-        // }
-        // else {
-        //     System.out.println("The object is smaller than the amount extracted");
-        //     return false;
-        // }
-
-        // return true;
+        }
+        else {
+            System.out.println("You tried to extract more elements then that there are present in your structure");
+            return false;
+        }
     }
     
     /* Times a sequence of operations on the underlying data structure, 
@@ -102,7 +100,7 @@ public abstract class CollectionTimer extends java.lang.Object {
         
         long stop = System.currentTimeMillis();
         long diff = stop - start;
-        System.out.println("Took "+diff+" milliseconds");
+        System.out.println(" took "+diff+" milliseconds");
         return diff;
 
     }

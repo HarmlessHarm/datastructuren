@@ -41,7 +41,7 @@ public class QueueTimer extends CollectionTimer {
     }
 
     /* Removes an object from the queue */
-    public void removeElement() {
+    public void removeElement() throws NoSuchElementException {
         queue.remove();
     }   
 
@@ -52,7 +52,7 @@ public class QueueTimer extends CollectionTimer {
 
     /* Tells whether the queue is empty */
     public boolean isEmpty() {
-        if( getSize() == 0) {
+        if (getSize() == 0) {
             return true;
         }
         else {

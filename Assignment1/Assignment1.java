@@ -54,13 +54,13 @@ public class Assignment1 extends java.lang.Object {
 
 		for (List<Integer> l : lists ) {
 			listTimer = new ListTimer(l, elemGenSeed);
-			System.out.println(l.getClass().getSimpleName());
+			System.out.print(l.getClass().getSimpleName());
 			listTimer.time(mutations);
 		}
 
-		for (Queue<Integer> q: queues) {
+		for (Queue<Integer> q : queues) {
 			queueTimer = new QueueTimer(q, elemGenSeed);
-			System.out.println(q.getClass().getSimpleName());
+			System.out.print(q.getClass().getSimpleName());
 			queueTimer.time(mutations);
 		}
 	}
