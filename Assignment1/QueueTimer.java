@@ -16,6 +16,7 @@ public class QueueTimer extends CollectionTimer {
     private Queue<Integer> queue;
 
     private QueueTimer(Queue<Integer> queue) {
+        super();
         this.queue = queue;
     	/*
     	 * Constructor that creates a QueueTimer instance for the given queue.
@@ -23,6 +24,8 @@ public class QueueTimer extends CollectionTimer {
     }
 
     public QueueTimer(Queue<Integer> queue, long elemGenSeed) {
+        super(elemGenSeed);
+        this.queue = queue;
     	/*
     	 * Constructor that creates a QueueTimer instance for the given queue that
     	 * will populate it with data generated using the specified seed.
@@ -30,7 +33,9 @@ public class QueueTimer extends CollectionTimer {
     }
 
     public QueueTimer(Queue<Integer> queue, Long elemGenSeed) {
-        	/*
+        super(elemGenSeed);
+        this.queue = queue;
+        /*
     	 * Constructor that creates a QueueTimer instance for the
     	 * given queue that will populate it with data generated using the specified seed.
     	 */
@@ -41,29 +46,41 @@ public class QueueTimer extends CollectionTimer {
      */
 
     public void addElement(Integer elem) {
+
+        queue.add(elem);
     	/*
     	 * Adds an Integer object to the queue.
     	 */
     }
 
-    public void removeElement() {
+    public void removeElement() throws IndexOutOfBoundsException, 
+                                        UnsupportedOperationException{
+
+        queue.remove();
     	/*
     	 * Removes an object from the queue.
     	 */
     }
 
     public int getSize() {
+
+        return queue.size();
     	/*
     	 * Returns the size of the queue.
     	 */
-        return 1;
     }
 
     public boolean isEmpty() {
+
+        if( getSize() == 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
     	/*
     	 * Tells whether the queue is empty.
     	 */
-        return true;
     }
 
 }

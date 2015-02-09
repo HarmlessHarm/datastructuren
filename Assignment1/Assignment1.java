@@ -76,6 +76,12 @@ public class Assignment1 extends java.lang.Object {
 			// System.out.println(l);
 		}
 
+		for (Queue<Integer> q: queues) {
+			queueTimer = new QueueTimer(q, elemGenSeed);
+			System.out.println(q.getClass().getSimpleName());
+			queueTimer.time(mutations);
+		}
+
 		/*
 		 * Performs benchmark by applying the specified mutations and using the given seed to
 		 * populate the data structures. The result is printed to stdout.

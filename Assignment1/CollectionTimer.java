@@ -68,20 +68,30 @@ public abstract class CollectionTimer extends java.lang.Object {
 
         amount = amount * -1; // Makes the negative a mount to 
 
-        for (int i=0; i < amount ;  i++) {
-            try {
-                removeElement();
+        if(amount < getSize()) {
+            
+            for (int i=0; i < amount ;  i++) {
+                // if( isEmpty() == false) {
+                    try {
+                        removeElement();
+                    }
+                    // catch (IndexOutOfBoundsException e) {
+                    //     System.err.println("IndexOutOfBoundsException: " + e.getMessage());
+                    //     return false;
+                    // }
+                    catch (UnsupportedOperationException e) {
+                        System.err.println("UnsupportedOperationException: " + e.getMessage());
+                        return false;
+                    }
+                // }
             }
-            catch (IndexOutOfBoundsException e) {
-                System.err.println("IndexOutOfBoundsException: " + e.getMessage());
-                return false;
-            }
-            catch (UnsupportedOperationException e) {
-                System.err.println("UnsupportedOperationException: " + e.getMessage());
-                return false;
-            }
+            return true;
         }
-        return true;
+        else {
+            System.out.println("The object is smaller than the amount extracted");
+            return false;
+        }
+
 
 
         /* Removes a specified number of objcts from the data structure */

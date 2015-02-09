@@ -14,6 +14,7 @@ public class ListTimer extends CollectionTimer {
     private List<Integer> list;
     
     public ListTimer(List<Integer> list) {
+        super();
         this.list = list;
         /* Constructor that creates a ListTimer instance for the given list */
     }
@@ -26,6 +27,8 @@ public class ListTimer extends CollectionTimer {
     }
     
     public ListTimer(List<Integer> list, java.lang.Long elemGenSeed) {
+        super(elemGenSeed);
+        this.list = list;
         /* Constructor that creates a ListTimer instance for the given list that
         will populate it with data generated usig the specfied seed. */
         
@@ -40,10 +43,9 @@ public class ListTimer extends CollectionTimer {
     
     public void removeElement() throws IndexOutOfBoundsException, 
                                         UnsupportedOperationException {
-        int size = getSize();
-     
-                int index = list.size() - 1; // Not so nice code to remove last element in list.
-                list.remove(index);
+                                                    
+        int index = list.size() - 1; // Not so nice code to remove last element in list.
+        list.remove(index);
             
 
 
@@ -63,8 +65,7 @@ public class ListTimer extends CollectionTimer {
    
    public boolean isEmpty() {
 
-        int size = list.size();
-        if (size == 0) {
+        if (getSize() == 0) {
             return true;
         }
         else {
