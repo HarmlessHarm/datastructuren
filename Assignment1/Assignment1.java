@@ -4,6 +4,12 @@
  * Course: Datastructuren KI 2015
  *
  * Class to benchmark data structures with interface List or Queue.
+ *
+ * How will the implementation of removeElement() affect the performance of the different ADTs?
+ *
+ * When we let the program add and remove a lot of elements the queues tend to get
+ * slower than lists the more elements there are removed, we think this is due to the
+ * fact that all elements have in the queue have move forward with each element removed.
  */
  
 import java.util.*;
@@ -52,12 +58,14 @@ public class Assignment1 extends java.lang.Object {
 		ListTimer listTimer;
 		QueueTimer queueTimer;
 
+		System.out.println("Lists: ");
 		for (List<Integer> l : lists ) {
 			listTimer = new ListTimer(l, elemGenSeed);
 			System.out.print(l.getClass().getSimpleName());
 			listTimer.time(mutations);
 		}
 
+		System.out.println("Queues: ");
 		for (Queue<Integer> q : queues) {
 			queueTimer = new QueueTimer(q, elemGenSeed);
 			System.out.print(q.getClass().getSimpleName());
