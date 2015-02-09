@@ -1,6 +1,6 @@
 /*
  * File: Assignment1.java
- * Collaborators: Maartje ter Hoeve, Harm Manders
+ * Collaborators: Maartje ter Hoeve (10190015), Harm Manders (10677186)
  * Course: Datastructuren KI 2015
  *
  * Class for all Queue mutations.
