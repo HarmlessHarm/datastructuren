@@ -41,14 +41,11 @@ public class ListTimer extends CollectionTimer {
         /* Adds an Integer to the object list */
     }
     
-    public void removeElement() throws IndexOutOfBoundsException, 
-                                        UnsupportedOperationException {
-                                                    
+    public void removeElement()  {
+
         int index = list.size() - 1; // Not so nice code to remove last element in list.
         list.remove(index);
             
-
-
         /* Removes an object from the list */
         
         /* Throws: java.lang.IndexOutOfBoundsException if the list is empty

@@ -93,7 +93,6 @@ public class Assignment1 extends java.lang.Object {
         
         long elemGenSeed = 0;
         int mutation;
-        // ArrayList<Integer> mutations = new ArrayList<Integer>();
         
         Assignment1 assignment = new Assignment1();
 
@@ -106,67 +105,51 @@ public class Assignment1 extends java.lang.Object {
                 System.out.println("Error: Please enter a seed.");
                 return;
             }
-            else {
-                try {
-                    elemGenSeed = Integer.parseInt(args[1]);                    
-                }
-                catch (NumberFormatException e) {
-                    System.out.println("Error: Seed has to be of type integer.");
-                    return;
-                }
-            }
+            
+            else if (args.length == 2 && isInteger(args[1])) {
+        		elemGenSeed = Integer.parseInt(args[1]);
+            	assignment.benchmark(elemGenSeed);
+        	}
 
-            if (args.length == 2) {
-                //elemGenSeed = Integer.parseInt(args[1]); //not very neat; twice this line
-                assignment.benchmark(elemGenSeed);
-            }
             else if (args.length > 2) {
-                //int mutation;
             	int[] mutations = new int[args.length - 2];
             	for (int i = 2; i<args.length; i++ ) {
-            		mutation = Integer.parseInt(args[i]);
-            		mutations[i - 2] = mutation;
+            		if (isInteger(args[i])) {
+	            		mutation = Integer.parseInt(args[i]);
+	            		mutations[i - 2] = mutation;
+            		}
             	}
                 assignment.benchmark(elemGenSeed, mutations);                
             }
         }
         
         else {
-        	// System.out.println("HOI");
-            //int mutation;
         	int[] mutations = new int[args.length];
         	for (int i = 0; i<args.length; i++ ) {
-        		mutation = Integer.parseInt(args[i]);
-        		mutations[i] = mutation;
-        		// System.out.println(mutation);
+        		if (isInteger(args[i])) {
+	        		mutation = Integer.parseInt(args[i]);
+	        		mutations[i] = mutation;
+        		}
         	}
             assignment.benchmark(0, mutations);
 
-
-
-            // for (int i=0; i < args.length; i++) {                
-            //     mutation = Integer.parseInt(args[i]);
-            //     mutations.add(mutation);
-            // }
-            
-            // int[] mutationsArray = new int[mutations.size()];
-            // for (int j=0; j<mutations.size(); j++) {
-            //     mutationsArray[j] = j;
-            // }
-                
-            // assignment.benchmark(elemGenSeed, mutationsArray);
         }
-        
-        
-        
-
-
-
 
 		/*
 		 * Main method of the program. Parses the command line options and initiates the benchmarking
 		 * process according to the provided arguments. See the class description for an overview of
 		 * the accepted paramers.
 		 */
+	}
+
+	private static boolean isInteger(String s) {
+		try {
+			Integer.parseInt(s);
+		}
+		catch (NumberFormatException e) {
+			System.out.println("You've used an invalid input; the result may not be adequate.");
+			return false;
+		}
+		return true;
 	}
 }

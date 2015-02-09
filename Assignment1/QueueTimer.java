@@ -53,14 +53,13 @@ public class QueueTimer extends CollectionTimer {
     	 */
     }
 
-    public void removeElement() throws IndexOutOfBoundsException, 
-                                        UnsupportedOperationException{
+    public void removeElement() {
 
         queue.remove();
     	/*
     	 * Removes an object from the queue.
     	 */
-    }
+    }   
 
     public int getSize() {
 

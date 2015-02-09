@@ -68,29 +68,33 @@ public abstract class CollectionTimer extends java.lang.Object {
 
         amount = amount * -1; // Makes the negative a mount to 
 
-        if(amount < getSize()) {
+        // if(amount < getSize()) {
             
             for (int i=0; i < amount ;  i++) {
                 // if( isEmpty() == false) {
                     try {
                         removeElement();
                     }
-                    // catch (IndexOutOfBoundsException e) {
-                    //     System.err.println("IndexOutOfBoundsException: " + e.getMessage());
-                    //     return false;
-                    // }
+                    catch (IndexOutOfBoundsException e) {
+                        System.err.println("IndexOutOfBoundsException: " + e.getMessage());
+                        return false;
+                    }
                     catch (UnsupportedOperationException e) {
                         System.err.println("UnsupportedOperationException: " + e.getMessage());
+                        return false;
+                    }
+                    catch (NoSuchElementException e) {
+                        System.out.println("NoSuchElementException: "+ e.getMessage());
                         return false;
                     }
                 // }
             }
             return true;
-        }
-        else {
-            System.out.println("The object is smaller than the amount extracted");
-            return false;
-        }
+        // }
+        // else {
+        //     System.out.println("The object is smaller than the amount extracted");
+        //     return false;
+        // }
 
 
 
