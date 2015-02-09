@@ -40,7 +40,7 @@ public class ListTimer extends CollectionTimer {
     }
     
     /* Removes an object from the list */
-    public void removeElement()  {
+    public void removeElement() throws IndexOutOfBoundsException, UnsupportedOperationException {
         int index = list.size() - 1; 
         list.remove(index);
     }

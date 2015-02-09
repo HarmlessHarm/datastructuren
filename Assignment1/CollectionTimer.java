@@ -54,7 +54,6 @@ public abstract class CollectionTimer extends java.lang.Object {
         // if(amount < getSize()) {
             
             for (int i=0; i<amount ;  i++) {
-                // if( isEmpty() == false) {
                     try {
                         removeElement();
                     }
@@ -70,7 +69,6 @@ public abstract class CollectionTimer extends java.lang.Object {
                         System.out.println("NoSuchElementException: "+ e.getMessage());
                         return false;
                     }
-                // }
             }
             return true;
         // }
