@@ -70,8 +70,8 @@ public class Assignment1 extends java.lang.Object {
 		QueueTimer queueTimer;
 
 		for (List<Integer> l : lists ) {
-			listTimer = new ListTimer(l);
-			listTimer.time();
+			listTimer = new ListTimer(l, elemGenSeed); // gives a random generator with seed 500 as well
+			listTimer.time(mutations);
 			// System.out.println(l);
 		}
 

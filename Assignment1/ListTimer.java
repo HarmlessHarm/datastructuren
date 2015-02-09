@@ -19,11 +19,13 @@ public class ListTimer extends CollectionTimer {
     }
     
     public ListTimer (List<Integer> list, long elemGenSeed) {
-        /* Constructor that creates a ListTimer instace for the given list that
+        this.list = list;
+        super(elemGenSeed);
+        /* Constructor that creates a ListTimer instance for the given list that
         will populate it with data generated using the specified seed. */
     }
     
-    public ListTimer(List<Integer> list, java.lang.Long elemGenSee) {
+    public ListTimer(List<Integer> list, java.lang.Long elemGenSeed) {
         /* Constructor that creates a ListTimer instance for the given list that
         will populate it with data generated usig the specfied seed. */
         
@@ -31,8 +33,7 @@ public class ListTimer extends CollectionTimer {
     }
     
     public void addElement(Integer elem) {
-        // System.out.println(elem);
-        // System.out.println(list);
+ 
         list.add(elem);
         /* Adds an Integer to the object list */
     }
@@ -40,21 +41,13 @@ public class ListTimer extends CollectionTimer {
     public void removeElement() throws IndexOutOfBoundsException, 
                                         UnsupportedOperationException {
         int size = getSize();
-        // if( size == 0 ) {
-        //     throw new IndexOutOfBoundsException();
-        // }
-        // else {
-            // try {
+     
                 int index = list.size() - 1; // Not so nice code to remove last element in list.
                 list.remove(index);
-            // }
-            // catch (UnsupportedOperationException e) {
-            //     throw new UnsupportedOperationException();
-            // }
-        // }
+            
 
 
-        /* Remoevs an object from the list */
+        /* Removes an object from the list */
         
         /* Throws: java.lang.IndexOutOfBoundsException if the list is empty
         java.lang.UnsupportedOperationException if the list does not support 

@@ -13,7 +13,7 @@ public abstract class CollectionTimer extends java.lang.Object {
 
     public static final int[] DEFAULT_MUTATIONS = {10000, -10000};
     private Random elemGen;
-    private long seed = 0;
+    private long elemdGendSeed = 0;
 	
 	public CollectionTimer() {
         /* Default constructor. Creates a CollectionTimer instance 
@@ -21,7 +21,9 @@ public abstract class CollectionTimer extends java.lang.Object {
     }
     
     public CollectionTimer(long elemGenSeed) {
-        seed = elemGenSeed;
+        this.elemGenSeed = elemGenSeed;
+        elemGen = new Random(this.elemGenSeed);
+        
         /* Constructor that creates a CollectioTimer instance with a random
         object generator with the specified seed. */
     }
@@ -119,6 +121,21 @@ public abstract class CollectionTimer extends java.lang.Object {
         are performed. Rest: see description above. */
         
         /* Returns: elapsed time in milliseconds */
-        return 3;
+        
+        long start = System.currentTimeMillis();
+        
+        for (int i=0; i<mutations.length; i++) {
+            if (i<0) {
+                extract(i);
+            }
+            else if (i>0) {
+                insert(i);
+            }
+        }
+        
+        long stop = System.currentTimeMillis();
+        long diff = stop - start;
+        return diff;
+
     }
 }
