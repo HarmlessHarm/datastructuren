@@ -8,68 +8,53 @@
 import java.util.*;
 import java.lang.*;
 
-
 public class ListTimer extends CollectionTimer {
 
     private List<Integer> list;
     
+    /* Constructor that creates a ListTimer instance for the given list */
     public ListTimer(List<Integer> list) {
         super();
-        this.list = list;
-        /* Constructor that creates a ListTimer instance for the given list */
+        this.list = list;        
     }
     
+    /* Constructor that creates a ListTimer instance for the given list, with
+     * a given seed */
     public ListTimer (List<Integer> list, long elemGenSeed) {
         super(elemGenSeed);
         this.list = list;
-        /* Constructor that creates a ListTimer instance for the given list that
-        will populate it with data generated using the specified seed. */
     }
     
+    /* Constructor that creates a ListTimer instance for the given list, with
+     * a given seed */
     public ListTimer(List<Integer> list, java.lang.Long elemGenSeed) {
         super(elemGenSeed);
         this.list = list;
-        /* Constructor that creates a ListTimer instance for the given list that
-        will populate it with data generated usig the specfied seed. */
-        
-        /* DIFFERENCE?? */
     }
     
-    public void addElement(Integer elem) {
- 
-        list.add(elem);
-        /* Adds an Integer to the object list */
+    /* Adds an Integer to the object list */
+    public void addElement(Integer elem) { 
+        list.add(elem);        
     }
     
+    /* Removes an object from the list */
     public void removeElement()  {
-
-        int index = list.size() - 1; // Not so nice code to remove last element in list.
+        int index = list.size() - 1; 
         list.remove(index);
-            
-        /* Removes an object from the list */
-        
-        /* Throws: java.lang.IndexOutOfBoundsException if the list is empty
-        java.lang.UnsupportedOperationException if the list does not support 
-        removal of elements */
     }
     
-    public int getSize() {
-        
+    /* Returns: the size of the list */
+    public int getSize() {        
         return list.size();
-        
-        /* Returns: the size of the list */
-   } 
+    } 
    
-   public boolean isEmpty() {
-
+    /* Tells whether the list is empty */
+    public boolean isEmpty() {
         if (getSize() == 0) {
             return true;
         }
         else {
             return false;
         }
-        /* Tells whether the list is empty */
-        
-        /* Returns: true if the list is empty, false otherwise */
    }
 }
