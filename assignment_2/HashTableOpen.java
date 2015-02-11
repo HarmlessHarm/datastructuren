@@ -14,12 +14,14 @@ public class HashTableOpen {
 	}
 
 	public void put(String key, String value) {
-		table[key][1] = value;
+		int index = function.calcIndex(key);
+		table[index][1] = value;
 	}
 
 	public String get(String key) {
-		System.out.println(table[key][1]);
-		return table[key][1];
+		int index = function.calcIndex(key);
+		System.out.println(table[index][1]);
+		return table[index][1];
 	}
 
 	public int size() {
