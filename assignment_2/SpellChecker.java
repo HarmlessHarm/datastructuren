@@ -19,7 +19,7 @@ class SpellChecker {
         textfile = args[1];
         hash_size = Integer.parseInt(args[2]);
         System.out.printf("Selected table size: %d\n", hash_size);
-        table = new Hashtable<String, String>(hash_size);
+        table = new Hashtable<String, String>(hash_size);                       // <-- Eigen code
        
         /* Read wordfile, and insert every word into the hash table. */
         try {
@@ -70,7 +70,7 @@ class SpellChecker {
 
         System.out.println("zoeken woorden in " + (end - start) + " ms");
     }
-    /* Checks is word contains digits. So it can be ignored for spell
+    /* Checks if word contains digits. So it can be ignored for spell
      * checking. */
     static boolean contains_numbers(String str) {
         for (int i = 0 ; i < str.length() ; i++) 
