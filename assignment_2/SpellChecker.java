@@ -21,8 +21,8 @@ class SpellChecker {
         textfile = args[1];
         hash_size = Integer.parseInt(args[2]);
         System.out.printf("Selected table size: %d\n", hash_size);
-        // table = new Hashtable<String, String>(hash_size);
-        function = new Division(hash_size);
+        //table = new Hashtable<String, String>(hash_size);
+        function = new Division(hash_size);       
         table = new HashTableOpen(hash_size, function);
 
         /* Read wordfile, and insert every word into the hash table. */

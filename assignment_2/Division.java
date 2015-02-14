@@ -7,7 +7,7 @@ public class Division implements Compressable {
         table_length = length;
     }
 
-    int calcIndex(String key) {
+    public int calcIndex(String key) {
         int index;
 
         index = Math.abs(hashCode(key)) % table_length;
