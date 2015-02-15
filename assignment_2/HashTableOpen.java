@@ -15,13 +15,15 @@ public class HashTableOpen {
 
 	public void put(String key, String value) {
 		int index = function.calcIndex(key);
-		table[index][1] = value;
+		table[index][0] = key; //put key in first column array
+		table[index][1] = value; //put value in second column array (value will be the placeholder a)
 	}
 
 	public String get(String key) {
 		int index = function.calcIndex(key);
-		System.out.println(table[index][1]);
-		return table[index][1];
+		//System.out.println(table[index][1]);
+		//System.out.println("check");
+		return table[index][0];
 	}
 
 	public int size() {
