@@ -1,5 +1,6 @@
 import java.util.*;
 import java.io.*;
+
 class SpellChecker {
     public static void main(String[] args) {
         int hash_size;
@@ -53,13 +54,17 @@ class SpellChecker {
                 StringTokenizer st = new StringTokenizer(copy, " ,.:;\"-_(){}[]?!*^&'\n\t");
                 while(st.hasMoreTokens()) {
                     String word = st.nextToken();
-                    if (!contains_numbers(word) && table.get(word) == null) {
+                    System.out.println("Word: " + word); // test
+                    if (!contains_numbers(word) && table.get(word) == null) {                        
                         //System.out.printf("Not found: [%s]\n", word);
                         typo++;
                     }
                     count++;
+                    System.out.println(count);
                 }
+                System.out.println("check");
                 str = src.readLine();
+                
             }
             end = System.currentTimeMillis();
         } catch (IOException e) {

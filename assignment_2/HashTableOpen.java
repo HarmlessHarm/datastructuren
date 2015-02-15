@@ -5,29 +5,60 @@ public class HashTableOpen {
 
     private CollisionChaining[] table;
     private Compressable function;
+    private CollisionChaining currentListNode;
 
     /* Constructor */
     HashTableOpen(int hash_size, Compressable function) {
         this.function = function;
+        // standard value of new array is null?
         table = new CollisionChaining[hash_size]; //if you don't want table load factor to be 0, this should be different
     }
     
     /* Puts new node to existing or new single linked list (represented as collisionChaining object) */
     public void put (String key, String value) {
+        System.out.println(key);
         int index = function.calcIndex(key);
-        CollisionChaining currentListNode = table[index];
-        if (table[index] == null) {
-            table[index] = new CollisionChaining(key, value);
+        currentListNode = table[index];
+        if (currentListNode == null) {
+            currentListNode = new CollisionChaining(key, value);
+            System.out.println("In hashtabe: " + currentListNode.getKey());
+        }
+        else {
+            /* Loop over single linked list until you've reached the last node */
+            while (currentListNode.getNext() != null) {
+                if (!currentListNode.getKey().equals(key)) {
+                    currentListNode = table[index].getNext();
+                }
+                else {
+                    currentListNode.setKey(key);
+                } //really needed? perhaps the methods just doesn't do anything otherwise, which would be sufficient as well
+            }
+            
+            /* Once you've reached the end of the list, construct a new node at the end of the linked list */
+            if (currentListNode.getNext() == null) {
+                currentListNode.setNext(new CollisionChaining(key, value));
+            }
+        }
+    }
+    
+    /* Loop through all list nodes, until the correct key has been found; return this one */
+    public String get(String key) {
+        int index = function.calcIndex(key);
+        currentListNode = table[index];
+        
+        if (currentListNode.getNext() == null) { //null pointer exception
+            if (currentListNode.getKey().equals(key)) {
+                return currentListNode.getKey();
+            }
         }
         
-        /* Loop over single linked list untill you've reached the last node */
         while (currentListNode.getNext() != null) {
-            currentListNode = table[index].getNext();
+            if (currentListNode.getKey().equals(key)) {
+                return currentListNode.getKey();
+            }
         }
         
-        if (currentListNode.getNext() == null) {
-            currentListNode.setNext(new CollisionChaining(key, value));
-        }
+        return null; // something that says the key hasn't been found?            
     }
 
 	/* // private int hash_size;
