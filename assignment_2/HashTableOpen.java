@@ -7,6 +7,7 @@ public class HashTableOpen {
     private Compressable function;
     private CollisionChaining currentListNode;
     private String[][] hashTableLinProb;
+    private String returnKey;
 
     /* Constructor */
     HashTableOpen(int hash_size, Compressable function) {
@@ -95,12 +96,24 @@ public class HashTableOpen {
             hashTableLinProb[indexCopy][1] = value;
             
         }
-        
-        //System.out.println("nog maken");
     }
     
     /* Loop through all list nodes, until the correct key has been found; return this one */
-    public String get(String key) {
+    public String get(String key, int hashStrategy) {
+        
+        
+        if (hashStrategy == 1) {
+            returnKey = getCollisionChaining(key);
+        }
+        else if (hashStrategy == 2) {
+            returnKey = getLinearProbing(key);
+        }
+        
+        return returnKey;       
+    }
+    
+    public String getCollisionChaining(String key) {
+    
         int index = function.calcIndex(key);
         System.out.println("Get: " + key);
         currentListNode = hashTableCollision[index];
@@ -118,7 +131,11 @@ public class HashTableOpen {
             }
         }
         
-        return null; // something that says the key hasn't been found?            
+        return null; // something that says the key hasn't been found?         
+    }
+    
+    public String getLinearProbing(String key) {
+        return "test";
     }
 
 	/* // private int hash_size;
