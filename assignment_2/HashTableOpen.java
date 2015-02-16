@@ -6,7 +6,7 @@ public class HashTableOpen {
     private CollisionChaining[] hashTableCollision;
     private Compressable function;
     private CollisionChaining currentListNode;
-    private String[] hashTableLinProb;
+    private String[][] hashTableLinProb;
 
     /* Constructor */
     HashTableOpen(int hash_size, Compressable function) {
@@ -84,8 +84,8 @@ public class HashTableOpen {
             int indexCopy = index;
             while (hashTableLinProb[indexCopy] != null) {
                 indexCopy++;
-                if (indexCopy == hashTableLinProb.lengt-1) {
-                    indexCopy == 0;
+                if (indexCopy == hashTableLinProb.length-1) {
+                    indexCopy = 0;
                 }
                 if (indexCopy == index) {
                     return;
