@@ -1,6 +1,16 @@
+/*
+ * File: SpellChecker.java
+ * Collaborators: Maartje ter Hoeve (10190015), Harm Manders (10677186)
+ * Course: Datastructuren KI 2015
+ *
+ * Class to construct a object that can be used as instance/node of a single linked list.
+ *
+ */
+
 import java.util.*;
 import java.io.*;
 
+/* Class that can be used to construct nodes of a single linked list */
 public class CollisionChaining {
     
     private String key;
@@ -24,10 +34,12 @@ public class CollisionChaining {
         return next;
     }
     
+    /* Set the key of the object */
     public void setKey(String newKey) {
         key = newKey;
     }
     
+    /* Get the key of the object */
     public String getKey() {
         return key;
     }

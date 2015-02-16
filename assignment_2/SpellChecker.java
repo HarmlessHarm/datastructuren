@@ -1,6 +1,16 @@
+/*
+ * File: SpellChecker.java
+ * Collaborators: Maartje ter Hoeve (10190015), Harm Manders (10677186)
+ * Course: Datastructuren KI 2015
+ *
+ * Class to check the spelling of text files, given a word list
+ *
+ */
+
 import java.util.*;
 import java.io.*;
 
+/* Main class, to check the spelling of the words in a text file */
 class SpellChecker {
     public static void main(String[] args) {
         int hash_size, hash_strategy;
@@ -55,15 +65,11 @@ class SpellChecker {
                 while(st.hasMoreTokens()) {
                     String word = st.nextToken();                    
                     if (!contains_numbers(word) && table.get(word, hash_strategy) == null) {                        
-                        System.out.printf("Not found: [%s]\n", word);
+                        //System.out.printf("Not found: [%s]\n", word);
                         typo++;
-                        //System.out.println("TYPO: " + word);
-                    }
-                    // System.out.println(table.get(word, hash_strategy));
+                    }                    
                     count++;
-                    // System.out.println(count);
                 }
-                // System.out.println("check");
                 str = src.readLine();
                 
             }
