@@ -41,26 +41,26 @@ public class HashTableOpen {
     }
     
     public void putCollisionChaining(String key, String value) {
-        // System.out.println(key);
-        int index = function.calcIndex(key);
-        // System.out.println("Index: " + index);
-       
-        currentListNode = hashTableCollision[index];
-        // System.out.println("Current listnode: " + currentListNode);
-        if (currentListNode == null) {
-            currentListNode = new CollisionChaining(key, value);
-            // System.out.println("In hashtable: " + currentListNode.getKey());
-        }
         
+        int index = function.calcIndex(key);             
+        currentListNode = hashTableCollision[index]; 
+       // System.out.println(key + ": " + index);      
+      
+        
+        if (currentListNode == null) {
+            hashTableCollision[index] = new CollisionChaining(key, value);           
+        }        
         else {
-            // System.out.println(" in else");
+            //System.out.println(" in else");
+            
             /* Loop over single linked list until you've reached the last node */
             while (currentListNode.getNext() != null) {
-                if (!currentListNode.getKey().equals(key)) {
-                    currentListNode = hashTableCollision[index].getNext();
+                if (!currentListNode.getKey().equals(key)) { // as then the key is already present, so no need to add anything
+                    currentListNode = currentListNode.getNext();
                 }
                 else {
                     currentListNode.setKey(key);
+                    break;
                 } //really needed? perhaps the methods just doesn't do anything otherwise, which would be sufficient as well
             }
             
@@ -69,6 +69,23 @@ public class HashTableOpen {
                 currentListNode.setNext(new CollisionChaining(key, value));
             }
         }
+
+        /* Debug hash table by printing the hash table */
+		/* System.out.println("----------------------------------");
+		 
+		 for (int  i = 0; i < 30; i++) {
+			try {
+		        System.out.println("In hashtable2: " + hashTableCollision[i].getKey());
+				System.out.println("Put at key: " + key);
+				System.out.println("Put at value: " + value);
+				System.out.println("Index: " + i);
+			} catch (NullPointerException e) {
+				System.out.println(e);
+				System.out.println("Index null: " + i);
+			}
+			System.out.println("------------------");
+			
+		} */
         
         // System.out.println("In hashtable2: " + hashTableCollision[3].getKey());
         
@@ -121,21 +138,29 @@ public class HashTableOpen {
     public String getCollisionChaining(String key) {
     
         int index = function.calcIndex(key);
-        // System.out.println("Get: " + key);
+       // System.out.println(index);
+        
         currentListNode = hashTableCollision[index];
-        // System.out.println("In get: " + currentListNode.getKey());
         
-        if (currentListNode.getNext() == null) { //null pointer exception
-            if (currentListNode.getKey().equals(key)) {
-                return currentListNode.getKey();
-            }
-        }
-        
+        if (currentListNode == null) {
+            return null;
+        }        
+ 
         while (currentListNode.getNext() != null) {
             if (currentListNode.getKey().equals(key)) {
                 return currentListNode.getKey();
             }
+            else {
+                currentListNode = currentListNode.getNext(); //haven't been able to check whether while loop works, as never more than 2 words occured on the same index
+            }            
         }
+        
+        if (currentListNode.getNext() == null) {
+            if (currentListNode.getKey().equals(key)) {
+                return currentListNode.getKey();
+            }
+        }
+        
         
         return null; // something that says the key hasn't been found?         
     }
