@@ -87,6 +87,7 @@ public class HashTableOpen {
                     tempI = 0;
                 }
                 if(tempI == index) {
+                    System.out.println("The array is full, use a larger hash_size");
                     System.exit(1);
                 }
             }
@@ -163,8 +164,39 @@ public class HashTableOpen {
     }
 	
 	/* Get size of hashtable (both used hashtables have same length) */
-	public int size() {
-		return hashTableCollision.length;
+	public int size(int hashStrategy) {
+        if( hashStrategy == 1) {
+            return sizeCollisionChaining();
+        }
+        else if( hashStrategy ==2 ) {
+            return sizeLinearProbing();
+        }
+        return 0;
 	}
+
+    private int sizeCollisionChaining() {
+        int counter=0;
+        for (int i=0;i<hashTableCollision.length ;i++ ) {
+            if(hashTableCollision[i] != null) {
+                CollisionChaining curNode = hashTableCollision[i];
+                while(curNode.getNext() != null) {
+                    curNode = curNode.getNext();
+                    counter++;
+                }
+                counter++; //Last element correction
+            }
+        }
+        return counter;
+    }
+
+    private int sizeLinearProbing() {
+        int counter=0;
+        for (int i=0;i<hashTableLinProb.length ;i++ ) {
+            if(hashTableLinProb[i][0] == null) {
+                counter++;
+            }
+        }
+        return hashTableLinProb.length - counter;
+    }
 
 }

@@ -9,8 +9,22 @@
 
 public class Division implements Compressable {
     int table_length;
-    int initial = 11;
-    int multiplier = 31;
+
+    /*Random prime numbers to play with, we chose 1019 since we noticed an optimum*/
+    // int initial = 3;
+    // int initial = 11;
+    // int initial = 31;
+    // int initial = 97;
+    // int initial = 509;
+    int initial = 1019;
+
+    /*Random prime numbers to play with, we chose 1019 since we noticed an optimum*/
+    // int multiplier = 3;
+    // int multiplier = 11;
+    // int multiplier = 31;
+    // int multiplier = 97;
+    // int multiplier = 509;
+    int multiplier = 1019;
     
     Division(int length) {
         table_length = length;

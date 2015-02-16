@@ -32,6 +32,11 @@ class SpellChecker {
         textfile = args[1];
         hash_size = Integer.parseInt(args[2]);
         hash_strategy = Integer.parseInt(args[3]);
+        if(hash_strategy != 1 && hash_strategy != 2 ) {
+            System.out.println("You did not enter a valid hash protocol!");
+            System.out.println("Append 1 for Collision Chaining, 2 for Linear Probing");
+            System.exit(1);
+        }
         System.out.printf("Selected table size: %d\n", hash_size);
         //table = new Hashtable<String, String>(hash_size); // Java Hash Function
         function = new Division(hash_size);
@@ -78,9 +83,9 @@ class SpellChecker {
             e.printStackTrace();
         }
 
-        System.out.printf("Hash table contains %d words\n", table.size());
+        System.out.printf("Hash table contains %d words\n", table.size(hash_strategy));
         System.out.printf("Hash table load factor %f\n",
-               (double)table.size()/hash_size);
+               (double)table.size(hash_strategy)/hash_size);
 
         System.out.printf("Text contains %d words\n", count);
         System.out.printf("typo's %d\n", typo);
