@@ -17,7 +17,6 @@ class SpellChecker {
         int count = 0, typo = 0;
         long start = 0, end = 0;
         String wordfile, textfile;
-       // Hashtable<String, String> table;
         HashTableOpen table;
         Compressable function;
 
@@ -38,7 +37,6 @@ class SpellChecker {
             System.exit(1);
         }
         System.out.printf("Selected table size: %d\n", hash_size);
-        //table = new Hashtable<String, String>(hash_size); // Java Hash Function
         function = new Division(hash_size);
         table = new HashTableOpen(hash_size, function);
 
@@ -92,6 +90,7 @@ class SpellChecker {
 
         System.out.println("zoeken woorden in " + (end - start) + " ms");
     }
+    
     /* Checks if word contains digits. So it can be ignored for spell
      * checking. */
     static boolean contains_numbers(String str) {

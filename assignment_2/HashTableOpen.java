@@ -25,7 +25,7 @@ public class HashTableOpen {
         this.function = function;
         
         /* For the collision chaining */
-        hashTableCollision = new CollisionChaining[hash_size]; //if you don't want table load factor to be 0, this should be different
+        hashTableCollision = new CollisionChaining[hash_size]; 
         for (int i=0; i<hash_size; i++) {
             hashTableCollision[i] = null;
         }
@@ -123,7 +123,7 @@ public class HashTableOpen {
                 return currentListNode.getKey();
             }
             else {
-                currentListNode = currentListNode.getNext(); //haven't been able to check whether while loop works, as never more than 2 words occured on the same index
+                currentListNode = currentListNode.getNext();
             }            
         }
         

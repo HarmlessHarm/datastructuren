@@ -10,7 +10,7 @@
 public class Division implements Compressable {
     int table_length;
 
-    /*Random prime numbers to play with, we chose 1019 since we noticed an optimum*/
+    /* Random prime numbers to play with, we chose 1019 since we noticed an optimum */
     // int initial = 3;
     // int initial = 11;
     // int initial = 31;
@@ -18,7 +18,7 @@ public class Division implements Compressable {
     // int initial = 509;
     int initial = 1019;
 
-    /*Random prime numbers to play with, we chose 1019 since we noticed an optimum*/
+    /* Random prime numbers to play with, we chose 1019 since we noticed an optimum */
     // int multiplier = 3;
     // int multiplier = 11;
     // int multiplier = 31;
