@@ -54,11 +54,11 @@ class SpellChecker {
 
                 StringTokenizer st = new StringTokenizer(copy, " ,.:;\"-_(){}[]?!*^&'\n\t");
                 while(st.hasMoreTokens()) {
-                    String word = st.nextToken();
-                    System.out.println("Word: " + word); // test
+                    String word = st.nextToken();                    
                     if (!contains_numbers(word) && table.get(word, hash_strategy) == null) {                        
                         //System.out.printf("Not found: [%s]\n", word);
                         typo++;
+                        //System.out.println("TYPO: " + word);
                     }
                     count++;
                     System.out.println(count);
