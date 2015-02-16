@@ -3,31 +3,56 @@ import java.io.*;
 
 public class HashTableOpen {
 
-    private CollisionChaining[] table;
+    private CollisionChaining[] hashTableCollision;
     private Compressable function;
     private CollisionChaining currentListNode;
+    private String[] hashTableLinProb;
 
     /* Constructor */
     HashTableOpen(int hash_size, Compressable function) {
         this.function = function;
-        // standard value of new array is null?
-        table = new CollisionChaining[hash_size]; //if you don't want table load factor to be 0, this should be different
+        // default value of new array is null?
+        hashTableCollision = new CollisionChaining[hash_size]; //if you don't want table load factor to be 0, this should be different
+        for (int i=0; i<hash_size; i++) {
+            hashTableCollision[i] = null;
+        }
+        System.out.println("table: " + hashTableCollision.length);
+        
+        /* For the linear probing */
+        hashTableLinProb = new String[hash_size][2];
+        // default value is null again?
     }
     
     /* Puts new node to existing or new single linked list (represented as collisionChaining object) */
-    public void put (String key, String value) {
+    public void put(String key, String value, int hashStrategy) {
+    
+        if (hashStrategy == 1) {
+            putCollisionChaining(key, value);
+        }
+        else if (hashStrategy == 2) {
+            putLinearProbing(key, value);
+        }        
+        
+    }
+    
+    public void putCollisionChaining(String key, String value) {
         System.out.println(key);
         int index = function.calcIndex(key);
-        currentListNode = table[index];
+        System.out.println("Index: " + index);
+       
+        currentListNode = hashTableCollision[index];
+        System.out.println("Current listnode: " + currentListNode);
         if (currentListNode == null) {
             currentListNode = new CollisionChaining(key, value);
-            System.out.println("In hashtabe: " + currentListNode.getKey());
+            System.out.println("In hashtable: " + currentListNode.getKey());
         }
+        
         else {
+            System.out.println(" in else");
             /* Loop over single linked list until you've reached the last node */
             while (currentListNode.getNext() != null) {
                 if (!currentListNode.getKey().equals(key)) {
-                    currentListNode = table[index].getNext();
+                    currentListNode = hashTableCollision[index].getNext();
                 }
                 else {
                     currentListNode.setKey(key);
@@ -39,12 +64,47 @@ public class HashTableOpen {
                 currentListNode.setNext(new CollisionChaining(key, value));
             }
         }
+        
+        System.out.println("In hashtable2: " + hashTableCollision[3].getKey());
+        
+        
+        //System.out.println("Everything in hashtable");
+    }
+    
+    /* Put key value pairs in hash table (reprented as int[]), using linear probing */
+    public void putLinearProbing(String key, String value) {
+        int index = function.calcIndex(key);
+        
+        if (hashTableLinProb[index] == null) {
+            hashTableLinProb[index][0] = key;
+            hashTableLinProb[index][1] = value;
+        }
+        
+        else {
+            int indexCopy = index;
+            while (hashTableLinProb[indexCopy] != null) {
+                indexCopy++;
+                if (indexCopy == hashTableLinProb.lengt-1) {
+                    indexCopy == 0;
+                }
+                if (indexCopy == index) {
+                    return;
+                }
+            }
+            hashTableLinProb[indexCopy][0] = key;
+            hashTableLinProb[indexCopy][1] = value;
+            
+        }
+        
+        //System.out.println("nog maken");
     }
     
     /* Loop through all list nodes, until the correct key has been found; return this one */
     public String get(String key) {
         int index = function.calcIndex(key);
-        currentListNode = table[index];
+        System.out.println("Get: " + key);
+        currentListNode = hashTableCollision[index];
+        System.out.println("In get: " + currentListNode.getKey());
         
         if (currentListNode.getNext() == null) { //null pointer exception
             if (currentListNode.getKey().equals(key)) {
@@ -87,7 +147,7 @@ public class HashTableOpen {
 	} */
 
 	public int size() {
-		return table.length;
+		return hashTableCollision.length;
 	}
 
 }

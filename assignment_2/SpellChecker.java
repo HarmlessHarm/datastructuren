@@ -3,7 +3,7 @@ import java.io.*;
 
 class SpellChecker {
     public static void main(String[] args) {
-        int hash_size;
+        int hash_size, hash_strategy;
         int count = 0, typo = 0;
         long start = 0, end = 0;
         String wordfile, textfile;
@@ -14,13 +14,14 @@ class SpellChecker {
         /* Shared token to store for every word in the hash table. */
         String placeholder = "a";
 
-        if (!(args.length == 3) ) {
-            System.out.println("Usage: java SpellChecker <wordfile> <text> <size>");
+        if (!(args.length == 4) ) {
+            System.out.println("Usage: java SpellChecker <wordfile> <text> <size> <hash_strategy>");
             System.exit(0);
         }
         wordfile = args[0];
         textfile = args[1];
         hash_size = Integer.parseInt(args[2]);
+        hash_strategy = Integer.parseInt(args[3]);
         System.out.printf("Selected table size: %d\n", hash_size);
         //table = new Hashtable<String, String>(hash_size);
         function = new Division(hash_size);
@@ -34,7 +35,7 @@ class SpellChecker {
             String str, copy;
             while ((str = in.readLine()) != null) {
                 copy = str.toLowerCase();
-                table.put(copy, placeholder);
+                table.put(copy, placeholder, hash_strategy); //added hashStrategy
             }
             end = System.currentTimeMillis();
             in.close();
