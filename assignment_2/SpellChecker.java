@@ -23,9 +23,8 @@ class SpellChecker {
         hash_size = Integer.parseInt(args[2]);
         hash_strategy = Integer.parseInt(args[3]);
         System.out.printf("Selected table size: %d\n", hash_size);
-        //table = new Hashtable<String, String>(hash_size);
+        //table = new Hashtable<String, String>(hash_size); // Java Hash Function
         function = new Division(hash_size);
-        //table = new Hashtable<String, String>(hash_size);     
         table = new HashTableOpen(hash_size, function);
 
         /* Read wordfile, and insert every word into the hash table. */
@@ -55,15 +54,16 @@ class SpellChecker {
                 StringTokenizer st = new StringTokenizer(copy, " ,.:;\"-_(){}[]?!*^&'\n\t");
                 while(st.hasMoreTokens()) {
                     String word = st.nextToken();
-                    System.out.println("Word: " + word); // test
+                    // System.out.println("Word: " + word); // test
                     if (!contains_numbers(word) && table.get(word, hash_strategy) == null) {                        
-                        //System.out.printf("Not found: [%s]\n", word);
+                        System.out.printf("Not found: [%s]\n", word);
                         typo++;
                     }
+                    // System.out.println(table.get(word, hash_strategy));
                     count++;
-                    System.out.println(count);
+                    // System.out.println(count);
                 }
-                System.out.println("check");
+                // System.out.println("check");
                 str = src.readLine();
                 
             }
