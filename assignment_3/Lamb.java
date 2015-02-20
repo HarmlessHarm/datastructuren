@@ -1,7 +1,9 @@
 public class Lamb extends Agent {
 
-    public Lamb() {
-        // Constructor
+    private String name;
+
+    public Lamb(String name) {
+        this.name = name;
     }
     
     public int placeInGame() {
