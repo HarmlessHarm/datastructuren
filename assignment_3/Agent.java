@@ -17,12 +17,7 @@ public class Agent {
     /* Check whether asked moves are valid */
     private boolean valid(int positionOne, int positionTwo) {        
         boolean status = false;
-        
-        /* New position empty? CHECK THIS BEFORE MOVE IS CALLED
-        if (positionTwo != null) {
-            return false;
-        } */
-        
+               
         /* Move left */
         if (positionTwo - positionOne == 1) {
             status = checkMoveLeft(positionOne, positionTwo); 
@@ -58,7 +53,7 @@ public class Agent {
     
     /* Checks whether move to the left is valid */
     private boolean checkMoveLeft(int positionOne, int positionTwo) { 
-        if (20 % positionOne == 0) {
+        if (positionOne == 0 || positionOne == 5 || positionOne == 10 || positionOne == 15 || positionOne == 20) {
             return false;
         }
         else {
@@ -68,7 +63,7 @@ public class Agent {
 
     /* Checks whether move to the right is valid */
     private boolean checkMoveRight(int positionOne, int positionTwo) {
-        if (25 % (positionOne + 1) == 0) {
+        if (positionOne == 4 || positionOne == 9 || positionOne == 14 || positionOne == 19 || positionOne == 24) {
             return false; 
         }
         else {

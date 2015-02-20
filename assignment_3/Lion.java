@@ -7,7 +7,7 @@ public class Lion extends Agent {
     }
     
     public boolean jump(int positionOne, int positionTwo, Agent[] board) {
-        if (valid(positionOne, positionTwo, Agent[] board)) {
+        if (valid(positionOne, positionTwo, board)) {
             return true;
         }
         else {
@@ -28,7 +28,7 @@ public class Lion extends Agent {
         }
         
         else if (positionTwo - positionOne == 10) {
-            status = checkJumDown(positionOne, positionTwo, board);
+            status = checkJumpDown(positionOne, positionTwo, board);
             return status;
         }
         
@@ -61,13 +61,116 @@ public class Lion extends Agent {
     }
 
     private boolean checkJumpRight(int positionOne, int positionTwo, Agent[] board) {
-        if (board[positionOne + 1] != null) {
-            
+        if (board[positionOne + 1] != null) { // check whether there's a lamb to jump over
+            for (int i=3; i<24; i+=5) {
+                if (positionOne == i) {
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            }
+            return false; 
+        }
+        return false;
+    }
+    
+    private boolean checkJumpLeft(int positionOne, int positionTwo, Agent[] board) {
+        if (board[positionOne - 1] != null) {
+            for (int i=1; i<24; i+=5) {
+                if (positionOne == i) {
+                    return false;
+                }
+                else {
+                    return true;
+                } 
+            }
+            return false;    
+        }
+        return false;
+    }
+    
+    private boolean checkJumpDown(int positionOne, int positionTwo, Agent[] board) {
+        if (board[positionOne + 5] != null) {
+            if (positionTwo > 24) {
+                return false;
+            }
+            else {
+                return true;
+            }
         }
         else {
             return false;
         }
     }
-    
 
+    private boolean checkJumpUp(int positionOne, int positionTwo, Agent[] board) {
+        if (board[positionOne - 5] != null) {
+            if (positionTwo < 0) {
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+        else {
+            return false;
+        }        
+    }
+    
+    private boolean checkJumpLeftUp(int positionOne, int positionTwo, Agent[] board) {
+        if (board[positionOne - 4] != null || positionOne % 2 == 0) {
+            if (positionTwo < 0 || positionOne == 13 || positionOne == 18 || positionOne ==  21) {
+                return false;
+            }   
+            else {
+                return true;
+            } 
+        }
+        else {
+            return false;
+        }
+    }
+
+    private boolean checkJumpLeftDown(int positionOne, int positionTwo, Agent[] board) {
+        if (board[positionTwo - 6] != null || positionOne % 2 == 0) {
+            if (positionTwo > 24 || positionOne == 1 || positionOne == 6 || positionOne == 11) {
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+        else {
+            return false;
+        }
+    }
+
+    private boolean checkJumpRightUp(int positionOne, int positionTwo, Agent[] board) {
+        if (board[positionTwo - 4] != null || positionOne % 2 == 0) {
+            if (positionTwo < 0 || positionOne == 23 || positionOne == 18 || positionOne == 13) {
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+        else {
+            return false;
+        }
+    }
+
+    private boolean checkJumpRightDown(int positionOne, int positionTwo, Agent[] board) {
+        if (board[positionTwo - 4] != null || positionOne % 2 == 0) {
+            if (positionTwo > 24 || positionOne == 3 || positionOne == 8 || positionOne == 13) {
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+        else {
+            return false;
+        }
+    } 
 }
