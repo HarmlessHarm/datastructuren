@@ -1,7 +1,9 @@
 public class Lion extends Agent {
 
-    public Lion() {
-        // constructor
+    private String name;
+
+    public Lion(String name) {
+        this.name = name;
     }
     
     public int jump() {
