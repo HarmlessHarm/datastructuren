@@ -1,13 +1,17 @@
-import acm.graphics.*;
-import acm.program.*;
-import acm.util.*;
+// import acm.graphics.*;
+// import acm.program.*;
+// import acm.util.*;
 import java.applet.*;
 import java.awt.*;
+import java.io.*;
+import java.util.*;
 import java.awt.event.*;
 
-public class LionsLambs extends GraphicsProgram {
+public class LionsLambs {
 	
 	public static Agent[] board = new Agent[25];
+
+	public static int WIN_STATE = 0;
 
 	public static void init() {
 		board[0] = new Lion("Leo");
@@ -16,17 +20,63 @@ public class LionsLambs extends GraphicsProgram {
 		board[24] = new Lion("Lejon");
 	}
 
-	public static void main() {
-		drawCanvas();
-	// call: java LionsLambs <Agent> <Move> <PositionOne> (<PositionTwo>)
+	public static void main(String[] args) {
+	    init();
+	    playGame();
+	}
 
+	// public static void main() {
+	// 	drawCanvas();
+	// }
 	
-	public void playGame(String[] args) {
-	    String agent = args[0];
-	    String move = args[1];
-	    int positionOne = Integer.parseInt(args[2]);
-	    int positionTwo = Integer.parseInt(args[3]);
-	    
+	// call: java LionsLambs <Agent> <Move> <PositionOne> (<PositionTwo>)
+	
+
+	public static void playGame(){
+		String[] input;
+		// StringTokenizer st;
+		// String agent, move;
+		// int pos1, pos2;
+
+		while( WIN_STATE == 0 ) {
+			Board.drawBoard(board);
+			input = readInput();
+			// st = new StringTokenizer(input);
+			// agent = st[0];
+			// move = st[1];
+			// pos1 = Integer.parseInt(st[2]);
+			// pos2 = Integer.parseInt(st[3]);
+			setMove(input);
+		}
+		if( WIN_STATE == 1) {
+			System.out.println("Lambs win!");
+			System.exit(1);
+		}
+		if (WIN_STATE == -1) {
+			System.out.println("Lions win!");
+			System.exit(1);
+		}
+	}
+
+	public static String[] readInput() {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String[] input;
+		try {
+			input = br.readLine().split("\\s");
+			return input;
+		} catch (IOException ioe) {
+			System.out.println("IO error trying to read your name!");
+			return null;
+      	}
+	}
+
+
+
+	public static void setMove(String[] st) {
+	    String agent = st[0];
+		String move = st[1];
+		int positionOne = Integer.parseInt(st[2]);
+		int positionTwo = Integer.parseInt(st[3]);
 	    
 	    /* LIONS */
 	    if (agent.equals("lion")) {
@@ -67,7 +117,7 @@ public class LionsLambs extends GraphicsProgram {
 	    
 	    
 	    /* LAMBS -- Still need to check whether object is lamb */
-	    if (args[0].equals("lamb")) {
+	    if (agent.equals("lamb")) {
 	        int countLambs = 0;
 	        
 	        // repetition of code, ugly
@@ -88,7 +138,7 @@ public class LionsLambs extends GraphicsProgram {
 	        
 	       
 	        else if (move.equals("placeInGame")) {
-	            if (board[positionOne] == null || countLambs < 20) {
+	            if (board[positionOne] == null && countLambs < 20) {
 	                board[positionOne] = new Lamb("name"); // name?
 	                countLambs++;
 	            }
@@ -101,15 +151,5 @@ public class LionsLambs extends GraphicsProgram {
 	
 	
 	
-	public static void main(String[] args) {
-	    setUpGame();
-	    playGame(args);
-		
-		
-		GCanvas canvas = new GCanvas();
-		
-		
-		//GRect rect = new GRect(10, 10);
-		//canvas.add(rect);
-	}
+
 }
