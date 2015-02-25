@@ -6,64 +6,64 @@ public class Lion extends Agent {
         this.name = name;
     }
     
-    public boolean jump(int positionOne, int positionTwo, Agent[] board) {
-        if (valid(positionOne, positionTwo, board)) {
-            return true;
-        }
-        else {
-            return false;
-        }        
-    }
+    // public boolean specialMove(int pos1, int pos2, Agent[] board) {
+    //     if (valid(pos1, pos2, board)) {
+    //         return true;
+    //     }
+    //     else {
+    //         return false;
+    //     }        
+    // }
     
-    private boolean valid(int positionOne, int positionTwo, Agent[] board) {
+    private boolean valid(int pos1, int pos2, Agent[] board) {
         boolean status = false;
-        if (positionTwo - positionOne == 2) {
-            status = checkJumpRight(positionOne, positionTwo, board);
+        if (pos2 - pos1 == 2) {
+            status = checkJumpRight(pos1, pos2, board);
             return status;
         }
         
-        else if (positionOne - positionTwo == 2) {
-            status = checkJumpLeft(positionOne, positionTwo, board);
+        else if (pos1 - pos2 == 2) {
+            status = checkJumpLeft(pos1, pos2, board);
             return status;
         }
         
-        else if (positionTwo - positionOne == 10) {
-            status = checkJumpDown(positionOne, positionTwo, board);
+        else if (pos2 - pos1 == 10) {
+            status = checkJumpDown(pos1, pos2, board);
             return status;
         }
         
-        else if (positionOne - positionTwo == 10) {
-            status = checkJumpUp(positionOne, positionTwo, board);
+        else if (pos1 - pos2 == 10) {
+            status = checkJumpUp(pos1, pos2, board);
             return status;
         }
         
-        else if (positionTwo - positionOne == 13) {
-            status = checkJumpRightDown(positionOne, positionTwo, board);
+        else if (pos2 - pos1 == 13) {
+            status = checkJumpRightDown(pos1, pos2, board);
             return status;
         }
         
-        else if (positionOne - positionTwo == 13) {
-            status = checkJumpLeftUp(positionOne, positionTwo, board);
+        else if (pos1 - pos2 == 13) {
+            status = checkJumpLeftUp(pos1, pos2, board);
             return status;
         }   
         
-        else if (positionTwo - positionOne == 8) {
-            status = checkJumpLeftDown(positionOne, positionTwo, board);
+        else if (pos2 - pos1 == 8) {
+            status = checkJumpLeftDown(pos1, pos2, board);
             return status;
         }
         
-        else if (positionOne - positionTwo == 8) {
-            status = checkJumpRightUp(positionOne, positionTwo, board);
+        else if (pos1 - pos2 == 8) {
+            status = checkJumpRightUp(pos1, pos2, board);
             return status;
         }
         
         return false;
     }
 
-    private boolean checkJumpRight(int positionOne, int positionTwo, Agent[] board) {
-        if (board[positionOne + 1] != null) { // check whether there's a lamb to jump over
+    private boolean checkJumpRight(int pos1, int pos2, Agent[] board) {
+        if (board[pos1 + 1] != null) { // check whether there's a lamb to jump over
             for (int i=3; i<24; i+=5) {
-                if (positionOne == i) {
+                if (pos1 == i) {
                     return false;
                 }
                 else {
@@ -75,10 +75,10 @@ public class Lion extends Agent {
         return false;
     }
     
-    private boolean checkJumpLeft(int positionOne, int positionTwo, Agent[] board) {
-        if (board[positionOne - 1] != null) {
+    private boolean checkJumpLeft(int pos1, int pos2, Agent[] board) {
+        if (board[pos1 - 1] != null) {
             for (int i=1; i<24; i+=5) {
-                if (positionOne == i) {
+                if (pos1 == i) {
                     return false;
                 }
                 else {
@@ -90,9 +90,9 @@ public class Lion extends Agent {
         return false;
     }
     
-    private boolean checkJumpDown(int positionOne, int positionTwo, Agent[] board) {
-        if (board[positionOne + 5] != null) {
-            if (positionTwo > 24) {
+    private boolean checkJumpDown(int pos1, int pos2, Agent[] board) {
+        if (board[pos1 + 5] != null) {
+            if (pos2 > 24) {
                 return false;
             }
             else {
@@ -104,9 +104,9 @@ public class Lion extends Agent {
         }
     }
 
-    private boolean checkJumpUp(int positionOne, int positionTwo, Agent[] board) {
-        if (board[positionOne - 5] != null) {
-            if (positionTwo < 0) {
+    private boolean checkJumpUp(int pos1, int pos2, Agent[] board) {
+        if (board[pos1 - 5] != null) {
+            if (pos2 < 0) {
                 return false;
             }
             else {
@@ -118,9 +118,9 @@ public class Lion extends Agent {
         }        
     }
     
-    private boolean checkJumpLeftUp(int positionOne, int positionTwo, Agent[] board) {
-        if (board[positionOne - 4] != null || positionOne % 2 == 0) {
-            if (positionTwo < 0 || positionOne == 13 || positionOne == 18 || positionOne ==  21) {
+    private boolean checkJumpLeftUp(int pos1, int pos2, Agent[] board) {
+        if (board[pos1 - 4] != null || pos1 % 2 == 0) {
+            if (pos2 < 0 || pos1 == 13 || pos1 == 18 || pos1 ==  21) {
                 return false;
             }   
             else {
@@ -132,9 +132,9 @@ public class Lion extends Agent {
         }
     }
 
-    private boolean checkJumpLeftDown(int positionOne, int positionTwo, Agent[] board) {
-        if (board[positionTwo - 6] != null || positionOne % 2 == 0) {
-            if (positionTwo > 24 || positionOne == 1 || positionOne == 6 || positionOne == 11) {
+    private boolean checkJumpLeftDown(int pos1, int pos2, Agent[] board) {
+        if (board[pos2 - 6] != null || pos1 % 2 == 0) {
+            if (pos2 > 24 || pos1 == 1 || pos1 == 6 || pos1 == 11) {
                 return false;
             }
             else {
@@ -146,9 +146,9 @@ public class Lion extends Agent {
         }
     }
 
-    private boolean checkJumpRightUp(int positionOne, int positionTwo, Agent[] board) {
-        if (board[positionTwo - 4] != null || positionOne % 2 == 0) {
-            if (positionTwo < 0 || positionOne == 23 || positionOne == 18 || positionOne == 13) {
+    private boolean checkJumpRightUp(int pos1, int pos2, Agent[] board) {
+        if (board[pos2 - 4] != null || pos1 % 2 == 0) {
+            if (pos2 < 0 || pos1 == 23 || pos1 == 18 || pos1 == 13) {
                 return false;
             }
             else {
@@ -160,9 +160,9 @@ public class Lion extends Agent {
         }
     }
 
-    private boolean checkJumpRightDown(int positionOne, int positionTwo, Agent[] board) {
-        if (board[positionTwo - 4] != null || positionOne % 2 == 0) {
-            if (positionTwo > 24 || positionOne == 3 || positionOne == 8 || positionOne == 13) {
+    private boolean checkJumpRightDown(int pos1, int pos2, Agent[] board) {
+        if (board[pos2 - 4] != null || pos1 % 2 == 0) {
+            if (pos2 > 24 || pos1 == 3 || pos1 == 8 || pos1 == 13) {
                 return false;
             }
             else {

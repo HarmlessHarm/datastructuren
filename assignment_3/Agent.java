@@ -1,10 +1,18 @@
 public abstract class Agent {
 
+    // private static int pos;
+
     public Agent() {
         // Construstuctor
     }
 
-    public abstract boolean jump(int pos1, int pos2, Agent[] board);
+    public static boolean specialMove(int pos1, int pos2, Agent[] board) {
+        System.out.println(LionsLambs2.board[pos1]);
+        return true;
+    }
+
+
+
     
     /*  */
     public boolean move(int pos1, int pos2) {        
@@ -24,64 +32,44 @@ public abstract class Agent {
 
         // if ( Arrays.asList(jumpInts).contains(posDif) ) {
         //     jump(pos );
-            
+
         // }
                
-        /* Move left */
-        if (pos2 - pos1 == 1) {
-            status = checkMoveRight(pos1, pos2); 
+        /* Move Horizontal */
+        if (posDif == 1 || posDif == -1) {
+            status = checkMoveHor(posDif, pos1); 
             return status;   
         }
         
-        /* Move right */
-        else if (pos1 - pos2 == 1) {
-            status = checkMoveLeft(pos1, pos2);
-            return status;
-        } 
-        
-        /* Move up or down */
-        else if (pos2 - pos1 == 5 || pos1 - pos2 == 5) {
-            status = checkMoveUpDown(pos1, pos2);
+        /* Move Vertical */
+        if (posDif == 5 || posDif == -5) {
+            status = checkMoveVer(pos1, pos2);
             return status;
         }
         
         /* Move left up; via diagonal */
-        else if (pos1 - pos2 == 6 ||  pos2 - pos1 == 4) {
-            status = checkMoveLeftUpDown(pos1, pos2);
+        if (posDif == -6 ||  posDif == 4 || posDif == 6 || posDif == -4) {
+            status = checkMoveDiag(posDif, pos1);
             return status;
         } 
-        
-        /* Move right up; via diagonal */
-        else if (pos2 - pos1 == 6 || pos1 - pos2 == 4) {
-            status = checkMoveRightUpDown(pos1, pos2);
-            return status;
-        }
-        
         return false;  
     }
     
     /* Checks whether move to the left is valid */
-    private boolean checkMoveLeft(int pos1, int pos2) { 
-        if (pos1 == 0 || pos1 == 5 || pos1 == 10 || pos1 == 15 || pos1 == 20) {
+    private static boolean checkMoveHor(int posDif, int pos1) {
+        if ((posDif == 1 && pos1 + 1 % 5 == 0)||
+            (posDif == -1 && pos1 % 5 == 0)) {
+
             return false;
         }
-        else {
-            return true;
-        } 
+        else { 
+            return true; 
+        }
+        
     }
 
-    /* Checks whether move to the right is valid */
-    private boolean checkMoveRight(int pos1, int pos2) {
-        if (pos1 == 4 || pos1 == 9 || pos1 == 14 || pos1 == 19 || pos1 == 24) {
-            return false; 
-        }
-        else {
-            return true;
-        }
-    }        
-
     /* Checks whether a move down or upwards is valid */
-    private boolean checkMoveUpDown(int pos1, int pos2) {
+    private boolean checkMoveVer(int pos1, int pos2) {
         if (pos2 > 24 || pos2 < 0) {
             return false;
         }
@@ -91,47 +79,13 @@ public abstract class Agent {
     }
     
     /* Checks whether a move upwards and to the left via the diagonal is valid */
-    private boolean checkMoveLeftUpDown(int pos1, int pos2) {
-        if (pos1 % 2 == 0) {
-            if (checkMoveLeft(pos1, pos2)) {
-                return true;
-            }
-            else {
-                return false;
-            }
+    private boolean checkMoveDiag(int posDif, int pos1) {
+        if (pos1 % 2 == 0 && 
+            checkMoveHor(posDif, pos1) && checkMoveVer(posDif, pos1) ) {
+            return true;
         }
         else {
             return false;
         }
     }
-    
-    /* Checks whether a move upwards or downwards and to the right via the diagonal is valid */
-    private boolean checkMoveRightUpDown(int pos1, int pos2) {
-        if (pos1 % 2 == 0) {
-            if (checkMoveRight(pos1, pos2)) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-        else {
-            return false;
-        }
-    }
-    
-    /* Checks whether a move upwards or downwards and to the left via the diagonal is valid */
-    private boolean checkMoveLeftDown(int pos1, int pos2) {
-         if (pos1 % 2 == 0) {
-            if (checkMoveRight(pos1, pos2)) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-        else {
-            return false;
-        }    
-    }    
 }
