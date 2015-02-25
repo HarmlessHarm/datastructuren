@@ -2,175 +2,72 @@ public class Lion extends Agent {
 
     private String name;
 
+    public static Agent target;
+
     public Lion(String name) {
         this.name = name;
     }
     
-    // public boolean specialMove(int pos1, int pos2, Agent[] board) {
-    //     if (valid(pos1, pos2, board)) {
-    //         return true;
-    //     }
-    //     else {
-    //         return false;
-    //     }        
-    // }
-    
-    private boolean valid(int pos1, int pos2, Agent[] board) {
-        boolean status = false;
-        if (pos2 - pos1 == 2) {
-            status = checkJumpRight(pos1, pos2, board);
-            return status;
-        }
-        
-        else if (pos1 - pos2 == 2) {
-            status = checkJumpLeft(pos1, pos2, board);
-            return status;
-        }
-        
-        else if (pos2 - pos1 == 10) {
-            status = checkJumpDown(pos1, pos2, board);
-            return status;
-        }
-        
-        else if (pos1 - pos2 == 10) {
-            status = checkJumpUp(pos1, pos2, board);
-            return status;
-        }
-        
-        else if (pos2 - pos1 == 13) {
-            status = checkJumpRightDown(pos1, pos2, board);
-            return status;
-        }
-        
-        else if (pos1 - pos2 == 13) {
-            status = checkJumpLeftUp(pos1, pos2, board);
-            return status;
-        }   
-        
-        else if (pos2 - pos1 == 8) {
-            status = checkJumpLeftDown(pos1, pos2, board);
-            return status;
-        }
-        
-        else if (pos1 - pos2 == 8) {
-            status = checkJumpRightUp(pos1, pos2, board);
-            return status;
-        }
-        
-        return false;
-    }
+    public boolean specialMove(int pos1, int pos2) {
+        int posDif = pos2 - pos1;
+        int posTar = posDif/2 + pos1;
+        target = LionsLambs.board[posTar];
+        System.out.println(posDif);
 
-    private boolean checkJumpRight(int pos1, int pos2, Agent[] board) {
-        if (board[pos1 + 1] != null) { // check whether there's a lamb to jump over
-            for (int i=3; i<24; i+=5) {
-                if (pos1 == i) {
-                    return false;
-                }
-                else {
-                    return true;
-                }
-            }
-            return false; 
-        }
-        return false;
-    }
-    
-    private boolean checkJumpLeft(int pos1, int pos2, Agent[] board) {
-        if (board[pos1 - 1] != null) {
-            for (int i=1; i<24; i+=5) {
-                if (pos1 == i) {
-                    return false;
-                }
-                else {
-                    return true;
-                } 
-            }
-            return false;    
-        }
-        return false;
-    }
-    
-    private boolean checkJumpDown(int pos1, int pos2, Agent[] board) {
-        if (board[pos1 + 5] != null) {
-            if (pos2 > 24) {
-                return false;
-            }
-            else {
-                return true;
-            }
-        }
-        else {
-            return false;
-        }
-    }
-
-    private boolean checkJumpUp(int pos1, int pos2, Agent[] board) {
-        if (board[pos1 - 5] != null) {
-            if (pos2 < 0) {
-                return false;
-            }
-            else {
-                return true;
-            }
+        if (valid(pos1, pos2, posDif) && target.getClass().equals(Lamb.class)) {
+            LionsLambs.board[posTar] = null;
+        	LionsLambs.LAMB_COUNT--;
+            return true;
         }
         else {
             return false;
         }        
     }
     
-    private boolean checkJumpLeftUp(int pos1, int pos2, Agent[] board) {
-        if (board[pos1 - 4] != null || pos1 % 2 == 0) {
-            if (pos2 < 0 || pos1 == 13 || pos1 == 18 || pos1 ==  21) {
-                return false;
-            }   
-            else {
-                return true;
-            } 
+    private boolean valid(int pos1, int pos2,int posDif) {
+        boolean status = false;
+        System.out.println("validation");
+        if (posDif == 2 || posDif == -2) {
+            status = checkJumpHor(pos1, posDif);
+            return status;
         }
-        else {
-            return false;
+        
+        else if (posDif == 10 || posDif == -10) {
+            status = checkJumpVer(pos2);
+            return status;
         }
+        
+        else if (posDif == 12 || posDif == -12 || posDif == 8 || posDif == -8) {
+            System.out.println("checkDiag");
+            status = checkJumpDiag(pos1, pos2, posDif);
+            return status;
+        }
+        
+        return status;
     }
 
-    private boolean checkJumpLeftDown(int pos1, int pos2, Agent[] board) {
-        if (board[pos2 - 6] != null || pos1 % 2 == 0) {
-            if (pos2 > 24 || pos1 == 1 || pos1 == 6 || pos1 == 11) {
-                return false;
-            }
-            else {
-                return true;
-            }
-        }
-        else {
-            return false;
-        }
+    private boolean checkJumpHor(int pos1, int posDif) {
+    	if ((posDif == 2 && pos1 % 5 < 3) || 
+    		(posDif == -2 && pos1 % 5 > 1) ) {
+    		return true;
+    	} else {
+    		return false;
+    	}
     }
 
-    private boolean checkJumpRightUp(int pos1, int pos2, Agent[] board) {
-        if (board[pos2 - 4] != null || pos1 % 2 == 0) {
-            if (pos2 < 0 || pos1 == 23 || pos1 == 18 || pos1 == 13) {
-                return false;
-            }
-            else {
-                return true;
-            }
-        }
-        else {
-            return false;
-        }
+    private boolean checkJumpVer(int pos2) {
+    	if (pos2 > 24 || pos2 < 0) {
+    		return false;
+    	} else {
+    		return true;
+    	}
     }
 
-    private boolean checkJumpRightDown(int pos1, int pos2, Agent[] board) {
-        if (board[pos2 - 4] != null || pos1 % 2 == 0) {
-            if (pos2 > 24 || pos1 == 3 || pos1 == 8 || pos1 == 13) {
-                return false;
-            }
-            else {
-                return true;
-            }
-        }
-        else {
-            return false;
-        }
-    } 
+    private boolean checkJumpDiag(int pos1, int pos2, int posDif) {
+    	if (pos1 % 2 == 0 && checkJumpHor(pos1, posDif) && checkJumpVer(pos2)) {
+    		return true;
+    	} else {
+    		return false;
+    	}
+    }
 }

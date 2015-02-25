@@ -6,10 +6,7 @@ public abstract class Agent {
         // Construstuctor
     }
 
-    public static boolean specialMove(int pos1, int pos2, Agent[] board) {
-        System.out.println(LionsLambs.board[pos1]);
-        return true;
-    }
+    public abstract boolean specialMove(int pos1, int pos2) ;
 
 
 
@@ -47,7 +44,7 @@ public abstract class Agent {
             return status;
         }
         
-        /* Move left up; via diagonal */
+        /* Move Diagonal */
         if (posDif == -6 ||  posDif == 4 || posDif == 6 || posDif == -4) {
             status = checkMoveDiag(posDif, pos1);
             return status;

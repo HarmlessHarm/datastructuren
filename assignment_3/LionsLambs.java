@@ -77,7 +77,7 @@ public class LionsLambs {
 		
 	    /* LIONS */
 	    else if (board[pos1] != null && board[pos2] == null) {
-	    	if(board[pos1].move(pos1, pos2) || board[pos1].specialMove(pos1, pos2, board)) {
+	    	if(board[pos1].move(pos1, pos2) || board[pos1].specialMove(pos1, pos2)) {
 	    		board[pos2] = board[pos1];
 	    		board[pos1] = null;
 	    	} else {

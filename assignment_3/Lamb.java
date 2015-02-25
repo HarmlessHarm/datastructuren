@@ -5,6 +5,9 @@ public class Lamb extends Agent {
     // public boolean specialMove(int pos1, int pos2, Agent[] board) {
     // 	return false;
     // }
+    public boolean specialMove(int pos1, int pos2) {
+    	return false;
+    }
 
     public Lamb(String name) {
         this.name = name;
