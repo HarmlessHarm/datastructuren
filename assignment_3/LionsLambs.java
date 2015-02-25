@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.*;
 import java.awt.event.*;
 
-public class LionsLambs2 {
+public class LionsLambs {
 	
 	public static Agent[] board = new Agent[25];
 	public static int WIN_STATE = 0;

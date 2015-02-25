@@ -7,7 +7,7 @@ public abstract class Agent {
     }
 
     public static boolean specialMove(int pos1, int pos2, Agent[] board) {
-        System.out.println(LionsLambs2.board[pos1]);
+        System.out.println(LionsLambs.board[pos1]);
         return true;
     }
 
