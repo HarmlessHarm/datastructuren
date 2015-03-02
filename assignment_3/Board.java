@@ -26,9 +26,9 @@ public class Board {
 		}
 	}
 
+    /* Method that prints the fillings of the positions on the board */
 	private static void setStringBoard(Agent[] board) {
 		for (int i=0;i<board.length ;i++ ) {
-			
 			if (board[i] == null) {
 				stringBoard[i]="0";
 			}
@@ -41,13 +41,14 @@ public class Board {
 		}
 	}
 
+    /* Method that prints the connections between the positions on the board */
 	private static void printConnections() {
 		if (CONNECTION_ROW == 0) {
 			System.out.println("|\\ | /|\\ | /|");
 			System.out.println("| \\|/ | \\|/ |");
 			CONNECTION_ROW = 1;
 		}
-		else if(CONNECTION_ROW == 1){
+		else if(CONNECTION_ROW == 1) {
 			System.out.println("| /|\\ | /|\\ |");
 			System.out.println("|/ | \\|/ | \\|");
 			CONNECTION_ROW = 0;

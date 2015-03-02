@@ -28,8 +28,11 @@ public class LionsLambs {
     /* This method describes the game loop */
 	public static void playGame(){
 		String[] input;
+		
+		// setUpGame(); -- the basic board should be drawn here
 
 		while (WIN_STATE == 0) {
+		    // updateBoard(); -- the board should be updated according to the positions filled
 			Board.drawBoard(board);
 			System.out.print("Lambs player's turn: "); // M: what if move is invalid; give player another chance?
 			input = readInput();
