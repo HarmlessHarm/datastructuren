@@ -8,9 +8,7 @@ public abstract class Agent {
 
     public abstract boolean specialMove(int pos1, int pos2) ;
 
-
-
-    
+  
     /*  */
     public boolean move(int pos1, int pos2) {        
         if (valid(pos1, pos2)) {
@@ -56,7 +54,6 @@ public abstract class Agent {
     private static boolean checkMoveHor(int posDif, int pos1) {
         if ((posDif == 1 && pos1 + 1 % 5 == 0)||
             (posDif == -1 && pos1 % 5 == 0)) {
-
             return false;
         }
         else { 
