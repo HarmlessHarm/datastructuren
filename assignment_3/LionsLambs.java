@@ -7,16 +7,18 @@ import java.awt.event.*;
 public class LionsLambs {
 	
 	public static Agent[] board = new Agent[25];
+	public static Lion[] lions = new Lion[4];
+	public static List<Lamb> lambs = new ArrayList<Lamb>();
 	public static int WIN_STATE = 0;
 	public static int TURN = 1;
 	public static int LAMB_COUNT = 20;
 	public static int LAMB_KILLED = 0;
 
 	public static void init() {
-		board[0] = new Lion("Leo");
-		board[4] = new Lion("Leu");
-		board[20] = new Lion("Love");
-		board[24] = new Lion("Lejon");
+		board[0] = new Lion("Leo", 0);
+		board[4] = new Lion("Leu", 4);
+		board[20] = new Lion("Love", 20);
+		board[24] = new Lion("Lejon", 24);
 	}
 
 	public static void main(String[] args) {

@@ -1,6 +1,6 @@
 public abstract class Agent {
 
-    // private static int pos;
+    public int position;
 
     public Agent() {
         // Construstuctor
@@ -12,6 +12,7 @@ public abstract class Agent {
     /*  */
     public boolean move(int pos1, int pos2) {        
         if (valid(pos1, pos2)) {
+            position = pos2;
             return true;
         }
         else {
