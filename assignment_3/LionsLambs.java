@@ -43,7 +43,7 @@ public class LionsLambs {
 					input = readInput();
 				} else if(TURN == -1) {
 					System.out.print("Lions player's turn: ");
-					input = Leopold.yourTurnSir(board);
+					input = Leopold.yourTurnSir(board, lions, lambs);
 				}
 				if(setMove(input)) {
 					TURN = TURN * -1;
