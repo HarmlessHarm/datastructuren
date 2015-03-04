@@ -51,7 +51,7 @@ public abstract class Agent {
     }
     
     /* Checks whether move to the left is valid */
-    private static boolean checkMoveHor(int posDif, int pos1) {
+    private boolean checkMoveHor(int posDif, int pos1) {
         if ((posDif == 1 && pos1 + 1 % 5 == 0)||
             (posDif == -1 && pos1 % 5 == 0)) {
             return false;

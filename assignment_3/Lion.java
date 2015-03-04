@@ -18,7 +18,7 @@ public class Lion extends Agent {
         /* Check whether move is valid and whether lion jumps over lamb */
         if (valid(pos1, pos2, posDif) && target.getClass().equals(Lamb.class)) {
             LionsLambs.board[posTar] = null;
-        	LionsLambs.LAMB_COUNT--;
+        	LionsLambs.LAMB_KILLED++;
             return true;
         }
         else {
