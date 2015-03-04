@@ -37,11 +37,12 @@ public class LionsLambs {
 		while (WIN_STATE == 0) {
 		    // updateBoard(); -- the board should be updated according to the positions filled
 			Board.drawBoard(board);
-			while(true) {
-				if(TURN == 1) {
-					System.out.print("Lambs player's turn: "); // M: what if move is invalid; give player another chance?
+			while (true) {
+				if (TURN == 1) {
+					System.out.print("Lambs player's turn: ");
 					input = readInput();
-				} else if(TURN == -1) {
+				} 
+				else if (TURN == -1) {
 					System.out.print("Lions player's turn: ");
 					input = Leopold.yourTurnSir(board, lions, lambs);
 				}
@@ -80,7 +81,7 @@ public class LionsLambs {
     /* Determines kind of move and moves if legitimate */
 	public static boolean setMove(String[] input) {
 		int pos1 = Integer.parseInt(input[0]);
-		int pos2 = 0; // M: Why do you need this?
+		int pos2 = 0; 
 		if (input.length == 2) {
 			pos2 = Integer.parseInt(input[1]);
 		}

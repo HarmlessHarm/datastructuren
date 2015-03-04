@@ -1,9 +1,11 @@
 public abstract class Agent {
 
+    public int name;
     public int position;
-
-    public Agent() {
-        // Construstuctor
+    
+    public Agent(String name, int position) {
+        this.name = name;
+        this.position = position;
     }
 
     public abstract boolean specialMove(int pos1, int pos2) ;

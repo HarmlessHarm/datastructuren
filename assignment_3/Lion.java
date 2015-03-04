@@ -19,6 +19,7 @@ public class Lion extends Agent {
         if (valid(pos1, pos2, posDif) && target.getClass().equals(Lamb.class)) {
             LionsLambs.board[posTar] = null;
         	LionsLambs.LAMB_KILLED++;
+        	//LionsLambs.lambs
             return true;
         }
         else {
