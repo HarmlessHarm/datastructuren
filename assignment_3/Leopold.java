@@ -12,5 +12,7 @@ public class Leopold {
 		this.lions = lions; 	
 		this.lambs = lambs.toArray(new Lambs[lambs.size()]);
 		System.out.println(this.lambs.length);
+		String[] test = {"12"};
+		return test;
 	}
 }

@@ -1,6 +1,6 @@
 public abstract class Agent {
 
-    public int name;
+    public String name;
     public int position;
     
     public Agent(String name, int position) {

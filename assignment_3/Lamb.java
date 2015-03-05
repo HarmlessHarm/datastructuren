@@ -1,7 +1,4 @@
 public class Lamb extends Agent {
-
-    private String name;
-
     // public boolean specialMove(int pos1, int pos2, Agent[] board) {
     // 	return false;
     // }
@@ -9,8 +6,8 @@ public class Lamb extends Agent {
     	return false;
     }
 
-    public Lamb(String name) {
-        this.name = name;
+    public Lamb(String name, int position) {
+        // Constructor
     }
     
     /* public boolean placeInGame(int position) {
