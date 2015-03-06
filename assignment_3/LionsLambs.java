@@ -7,12 +7,13 @@ import java.awt.event.*;
 public class LionsLambs {
 	
 	public static Agent[] board = new Agent[25];
-	public static Lion[] lions = new Lion[4];
-	public static List<Lamb> lambs = new ArrayList<Lamb>();
+	//public static Lion[] lions = new Lion[4];
+	//public static List<Lamb> lambs = new ArrayList<Lamb>();
 	public static int WIN_STATE = 0;
 	public static int TURN = 1;
 	public static int LAMB_COUNT = 20;
 	public static int LAMB_KILLED = 0;
+	public static String[] input;
 
 	public static void init() {
 		board[0] = new Lion("Leo", 0);
@@ -30,7 +31,7 @@ public class LionsLambs {
 
     /* This method describes the game loop */
 	public static void playGame(){
-		String[] input;
+		
 		
 		// setUpGame(); -- the basic board should be drawn here
 
@@ -44,9 +45,11 @@ public class LionsLambs {
 				} 
 				else if (TURN == -1) {
 					System.out.print("Lions player's turn: ");
-					input = Leopold.yourTurnSir(board, lions, lambs);
+					//input = readInput();
+					//input = Leopold.yourTurnSir(board, lions, lambs);
+					input = Leopold.yourTurnSir(board);
 				}
-				if(setMove(input)) {
+				if (setMove(input)) {
 					TURN = TURN * -1;
 					break;
 				}
@@ -91,7 +94,8 @@ public class LionsLambs {
 		
 		/* Place lamb in game */
 		if (input.length == 1 && LAMB_COUNT != 0 && board[pos1] == null && TURN == 1) {
-			board[pos1] =  new Lamb("name");
+			board[pos1] =  new Lamb("name", pos1);
+			//lambs.add(board[pos1]);
 			LAMB_COUNT--;
 			return true;
 		}
@@ -101,11 +105,21 @@ public class LionsLambs {
 	    	if ((TURN == 1 && board[pos1].getClass().equals(Lamb.class) && LAMB_COUNT == 0) ||
 	    		(TURN == -1 && board[pos1].getClass().equals(Lion.class))) {
 
-		    	if(board[pos1].move(pos1, pos2) || board[pos1].specialMove(pos1, pos2)) {
+		    	if (board[pos1].move(pos1, pos2) || board[pos1].specialMove(pos1, pos2)) {
 		    		board[pos2] = board[pos1];
 		    		board[pos1] = null;
+		    		
+		    		/*if (board[pos1].getClass().equals(Lamb.class) {
+		    		    lambs.get(board[pos1]).setPosition(pos2);
+		    		}
+		    		
+		    		else if (board[pos1].getClass().equals(Lion.class) {
+		    		    lions[board[pos1
+		    		} */
+		    		
 		    		return true;
-		    	} else {
+		    	} 
+		    	else {
 		    		System.out.println("Invalid move");
 		    		return false;
 		    	}

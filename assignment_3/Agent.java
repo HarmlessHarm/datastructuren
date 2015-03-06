@@ -1,15 +1,22 @@
 public abstract class Agent {
 
-    public int name;
+    public String name;
     public int position;
     
-    public Agent(String name, int position) {
+    public Agent() {
+        //nothing
+    }
+    
+    /*public Agent(String name, int position) {
         this.name = name;
         this.position = position;
-    }
+    } */
 
     public abstract boolean specialMove(int pos1, int pos2) ;
 
+    /*public int setPosition() {
+        
+    } */
   
     /*  */
     public boolean move(int pos1, int pos2) {        
