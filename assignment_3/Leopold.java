@@ -35,6 +35,7 @@ public class Leopold {
 		//this.lions = lions; 	
 		//this.lambs = lambs.toArray(new Lambs[lambs.size()]);
 		//System.out.println(this.lambs.length);
+
 	}
 	
 	/* Neighbours of the lion are being checked for being lamb */

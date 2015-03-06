@@ -16,7 +16,6 @@ public class Lamb extends Agent {
     	return false;
     }
 
-
     /* Set position of lambs, needed to make them able to move around */
     public void setPosition(int pos1) {
         this.pos1 = pos1;
@@ -25,6 +24,7 @@ public class Lamb extends Agent {
     /* Get position of lambs */
     public int getPosition() {
         return pos1;
+
     }
     
     /* public boolean placeInGame(int position) {

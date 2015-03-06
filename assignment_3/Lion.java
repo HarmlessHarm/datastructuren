@@ -1,12 +1,12 @@
 public class Lion extends Agent {
 
-    private String name;
-
     public static Agent target;
 
     public Lion(String name, int position) {
+
         this.name = name;
         this.position = position;
+
     }
     
     /* Method for the special moves: place lamb in game and lion jump */
