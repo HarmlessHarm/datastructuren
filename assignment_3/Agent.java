@@ -12,34 +12,44 @@ public abstract class Agent {
         this.position = position;
     } */
 
-    public abstract boolean specialMove(int pos1, int pos2) ;
-    public abstract boolean validateAI(int pos1, int pos2); 
+    public abstract boolean specialMove(int pos1, int pos2);
+    // public abstract boolean validateAI(int pos1, int pos2); 
 
     /*public int setPosition() {
         
     } */
   
     /*  */
-    public boolean move(int pos1, int pos2) {        
-        if (valid(pos1, pos2)) {
-            position = pos2;
-            return true;
-        }
-        else {
+
+    public static boolean validate(Agent[] board, int pos1, int pos2, int turn) {
+        if (((pos2 < 0 || pos2 > 24) && pos2 < 9000) ||
+             (pos1 < 0 || pos1 > 24 )) {
             return false;
-        } 
+        }
+        // if pos2 > 9000 place lamb
+        if (pos2 > 9000 && LionsLambs.LAMB_COUNT != 0 && 
+            board[pos1] == null && turn == 1) {
+            return true;
+        } else if (board[pos1] != null && board[pos2] == null) {
+            if((turn == 1 && board[pos1].getClass().equals(Lamb.class) && LionsLambs.LAMB_COUNT == 0) ||
+                turn == -1 && board[pos1].getClass().equals(Lion.class)) {
+                if (move(pos1, pos2) || board[pos1].specialMove(pos1, pos2)) {
+                    return true;
+                }
+            }
+        }
+        System.out.println("Invalid move...");
+        return false;
+        
+
+        // else move.
     }
     
     /* Check whether asked moves are valid */
-    private boolean valid(int pos1, int pos2) {        
+    private static boolean move(int pos1, int pos2) {
+        System.out.println("check move");
         boolean status = false;
         int posDif = pos2 - pos1;
-        // int[] jumpInts = {-12, -10, -8, -2, 2, 8, 10, 12};
-
-        // if ( Arrays.asList(jumpInts).contains(posDif) ) {
-        //     jump(pos );
-
-        // }
                
         /* Move Horizontal */
         if (posDif == 1 || posDif == -1) {
@@ -63,7 +73,7 @@ public abstract class Agent {
     }
     
     /* Checks whether move to the left is valid */
-    private boolean checkMoveHor(int posDif, int pos1) {
+    private static boolean checkMoveHor(int posDif, int pos1) {
         if ((posDif == 1 && (pos1 + 1) % 5 == 0)||
             (posDif == -1 && pos1 % 5 == 0)) {
             // System.out.println("false!");
@@ -76,7 +86,7 @@ public abstract class Agent {
     }
 
     /* Checks whether a move down or upwards is valid */
-    private boolean checkMoveVer(int pos2) {
+    private static boolean checkMoveVer(int pos2) {
         if (pos2 > 24 || pos2 < 0) {
             return false;
         }
@@ -86,7 +96,7 @@ public abstract class Agent {
     }
     
     /* Checks whether a move upwards and to the left via the diagonal is valid */
-    private boolean checkMoveDiag(int posDif, int pos1) {
+    private static boolean checkMoveDiag(int posDif, int pos1) {
         if (pos1 % 2 == 0 && posDif > 0 &&
             checkMoveHor(posDif - 5, pos1) && checkMoveVer(posDif + pos1) ) {
             return true;

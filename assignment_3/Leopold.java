@@ -7,16 +7,17 @@ public class Leopold {
 	//public static Lion[] lions = new Lion[4];
 	//public static Lambs[] lambs;
 	
-	public static String[] leopoldsMove = new String[2];
+	public static int[] leopoldsMove = new int[2];
 	public static int[] neighbours = {-1, 1,-4, 4, -5, 5, -6, 6};
+	public static final int TURN = -1; // Lions turn always -1
 
     /* AI chooses move */
-	public static String[] yourTurnSir(Agent[] board) {
-		ArrayList<String[]> possibleMoves= new ArrayList<String[]>();
+	public static int[] yourTurnSir(Agent[] board) {
+		ArrayList<int[]> possibleMoves= new ArrayList<int[]>();
 	    for (int i=0; i<board.length; i++) {
 	        if (board[i] != null && board[i].getClass().equals(Lion.class)) {
 	            leopoldsMove = checkNeighbours(board, i); // i = position on board
-	            if (leopoldsMove[0] != null) {
+	            if (leopoldsMove[0] != -999) {
 	                possibleMoves.add(leopoldsMove);
 	                // return leopoldsMove;
 	            }
@@ -29,44 +30,51 @@ public class Leopold {
 	    	return possibleMoves.get(randMove);
 	    } 
 	    for (int i = 0;i<board.length ;i++ ) {
+	    	// Gets all lions on board
 			if(board[i] != null && board[i].getClass().equals(Lion.class) ) {
+            	
             	leopoldsMove = randomMove(i);
+            	while(board[i].validate(board, leopoldsMove[0], leopoldsMove[1], TURN) == false) {
+            		leopoldsMove = randomMove(i);
+            	}
         		return leopoldsMove;
     		}
         }
-        String[] noStr = {null, null};
+        int[] noStr = {-999, -999}; // Will never be accessed
         return noStr;
 	}
 	
 	/* Neighbours of the lion are being checked for being lamb */
-	private static String[] checkNeighbours(Agent[] board, int boardPos) {
-	    int checkNeigh;
-	    int pos1, pos2;
+	private static int[] checkNeighbours(Agent[] board, int pos1) {
+	    int neighPos;
+	    int pos2;
 	    for (int i=0; i<neighbours.length; i++) {
-	        checkNeigh = boardPos + neighbours[i];
-        	pos2 = checkNeigh + neighbours[i];
-	        if ((checkNeigh >= 0 && checkNeigh <= 24) && board[checkNeigh] != null && 
-	        	board[checkNeigh].getClass().equals(Lamb.class) && 
-	        	board[boardPos].validateAI(boardPos, pos2)) {
+	        neighPos = pos1 + neighbours[i]; // position of neighbour
+        	pos2 = neighPos + neighbours[i]; // target move position
+        	System.out.println("try: "+pos1+" -> "+pos2);
+	        if (board[pos1].validate(board, pos1, pos2, TURN)) {
 	        	
 
-	            leopoldsMove[0] = Integer.toString(boardPos);
-	            leopoldsMove[1] = Integer.toString(pos2);
-	            System.out.println("From "+boardPos+" via "+checkNeigh+" to "+pos2);
-	            System.out.print("nom nom");
+	            leopoldsMove[0] = pos1;
+	            leopoldsMove[1] = pos2;
+	            System.out.println("From "+pos1+" via "+neighPos+" to "+pos2);
+	            System.out.println("nom nom nom");
 	            return leopoldsMove; 
 	        }	        
 	    }
-	    String[] noStr = {null,null};
+	    System.out.println("really!?");
+	    int[] noStr = {-999,-999}; // never happens but needs return statement
 	    return noStr;
 	}	
 	
 	/* Chooses a random move for the lion */
-	private static String[] randomMove(int boardPos) {
+	private static int[] randomMove(int pos1) {
+		System.out.println("random move");
 	    int randomNeigh = new Random().nextInt(neighbours.length);
-        int randomMove = boardPos + neighbours[randomNeigh];
-        leopoldsMove[0] = Integer.toString(boardPos);
-        leopoldsMove[1] = Integer.toString(randomMove);
+	    System.out.println("randTar:"+randomNeigh);
+        int randomMove = pos1 + neighbours[randomNeigh];
+        leopoldsMove[0] = pos1;
+        leopoldsMove[1] = randomMove;
         return leopoldsMove;
     }	
 }

@@ -14,11 +14,11 @@ public class Lion extends Agent {
         int posDif = pos2 - pos1;
         int posTar = posDif/2 + pos1;
         target = LionsLambs.board[posTar];
-        System.out.println(posTar);
+        System.out.println("specMove tar@ "+posTar);
         //System.out.println(posDif);
 
         /* Check whether move is valid and whether lion jumps over lamb */
-        if (valid(pos1, pos2, posDif) && target.getClass().equals(Lamb.class)) {
+        if (target != null && valid(pos1, pos2, posDif) && target.getClass().equals(Lamb.class)) {
             LionsLambs.board[posTar] = null;
         	LionsLambs.LAMB_KILLED++;
         	//LionsLambs.lambs
@@ -29,15 +29,15 @@ public class Lion extends Agent {
         }        
     }
     
-    public boolean validateAI(int pos1, int pos2) {
-        int posDif = pos2 - pos1;
+    // public boolean validateAI(int pos1, int pos2) {
+    //     int posDif = pos2 - pos1;
 
-        if(pos2 >= 0 && pos2 < 25 && LionsLambs.board[pos2] == null && 
-            valid(pos1, pos2, posDif)) {
-            return true;
-        }
-        return false;
-    }
+    //     if(pos2 >= 0 && pos2 < 25 && LionsLambs.board[pos2] == null && 
+    //         valid(pos1, pos2, posDif)) {
+    //         return true;
+    //     }
+    //     return false;
+    // }
 
     /* Validates jumps */
     private boolean valid(int pos1, int pos2, int posDif) {
