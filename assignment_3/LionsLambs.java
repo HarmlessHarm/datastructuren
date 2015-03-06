@@ -43,9 +43,10 @@ public class LionsLambs {
 				} 
 				else if (TURN == -1) {
 					System.out.print("Lions player's turn: ");
-					//input = readInput();
+					// input = readInput();
 					//input = Leopold.yourTurnSir(board, lions, lambs);
 					input = Leopold.yourTurnSir(board);
+					System.out.println("Leo says: "+input[0]+" "+input[1]);
 				}
 				if (setMove(input)) {
 					TURN = TURN * -1;
@@ -85,6 +86,10 @@ public class LionsLambs {
 		int pos2 = 0; 
 		if (input.length == 2) {
 			pos2 = Integer.parseInt(input[1]);
+		}
+		if (pos2 < 0 || pos2 > 24 ||
+			pos1 < 0 || pos1 > 24) {
+			return false;
 		}
 
 		// hiermee kan je de class opvragen zie ook Board.java

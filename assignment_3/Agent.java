@@ -13,6 +13,7 @@ public abstract class Agent {
     } */
 
     public abstract boolean specialMove(int pos1, int pos2) ;
+    public abstract boolean validateAI(int pos1, int pos2); 
 
     /*public int setPosition() {
         
@@ -42,13 +43,14 @@ public abstract class Agent {
                
         /* Move Horizontal */
         if (posDif == 1 || posDif == -1) {
+            // System.out.println(posDif);
             status = checkMoveHor(posDif, pos1); 
             return status;   
         }
         
         /* Move Vertical */
         if (posDif == 5 || posDif == -5) {
-            status = checkMoveVer(pos1, pos2);
+            status = checkMoveVer(pos2);
             return status;
         }
         
@@ -62,8 +64,9 @@ public abstract class Agent {
     
     /* Checks whether move to the left is valid */
     private boolean checkMoveHor(int posDif, int pos1) {
-        if ((posDif == 1 && pos1 + 1 % 5 == 0)||
+        if ((posDif == 1 && (pos1 + 1) % 5 == 0)||
             (posDif == -1 && pos1 % 5 == 0)) {
+            // System.out.println("false!");
             return false;
         }
         else { 
@@ -73,7 +76,7 @@ public abstract class Agent {
     }
 
     /* Checks whether a move down or upwards is valid */
-    private boolean checkMoveVer(int pos1, int pos2) {
+    private boolean checkMoveVer(int pos2) {
         if (pos2 > 24 || pos2 < 0) {
             return false;
         }
@@ -84,8 +87,12 @@ public abstract class Agent {
     
     /* Checks whether a move upwards and to the left via the diagonal is valid */
     private boolean checkMoveDiag(int posDif, int pos1) {
-        if (pos1 % 2 == 0 && 
-            checkMoveHor(posDif, pos1) && checkMoveVer(posDif, pos1) ) {
+        if (pos1 % 2 == 0 && posDif > 0 &&
+            checkMoveHor(posDif - 5, pos1) && checkMoveVer(posDif + pos1) ) {
+            return true;
+        }
+        if (pos1 % 2 == 0 && posDif < 0 &&
+            checkMoveHor(posDif + 5, pos1) && checkMoveVer(posDif + pos1) ) {
             return true;
         }
         else {
