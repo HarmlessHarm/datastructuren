@@ -45,6 +45,8 @@ public class LionsLambs {
 
 					if(board[pos1].validate(board, pos1, pos2, TURN)) {
 						setMove(pos1, pos2);
+						TURN = TURN * -1;
+						break;
 					}
 				
 				} 
@@ -53,12 +55,13 @@ public class LionsLambs {
 					// input = readInput();
 					input = Leopold.yourTurnSir(board);
 					setMove(input[0], input[1]);
+					TURN = TURN * -1;
 
 					// setMove(input[0], input[1])
 					System.out.println("Leo says: "+input[0]+" "+input[1]);
+					break;
 				}
-				TURN = TURN * -1;
-				break;
+				
 			}
 		}
 		
