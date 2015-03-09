@@ -15,6 +15,7 @@ public class LionsLambs {
 	public static int[] input;
 
 	public static void init() {
+		// Lions without names are not OK
 		board[0] = new Lion("Leo", 0);
 		board[4] = new Lion("Leu", 4);
 		board[20] = new Lion("Love", 20);
