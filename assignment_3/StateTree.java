@@ -10,13 +10,13 @@ public class StateTree {
     // private static int[] bestMove;
 
     /* Recursive method to build a tree and choose the best path while doing so */
-    private MoveScore buildLionTree(Agent[] board, int currentDepth) {
+    private static MoveScore buildLionTree(Agent[] board, int currentDepth) {
     
         //init vars;
         ArrayList<int[]> moves = new ArrayList<int[]>();
         ArrayList<int[]> tempMoves = new ArrayList<int[]>();
-        MoveScore bestMoveScore = new MoveScore();
-        Agent[] newBoard;
+        MoveScore bestMoveScore = new MoveScore({0,1}, 100);
+        Agent[] newLionBoard;
         
         /* Lion's turn */
         // if (turn == -1) {
@@ -29,11 +29,11 @@ public class StateTree {
                 }
             }
             for (int k=0; k < moves.size(); k++) {
-                move = moves.get(k);
-                newBoard = newBoard(board, move);
-                score = evaluate(newBoard);
+                int[] move = moves.get(k);
+                Agent[] newBoard = newBoard(board, move);
+                int score = evaluate(newBoard);
                 MoveScore moveScore = new MoveScore(move, score);
-
+                MoveScore lambMoveScore = new MoveScore();
                 if (currentDepth != DEPTH) {
                     currentDepth++;
                     lambMoveScore = buildLambTree(newBoard, currentDepth);
@@ -51,13 +51,13 @@ public class StateTree {
         
     }
 
-    private MoveScore buildLambTree(Agent[] board, int currentDepth) {
+    private static MoveScore buildLambTree(Agent[] board, int currentDepth) {
     
         //init vars;
         ArrayList<int[]> moves = new ArrayList<int[]>();
         ArrayList<int[]> tempMoves = new ArrayList<int[]>();
         MoveScore bestMoveScore = new MoveScore();
-        Agent[] newBoard;
+        Agent[] newLambBoard;
         
         for (int i=0; i<board.length; i++) {
             if ( board[i] != null && board[i].getClass().equals(Lamb.class) ) {
@@ -69,11 +69,11 @@ public class StateTree {
         }
 
         for (int k=0; k < moves.size(); k++) {
-            move = moves.get(k);
-            newBoard = newBoard(board, move);
-            score = evaluate(newBoard);
+            int[] move = moves.get(k);
+            Agent[] newBoard = newBoard(board, move);
+            int score = evaluate(newBoard);
             MoveScore moveScore = new MoveScore(move, score);
-
+            MoveScore lionMoveScore = new MoveScore();
             if (currentDepth != DEPTH) {
                 currentDepth++;
                 lionMoveScore = buildLionTree(newBoard, currentDepth);
@@ -86,19 +86,19 @@ public class StateTree {
                 bestMoveScore.setScore(moveScore.getScore());
             }
         }
-    
+        // System.out.println(bestMoveScore);   
         return bestMoveScore;
     }
     
     /* Checks all possible moves for a player -- STILL TO BE WRITTEN */
-    private ArrayList<int[]> getPossibleLionMoves(Agent[] board, int boardPos) {
+    private static ArrayList<int[]> getPossibleLionMoves(Agent[] board, int boardPos) {
         ArrayList<int[]> possibleMoves = new ArrayList<int[]>();
-        int[] move1 = {0,1};
-        possibleMoves.add(move1);
+        int[] move = {0,1};
+        possibleMoves.add(move);
         return possibleMoves;
     }
 
-    private ArrayList<int[]> getPossibleLambMoves(Agent[] board, int boardPos) {
+    private static ArrayList<int[]> getPossibleLambMoves(Agent[] board, int boardPos) {
         ArrayList<int[]> possibleMoves = new ArrayList<int[]>();
         int[] move1 = {12,9001};
         possibleMoves.add(move1);
@@ -106,16 +106,16 @@ public class StateTree {
     }
     
     /* Simulates a move and returns the board after doing the move */
-    private Agent[] newBoard(Agent[] board, int[] move) {
+    private static Agent[] newBoard(Agent[] board, int[] move) {
         return board;
     }
     
     /* Compares to boards and returns the best */
-    private int evaluate(Agent[] board) {
+    private static int evaluate(Agent[] board) {
         return 20;
     }
 
-    public int[] getBestMove(Agent[] board) {
-        return buildLionTree(board, 0);
+    public static int[] getBestMove(Agent[] board) {
+        return buildLionTree(board, 0).getMove();
     }
 }

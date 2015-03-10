@@ -55,6 +55,7 @@ public class LionsLambs {
 					System.out.print("Lions player's turn: ");
 					// input = readInput();
 					input = Leopold.yourTurnSir(board);
+					System.out.println("1: "+input[0]+"2: "+input[1]);
 					setMove(input[0], input[1]);
 					TURN = TURN * -1;
 

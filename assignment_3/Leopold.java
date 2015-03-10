@@ -13,35 +13,38 @@ public class Leopold {
 
     /* AI chooses move */
 	public static int[] yourTurnSir(Agent[] board) {
-		ArrayList<int[]> possibleMoves= new ArrayList<int[]>();
-	    for (int i=0; i<board.length; i++) {
-	        if (board[i] != null && board[i].getClass().equals(Lion.class)) {
-	            leopoldsMove = checkNeighbours(board, i); // i = position on board
-	            if (leopoldsMove[0] != -999) {
-	                possibleMoves.add(leopoldsMove);
-	                // return leopoldsMove;
-	            }
-	        }
-	    }
-	    if (possibleMoves.size() != 0) {
-	    	int randMove = new Random().nextInt(possibleMoves.size());
-	    	String moveStr= Arrays.toString(possibleMoves.get(randMove));
-	    	System.out.println(moveStr);
-	    	return possibleMoves.get(randMove);
-	    } 
-	    for (int i = 0;i<board.length ;i++ ) {
-	    	// Gets all lions on board
-			if(board[i] != null && board[i].getClass().equals(Lion.class) ) {
+		System.out.println(StateTree.getBestMove(board));
+		return StateTree.getBestMove(board);
+
+		// ArrayList<int[]> possibleMoves= new ArrayList<int[]>();
+	 //    for (int i=0; i<board.length; i++) {
+	 //        if (board[i] != null && board[i].getClass().equals(Lion.class)) {
+	 //            leopoldsMove = checkNeighbours(board, i); // i = position on board
+	 //            if (leopoldsMove[0] != -999) {
+	 //                possibleMoves.add(leopoldsMove);
+	 //                // return leopoldsMove;
+	 //            }
+	 //        }
+	 //    }
+	 //    if (possibleMoves.size() != 0) {
+	 //    	int randMove = new Random().nextInt(possibleMoves.size());
+	 //    	String moveStr= Arrays.toString(possibleMoves.get(randMove));
+	 //    	System.out.println(moveStr);
+	 //    	return possibleMoves.get(randMove);
+	 //    } 
+	 //    for (int i = 0;i<board.length ;i++ ) {
+	 //    	// Gets all lions on board
+		// 	if(board[i] != null && board[i].getClass().equals(Lion.class) ) {
             	
-            	leopoldsMove = randomMove(i);
-            	while(board[i].validate(board, leopoldsMove[0], leopoldsMove[1], TURN) == false) {
-            		leopoldsMove = randomMove(i);
-            	}
-        		return leopoldsMove;
-    		}
-        }
-        int[] noStr = {-999, -999}; // Will never be accessed
-        return noStr;
+  //           	leopoldsMove = randomMove(i);
+  //           	while(board[i].validate(board, leopoldsMove[0], leopoldsMove[1], TURN) == false) {
+  //           		leopoldsMove = randomMove(i);
+  //           	}
+  //       		return leopoldsMove;
+  //   		}
+  //       }
+  //       int[] noStr = {-999, -999}; // Will never be accessed
+  //       return noStr;
 	}
 	
 	/* Neighbours of the lion are being checked for being lamb */

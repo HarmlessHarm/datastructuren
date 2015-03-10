@@ -12,6 +12,8 @@ public class MoveScore {
     
     public MoveScore(int[] move, int score) {
         // second constructor
+        this.move = move;
+        this.score = score;
     }
 
     public void setScore(int score) {
@@ -28,7 +30,7 @@ public class MoveScore {
     }
     
     public int[] getMove() {
-        move;
+        return move;
     }
 
 }
