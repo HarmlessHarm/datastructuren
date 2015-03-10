@@ -4,46 +4,59 @@ import java.lang.*;
 
 public class StateTree {
 
-    private int depth = 3;
+    private static final int DEPTH = 1;
+    private int currentBranch;
+    private int[] bestMove;
+    private Agent[] bestBoard;
+
+    private static ArrayList<ArrayList<int[]>> moveTree = new ArrayList<ArrayList<int[]>>();
+
+    // private static int[] bestMove;
 
     /* Recursive method to build a tree and choose the best path while doing so */
-    public int[] buildTree(Agent[] board, int turn, int depth) {
+    public int[] buildTree(Agent[] board, int turn, int currentDepth) {
     
         //int[] moves;
-        ArrayList<ArrayList<Integer>> moves = new ArrayList<ArrayList<Integer>>();
-        ArrayList<ArrayList<Integer>> allMoves = new ArrayList<ArrayList<Integer>>();
+        ArrayList<int[]> moves = new ArrayList<int[]>();
+        // ArrayList<ArrayList<Integer>> allMoves = new ArrayList<ArrayList<Integer>>();
         Map<Integer, ArrayList<ArrayList<Integer>>> movesHashmap = new HashMap<Integer, ArrayList<ArrayList<Integer>>>();
         ArrayList<Integer> move = new ArrayList<Integer>();
         Agent[] newBoard;
         int[] bestMove = {0,1};
         
         /* Lion's turn */
-        if (turn == -1) {
+        // if (turn == -1) {
             for (int i=0; i<board.length; i++) {
-                if (board[i].getClass().equals(Lion.class)) {
+                if (board[i] != null &&
+                    ((turn == -1 && board[i].getClass().equals(Lion.class)) ||
+                     (turn == 1 && board[i].getClass().equals(Lamb.class)))) {
                     moves = getPossibleMoves(board, i); //moves will be overwritten, so you need to store the instances in an arrayList
-                    for (int j=0; i<moves.size(); j++) {
-                        allMoves.add(moves.get(i));
+                    for (int j=0; j < moves.size(); j++) {
+                        moveTree.get(currentDepth).add(moves.get(j)); // Adds all possible moves from current branch to the corresponding depth in the tree 
                     }
+                }
+                if (currentDepth == 0) {
+                    currentBranch = i;
                 }
             }
             
-            movesHashmap.put(depth, allMoves); // store all moves at a certain depth in a hashmap, so that you won't loose them
+            // movesHashmap.put(currentDepth, allMoves); // store all moves at a certain depth in a hashmap, so that you won't loose them
         
             /* Real recursive part */
-            for (int k=0; k<allMoves.size(); k++) {
+            for (int k=0; k < allMoves.size(); k++) {
+                movesAtDepth = moveTree.get(currentDepth);
                 move = allMoves.get(k);
                 newBoard = simulateMove(board, move);
-                if (depth != 0) {
+                if (currentDepth != DEPTH) {
                     turn = -1;
-                    depth--;
-                    buildTree(newBoard, turn, depth);
+                    currentDepth++;
+                    buildTree(newBoard, turn, currentDepth);
+                    currentDepth--;
                 }
                 Agent[] newBestBoard = compareBoards(newBoard, board);
                 board = newBestBoard;
             }
-        
-        }  
+        // }  
         
         return bestMove;  
         
@@ -70,7 +83,7 @@ public class StateTree {
     }
 
     public static void main(String[] args) {
-    
+  
     
     }
 

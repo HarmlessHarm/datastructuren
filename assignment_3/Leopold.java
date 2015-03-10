@@ -51,7 +51,7 @@ public class Leopold {
 	    for (int i=0; i<neighbours.length; i++) {
 	        neighPos = pos1 + neighbours[i]; // position of neighbour
         	pos2 = neighPos + neighbours[i]; // target move position
-        	System.out.println("try: "+pos1+" -> "+pos2);
+        	// System.out.println("try: "+pos1+" -> "+pos2);
 	        if (board[pos1].validate(board, pos1, pos2, TURN)) {
 	        	
 
@@ -62,16 +62,16 @@ public class Leopold {
 	            return leopoldsMove; 
 	        }	        
 	    }
-	    System.out.println("really!?");
+	    // System.out.println("really!?");
 	    int[] noStr = {-999,-999}; // never happens but needs return statement
 	    return noStr;
 	}	
 	
 	/* Chooses a random move for the lion */
 	private static int[] randomMove(int pos1) {
-		System.out.println("random move");
+		// System.out.println("random move");
 	    int randomNeigh = new Random().nextInt(neighbours.length);
-	    System.out.println("randTar:"+randomNeigh);
+	    // System.out.println("randTar:"+randomNeigh);
         int randomMove = pos1 + neighbours[randomNeigh];
         leopoldsMove[0] = pos1;
         leopoldsMove[1] = randomMove;

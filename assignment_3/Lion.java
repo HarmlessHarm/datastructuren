@@ -14,7 +14,7 @@ public class Lion extends Agent {
         int posDif = pos2 - pos1;
         int posTar = posDif/2 + pos1;
         target = LionsLambs.board[posTar];
-        System.out.println("specMove tar@ "+posTar);
+        // System.out.println("specMove tar@ "+posTar);
         //System.out.println(posDif);
 
         /* Check whether move is valid and whether lion jumps over lamb */

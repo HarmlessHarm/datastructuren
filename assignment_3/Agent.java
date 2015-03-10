@@ -42,7 +42,7 @@ public abstract class Agent {
             System.out.println("No lambs left...");
             return false;
         }
-        System.out.println("Invalid move...");
+        // System.out.println("Invalid move...");
         return false;
         
 
@@ -51,7 +51,7 @@ public abstract class Agent {
     
     /* Check whether asked moves are valid */
     private static boolean move(int pos1, int pos2) {
-        System.out.println("check move");
+        // System.out.println("check move");
         boolean status = false;
         int posDif = pos2 - pos1;
                
