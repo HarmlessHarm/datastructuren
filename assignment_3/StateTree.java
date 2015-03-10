@@ -4,87 +4,118 @@ import java.lang.*;
 
 public class StateTree {
 
-    private static final int DEPTH = 1;
-    private int currentBranch;
-    private int[] bestMove;
-    private Agent[] bestBoard;
+    private static final int DEPTH = 1; // Gets depth   
 
-    private static ArrayList<ArrayList<int[]>> moveTree = new ArrayList<ArrayList<int[]>>();
 
     // private static int[] bestMove;
 
     /* Recursive method to build a tree and choose the best path while doing so */
-    public int[] buildTree(Agent[] board, int turn, int currentDepth) {
+    private MoveScore buildLionTree(Agent[] board, int currentDepth) {
     
-        //int[] moves;
+        //init vars;
         ArrayList<int[]> moves = new ArrayList<int[]>();
-        // ArrayList<ArrayList<Integer>> allMoves = new ArrayList<ArrayList<Integer>>();
-        Map<Integer, ArrayList<ArrayList<Integer>>> movesHashmap = new HashMap<Integer, ArrayList<ArrayList<Integer>>>();
-        ArrayList<Integer> move = new ArrayList<Integer>();
+        ArrayList<int[]> tempMoves = new ArrayList<int[]>();
+        MoveScore bestMoveScore = new MoveScore();
         Agent[] newBoard;
-        int[] bestMove = {0,1};
         
         /* Lion's turn */
         // if (turn == -1) {
             for (int i=0; i<board.length; i++) {
-                if (board[i] != null &&
-                    ((turn == -1 && board[i].getClass().equals(Lion.class)) ||
-                     (turn == 1 && board[i].getClass().equals(Lamb.class)))) {
-                    moves = getPossibleMoves(board, i); //moves will be overwritten, so you need to store the instances in an arrayList
-                    for (int j=0; j < moves.size(); j++) {
-                        moveTree.get(currentDepth).add(moves.get(j)); // Adds all possible moves from current branch to the corresponding depth in the tree 
+                if ( board[i] != null && board[i].getClass().equals(Lion.class) ) {
+                    tempMoves = getPossibleLionMoves(board, i);                     // returns ArrayList with all possible moves a Lion on board[i]
+                    for (int j=0; j < tempMoves.size(); j++) {
+                        moves.add(tempMoves.get(j));                            // Adds all possible moves for Lion to moves ArrayList moves
                     }
                 }
-                if (currentDepth == 0) {
-                    currentBranch = i;
-                }
             }
-            
-            // movesHashmap.put(currentDepth, allMoves); // store all moves at a certain depth in a hashmap, so that you won't loose them
-        
-            /* Real recursive part */
-            for (int k=0; k < allMoves.size(); k++) {
-                movesAtDepth = moveTree.get(currentDepth);
-                move = allMoves.get(k);
-                newBoard = simulateMove(board, move);
+            for (int k=0; k < moves.size(); k++) {
+                move = moves.get(k);
+                newBoard = newBoard(board, move);
+                score = evaluate(newBoard);
+                MoveScore moveScore = new MoveScore(move, score);
+
                 if (currentDepth != DEPTH) {
-                    turn = -1;
                     currentDepth++;
-                    buildTree(newBoard, turn, currentDepth);
+                    lambMoveScore = buildLambTree(newBoard, currentDepth);
                     currentDepth--;
                 }
-                Agent[] newBestBoard = compareBoards(newBoard, board);
-                board = newBestBoard;
+                if (lambMoveScore.getScore() > moveScore.getScore()) {
+                    moveScore.setScore(lambMoveScore.getScore());
+                }
+                if (moveScore.getScore() < bestMoveScore.getScore()) {
+                    bestMoveScore.setScore(moveScore.getScore());
+                }
             }
-        // }  
         
-        return bestMove;  
+        return bestMoveScore;  
         
+    }
+
+    private MoveScore buildLambTree(Agent[] board, int currentDepth) {
+    
+        //init vars;
+        ArrayList<int[]> moves = new ArrayList<int[]>();
+        ArrayList<int[]> tempMoves = new ArrayList<int[]>();
+        MoveScore bestMoveScore = new MoveScore();
+        Agent[] newBoard;
+        
+        for (int i=0; i<board.length; i++) {
+            if ( board[i] != null && board[i].getClass().equals(Lamb.class) ) {
+                tempMoves = getPossibleLambMoves(board, i);                     // returns ArrayList with all possible moves a Lamb on board[i]
+                for (int j=0; j < tempMoves.size(); j++) {
+                    moves.add(tempMoves.get(j));                            // Adds all possible moves for Lamb to moves ArrayList moves
+                }
+            }
+        }
+
+        for (int k=0; k < moves.size(); k++) {
+            move = moves.get(k);
+            newBoard = newBoard(board, move);
+            score = evaluate(newBoard);
+            MoveScore moveScore = new MoveScore(move, score);
+
+            if (currentDepth != DEPTH) {
+                currentDepth++;
+                lionMoveScore = buildLionTree(newBoard, currentDepth);
+                currentDepth--;
+            }
+            if (lionMoveScore.getScore() > moveScore.getScore()) {
+                moveScore.setScore(lionMoveScore.getScore());
+            }
+            if (moveScore.getScore() > bestMoveScore.getScore()) {
+                bestMoveScore.setScore(moveScore.getScore());
+            }
+        }
+    
+        return bestMoveScore;
     }
     
     /* Checks all possible moves for a player -- STILL TO BE WRITTEN */
-    public ArrayList<ArrayList<Integer>> getPossibleMoves(Agent[] board, int boardPos) {
-        ArrayList<Integer> move1 = new ArrayList<Integer>(); // so this is an arrayList which is not particularly handy
-        move1.add(0);
-        move1.add(1);
-        ArrayList<ArrayList<Integer>> possibleMoves = new ArrayList<ArrayList<Integer>>();
+    private ArrayList<int[]> getPossibleLionMoves(Agent[] board, int boardPos) {
+        ArrayList<int[]> possibleMoves = new ArrayList<int[]>();
+        int[] move1 = {0,1};
+        possibleMoves.add(move1);
+        return possibleMoves;
+    }
+
+    private ArrayList<int[]> getPossibleLambMoves(Agent[] board, int boardPos) {
+        ArrayList<int[]> possibleMoves = new ArrayList<int[]>();
+        int[] move1 = {12,9001};
         possibleMoves.add(move1);
         return possibleMoves;
     }
     
     /* Simulates a move and returns the board after doing the move */
-    public Agent[] simulateMove(Agent[] board, List<Integer> move) {
+    private Agent[] newBoard(Agent[] board, int[] move) {
         return board;
     }
     
     /* Compares to boards and returns the best */
-    public Agent[] compareBoards(Agent[] newBoard, Agent[] board) {
-        return newBoard;
+    private int evaluate(Agent[] board) {
+        return 20;
     }
 
-    public static void main(String[] args) {
-  
-    
+    public int[] getBestMove(Agent[] board) {
+        return buildLionTree(board, 0);
     }
-
 }
