@@ -13,7 +13,7 @@ public class Leopold {
 
     /* AI chooses move */
 	public static int[] yourTurnSir(Agent[] board) {
-		System.out.println(StateTree.getBestMove(board));
+		// System.out.println(StateTree.getBestMove(board));
 		return StateTree.getBestMove(board);
 
 		// ArrayList<int[]> possibleMoves= new ArrayList<int[]>();

@@ -15,7 +15,8 @@ public class StateTree {
         //init vars;
         ArrayList<int[]> moves = new ArrayList<int[]>();
         ArrayList<int[]> tempMoves = new ArrayList<int[]>();
-        MoveScore bestMoveScore = new MoveScore({0,1}, 100);
+        int[] testMove = {0,5};
+        MoveScore bestMoveScore = new MoveScore(testMove, 100);
         Agent[] newLionBoard;
         
         /* Lion's turn */
@@ -40,15 +41,15 @@ public class StateTree {
                     currentDepth--;
                 }
                 if (lambMoveScore.getScore() > moveScore.getScore()) {
-                    moveScore.setScore(lambMoveScore.getScore());
+                    moveScore = lambMoveScore;
                 }
                 if (moveScore.getScore() < bestMoveScore.getScore()) {
-                    bestMoveScore.setScore(moveScore.getScore());
+                    System.out.println(moveScore.getScore());
+                    bestMoveScore = moveScore;
+                    System.out.println(bestMoveScore.getMove()[1]);
                 }
             }
-        
-        return bestMoveScore;  
-        
+        return bestMoveScore;
     }
 
     private static MoveScore buildLambTree(Agent[] board, int currentDepth) {
@@ -80,13 +81,12 @@ public class StateTree {
                 currentDepth--;
             }
             if (lionMoveScore.getScore() > moveScore.getScore()) {
-                moveScore.setScore(lionMoveScore.getScore());
+                moveScore = lionMoveScore;
             }
             if (moveScore.getScore() > bestMoveScore.getScore()) {
-                bestMoveScore.setScore(moveScore.getScore());
+                bestMoveScore = moveScore;
             }
         }
-        // System.out.println(bestMoveScore);   
         return bestMoveScore;
     }
     
