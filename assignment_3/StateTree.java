@@ -6,6 +6,8 @@ public class StateTree {
 
     private static final int DEPTH = 1; // Gets depth
     public static int[] neighbours = {-1, 1,-4, 4, -5, 5, -6, 6};
+    public static int weightNearLamb = 5;
+    public static int weightLamb = 10;
 
 
     // private static int[] bestMove;
@@ -143,7 +145,34 @@ public class StateTree {
     
     /* Compares to boards and returns the best */
     private static int evaluate(Agent[] board) {
-        return 20;
+        int[] neighbours = {-6, -5, -4, -1, 1, 4, 5, 6};
+        int numberNearLambs = 0;
+        int totalLambs = 0;
+        int score;
+        
+        /* Compute total number of Lambs */
+        for (int i=0; i<board.length; i++) {
+            if (board[i] != null && board[i].getClass().equals(Lamb.class)) {
+                totalLambs++;
+            }
+        }
+        
+        /* Compute number of neighbouring lambs */
+        for (int i=0; i<board.length; i++) {
+            if (board[i] != null && board[i].getClass().equals(Lion.class)) {
+                for (int j=0; j<neighbours.length; j++) {
+                    if (i+j>0 && i+j<24 && board[i+j] != null && board[i+j].getClass().equals(Lamb.class)) {
+                        numberNearLambs++;
+                    }
+                }
+            }            
+        }        
+        
+        score = numberNearLambs*weightNearLamb + totalLambs*weightLamb;
+        
+        return score;
+       
+        
     }
 
     public static int[] getBestMove(Agent[] board) {
