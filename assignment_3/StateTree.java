@@ -63,6 +63,8 @@ public class StateTree {
         ArrayList<int[]> tempMoves = new ArrayList<int[]>();
         MoveScore bestMoveScore = new MoveScore();
 
+        Agent[] oldBoard = new Agent[25];
+
 
         if (LionsLambs.LAMB_COUNT != 0) {
             tempMoves = getPossibleLambMoves(board, 0);
@@ -143,24 +145,28 @@ public class StateTree {
     private static Agent[] newBoard(Agent[] board, int[] move) {
         int pos1 = move[0];
         int pos2 = move[1];
+        Agent[] newBoard = new Agent[25];
+        for (int i = 0; i < board.length ;i++ ) {
+            newBoard[i] = board[i];
+        }
         int[] jumps = {-2, 2,-8, 8, -10, 10, -12, 12};
         int posDiff = pos2 - pos1;
         System.out.println("newBoard: "+pos1+" -> "+pos2);
         if (pos2 > 9000) {
-            board[pos1] =  new Lamb("name", pos1);
+            newBoard[pos1] =  new Lamb("name", pos1);
         } else {
-            board[pos2] = board[pos1];
-            board[pos1] = null;
+            newBoard[pos2] = newBoard[pos1];
+            newBoard[pos1] = null;
         } 
         // checks of the move that was done was a kill move and removes the lamb
         for (int i=0;i < jumps.length ; i++) {
             if (posDiff == i) {
                 int target = pos1 + (pos2 - pos1)/2;
-                board[target] = null;
+                newBoard[target] = null;
             }
         }
         // Board.drawBoard(board);
-        return board;
+        return newBoard;
     }
     
     /* Compares to boards and returns the best */
