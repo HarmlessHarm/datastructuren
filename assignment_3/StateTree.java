@@ -4,7 +4,8 @@ import java.lang.*;
 
 public class StateTree {
 
-    private static final int DEPTH = 1; // Gets depth   
+    private static final int DEPTH = 1; // Gets depth
+    public static int[] neighbours = {-1, 1,-4, 4, -5, 5, -6, 6};
 
 
     // private static int[] bestMove;
@@ -59,12 +60,22 @@ public class StateTree {
         ArrayList<int[]> tempMoves = new ArrayList<int[]>();
         MoveScore bestMoveScore = new MoveScore();
         Agent[] newLambBoard;
-        
-        for (int i=0; i<board.length; i++) {
-            if ( board[i] != null && board[i].getClass().equals(Lamb.class) ) {
-                tempMoves = getPossibleLambMoves(board, i);                     // returns ArrayList with all possible moves a Lamb on board[i]
-                for (int j=0; j < tempMoves.size(); j++) {
-                    moves.add(tempMoves.get(j));                            // Adds all possible moves for Lamb to moves ArrayList moves
+
+
+        if (LionsLambs.LAMB_COUNT != 0) {
+            System.out.println("lambcount != 0");
+            tempMoves = getPossibleLambMoves(board, 0);
+            for (int k=0;k < tempMoves.size() ;k++ ) {
+                moves.add(tempMoves.get(k));
+            }
+        }
+        if (LionsLambs.LAMB_COUNT == 0) {
+            for (int i=0; i<board.length; i++) {
+                if ( board[i] != null && board[i].getClass().equals(Lamb.class) ) {
+                    tempMoves = getPossibleLambMoves(board, i);                     // returns ArrayList with all possible moves a Lamb on board[i]
+                    for (int j=0; j < tempMoves.size(); j++) {
+                        moves.add(tempMoves.get(j));                            // Adds all possible moves for Lamb to moves ArrayList moves
+                    }
                 }
             }
         }
@@ -91,17 +102,38 @@ public class StateTree {
     }
     
     /* Checks all possible moves for a player -- STILL TO BE WRITTEN */
-    private static ArrayList<int[]> getPossibleLionMoves(Agent[] board, int boardPos) {
+    private static ArrayList<int[]> getPossibleLionMoves(Agent[] board, int i) {
         ArrayList<int[]> possibleMoves = new ArrayList<int[]>();
-        int[] move = {0,1};
-        possibleMoves.add(move);
+        // newMove = new int[2];
+        for (int j=0;j < board.length ;j++ ) {
+            if (Agent.validate(board, i, j, -1)) {
+                int[] newMove = {i, j};
+                System.out.println("valid: "+i+" -> "+j);
+                possibleMoves.add(newMove);
+            }
+        }
         return possibleMoves;
     }
-
-    private static ArrayList<int[]> getPossibleLambMoves(Agent[] board, int boardPos) {
+    private static ArrayList<int[]> getPossibleLambMoves(Agent[] board, int i) {
         ArrayList<int[]> possibleMoves = new ArrayList<int[]>();
-        int[] move1 = {12,9001};
-        possibleMoves.add(move1);
+        // int[] newMove = new int[2];
+        if (LionsLambs.LAMB_COUNT != 0) {
+            for (int j=0;j < board.length ;j++ ) {
+                if(Agent.validate(board,j,9001,1)){
+                    System.out.println("place lamb@ "+j);
+                    int[] newMove = {j, 9001};
+                    possibleMoves.add(newMove);
+                }
+            }
+        }
+        if(LionsLambs.LAMB_COUNT == 0) {
+            for (int k=0;k < board.length ;k++ ) {
+                if(Agent.validate(board,i, k, 1)){
+                    int[] newMove = {i,k};
+                    possibleMoves.add(newMove);
+                }
+            }
+        }
         return possibleMoves;
     }
     

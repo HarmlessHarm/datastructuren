@@ -27,9 +27,12 @@ public abstract class Agent {
             return false;
         }
         // if pos2 > 9000 place lamb
-        if (pos2 > 9000 && LionsLambs.LAMB_COUNT != 0 && 
-            board[pos1] == null && turn == 1) {
-            return true;
+        if (pos2 > 9000 && LionsLambs.LAMB_COUNT != 0 && turn == 1) {
+            if (board[pos1] == null) {
+                return true;
+            } else{
+                return false;
+            }
         } else if (board[pos1] != null && board[pos2] == null) {
             if((turn == 1 && board[pos1].getClass().equals(Lamb.class) && LionsLambs.LAMB_COUNT == 0) ||
                 turn == -1 && board[pos1].getClass().equals(Lion.class)) {
