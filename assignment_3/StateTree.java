@@ -14,13 +14,12 @@ public class StateTree {
 
     /* Recursive method to build a tree and choose the best path while doing so */
     private static MoveScore buildLionTree(Agent[] board, int currentDepth) {
-    
+        System.out.println("BUILD LION TREE");
         //init vars;
         ArrayList<int[]> moves = new ArrayList<int[]>();
         ArrayList<int[]> tempMoves = new ArrayList<int[]>();
         int[] testMove = {0,5};
         MoveScore bestMoveScore = new MoveScore(testMove, 100);
-        Agent[] newLionBoard;
         
         /* Lion's turn */
         // if (turn == -1) {
@@ -34,34 +33,35 @@ public class StateTree {
             }
             for (int k=0; k < moves.size(); k++) {
                 int[] move = moves.get(k);
-                Agent[] newBoard = newBoard(board, move);
+                Agent[] newBoard = new Agent[25];
+                newBoard = newBoard(board, move);
                 int score = evaluate(newBoard);
                 MoveScore moveScore = new MoveScore(move, score);
                 MoveScore lambMoveScore = new MoveScore();
                 if (currentDepth != DEPTH) {
                     currentDepth++;
                     lambMoveScore = buildLambTree(newBoard, currentDepth);
+                    System.out.println("OUT OF LAMB TREE");
                     currentDepth--;
                 }
                 if (lambMoveScore.getScore() > moveScore.getScore()) {
-                    moveScore = lambMoveScore;
+                    moveScore.setScore(lambMoveScore.getScore());
                 }
                 if (moveScore.getScore() < bestMoveScore.getScore()) {
                     System.out.println(moveScore.getScore());
                     bestMoveScore = moveScore;
-                    System.out.println(bestMoveScore.getMove()[1]);
+                    System.out.println("BM: "+bestMoveScore.getMove()[0]+" -> "+bestMoveScore.getMove()[1]);
                 }
             }
         return bestMoveScore;
     }
 
     private static MoveScore buildLambTree(Agent[] board, int currentDepth) {
-    
+        System.out.println("BUILD LAMB TREE");
         //init vars;
         ArrayList<int[]> moves = new ArrayList<int[]>();
         ArrayList<int[]> tempMoves = new ArrayList<int[]>();
         MoveScore bestMoveScore = new MoveScore();
-        Agent[] newLambBoard;
 
 
         if (LionsLambs.LAMB_COUNT != 0) {
@@ -83,7 +83,8 @@ public class StateTree {
 
         for (int k=0; k < moves.size(); k++) {
             int[] move = moves.get(k);
-            Agent[] newBoard = newBoard(board, move);
+            Agent[] newBoard = new Agent[25];
+            newBoard = newBoard(board, move);
             int score = evaluate(newBoard);
             MoveScore moveScore = new MoveScore(move, score);
             MoveScore lionMoveScore = new MoveScore();
@@ -93,7 +94,7 @@ public class StateTree {
                 currentDepth--;
             }
             if (lionMoveScore.getScore() > moveScore.getScore()) {
-                moveScore = lionMoveScore;
+                moveScore.setScore(lionMoveScore.getScore());
             }
             if (moveScore.getScore() > bestMoveScore.getScore()) {
                 bestMoveScore = moveScore;
@@ -140,6 +141,25 @@ public class StateTree {
     
     /* Simulates a move and returns the board after doing the move */
     private static Agent[] newBoard(Agent[] board, int[] move) {
+        int pos1 = move[0];
+        int pos2 = move[1];
+        int[] jumps = {-2, 2,-8, 8, -10, 10, -12, 12};
+        int posDiff = pos2 - pos1;
+        System.out.println("newBoard: "+pos1+" -> "+pos2);
+        if (pos2 > 9000) {
+            board[pos1] =  new Lamb("name", pos1);
+        } else {
+            board[pos2] = board[pos1];
+            board[pos1] = null;
+        } 
+        // checks of the move that was done was a kill move and removes the lamb
+        for (int i=0;i < jumps.length ; i++) {
+            if (posDiff == i) {
+                int target = pos1 + (pos2 - pos1)/2;
+                board[target] = null;
+            }
+        }
+        // Board.drawBoard(board);
         return board;
     }
     
@@ -172,7 +192,6 @@ public class StateTree {
         
         return score;
        
-        
     }
 
     public static int[] getBestMove(Agent[] board) {
