@@ -18,13 +18,8 @@ public class Lion extends Agent {
         //System.out.println(posDif);
 
         /* Check whether move is valid and whether lion jumps over lamb */
-        if (target != null && valid(pos1, pos2, posDif) && target.getClass().equals(Lamb.class)) {
-            
-            // THIS PART HAS TO GO TO LionsLambs else all lambs will be killed during state tree building
-            LionsLambs.board[posTar] = null;
-        	LionsLambs.LAMB_KILLED++;
-        	//LionsLambs.lambs
-            return true;
+        if (target != null && valid(pos1, pos2, posDif) && target.getClass().equals(Lamb.class)) {        
+             return true;
         }
         else {
             return false;

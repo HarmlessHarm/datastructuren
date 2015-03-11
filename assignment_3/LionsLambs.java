@@ -1,6 +1,7 @@
 import java.applet.*;
 import java.io.*;
 import java.util.*;
+import java.lang.*;
 
 public class LionsLambs {
 	
@@ -103,6 +104,10 @@ public class LionsLambs {
 	}
 
     public static void setMove(int pos1, int pos2) {
+    	int[] jumps = {-2, 2,-8, 8, -10, 10, -12, 12};
+    	int posDiff = pos2 - pos1;
+    	System.out.println("setMove: "+pos1+" -> "+pos2+" pd: "+posDiff);
+
     	boardHistory.add(board);
     	if (pos2 > 9000) {
 			board[pos1] =  new Lamb("name", pos1);
@@ -110,6 +115,14 @@ public class LionsLambs {
     	} else {
 	    	board[pos2] = board[pos1];
 	    	board[pos1] = null;
+    	} 
+    	// checks of the move that was done was a kill move and removes the lamb
+    	for (int i=0;i < jumps.length ; i++) {
+    		if (posDiff == i) {
+	    		int target = pos1 + (pos2 - pos1)/2;
+	    		board[target] = null;
+	    		LAMB_KILLED++;
+    		}
     	}
     }
 	    	

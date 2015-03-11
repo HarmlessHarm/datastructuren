@@ -63,7 +63,6 @@ public class StateTree {
 
 
         if (LionsLambs.LAMB_COUNT != 0) {
-            System.out.println("lambcount != 0");
             tempMoves = getPossibleLambMoves(board, 0);
             for (int k=0;k < tempMoves.size() ;k++ ) {
                 moves.add(tempMoves.get(k));
@@ -120,7 +119,7 @@ public class StateTree {
         if (LionsLambs.LAMB_COUNT != 0) {
             for (int j=0;j < board.length ;j++ ) {
                 if(Agent.validate(board,j,9001,1)){
-                    System.out.println("place lamb@ "+j);
+                    // System.out.println("place lamb@ "+j);
                     int[] newMove = {j, 9001};
                     possibleMoves.add(newMove);
                 }
