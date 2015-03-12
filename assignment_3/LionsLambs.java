@@ -56,6 +56,7 @@ public class LionsLambs {
 					System.out.print("Lions player's turn: ");
 					// input = readInput();
 					input = Leopold.yourTurnSir(board);
+					//System.out.println("input: " + input[0] + "  " + input[1]);
 					setMove(input[0], input[1]);
 					TURN = TURN * -1;
 
@@ -113,12 +114,14 @@ public class LionsLambs {
 			board[pos1] =  new Lamb("name", pos1);
 			LAMB_COUNT--;
     	} else {
+    	    System.out.println(pos1 +" is emptied now");
 	    	board[pos2] = board[pos1];
 	    	board[pos1] = null;
     	} 
     	// checks of the move that was done was a kill move and removes the lamb
     	for (int i=0;i < jumps.length ; i++) {
     		if (posDiff == jumps[i]) {
+    		    System.out.println("In check killing move");
 	    		int target = pos1 + (pos2 - pos1)/2;
 	    		board[target] = null;
 	    		LAMB_KILLED++;

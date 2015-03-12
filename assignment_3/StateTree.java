@@ -4,9 +4,9 @@ import java.lang.*;
 
 public class StateTree {
 
-    private static final int DEPTH = 2; // Gets depth
+    private static final int DEPTH = 3; // Gets depth
     public static int[] neighbours = {-1, 1,-4, 4, -5, 5, -6, 6};
-    public static int weightNearLamb = 0;
+    public static int weightNearLamb = 5;
     public static int weightLamb = 10;
 
 
@@ -19,7 +19,7 @@ public class StateTree {
         ArrayList<int[]> moves = new ArrayList<int[]>();
         ArrayList<int[]> tempMoves = new ArrayList<int[]>();
         int[] testMove = {0,5};
-        MoveScore bestMoveScore = new MoveScore(testMove, 100);
+        MoveScore bestMoveScore = new MoveScore(testMove, 10000000);
         
         /* Lion's turn */
         // if (turn == -1) {
@@ -49,10 +49,13 @@ public class StateTree {
                 }
                 if (moveScore.getScore() < bestMoveScore.getScore()) {
                     bestMoveScore = moveScore;
-                    System.out.println("Score: "+moveScore.getScore());
-                    System.out.println("BM: "+bestMoveScore.getMove()[0]+" -> "+bestMoveScore.getMove()[1]);
+                    //System.out.println("Score: "+moveScore.getScore());
+                    //System.out.println("BM: "+bestMoveScore.getMove()[0]+" -> "+bestMoveScore.getMove()[1]);
                 }
             }
+            
+            
+            
         return bestMoveScore;
     }
 
@@ -112,7 +115,7 @@ public class StateTree {
         for (int j=0;j < board.length ;j++ ) {
             if (Agent.validate(board, i, j, -1)) {
                 int[] newMove = {i, j};
-                System.out.println("valid: "+i+" -> "+j);
+               // System.out.println("valid: "+i+" -> "+j);
                 possibleMoves.add(newMove);
             }
         }
@@ -161,7 +164,7 @@ public class StateTree {
         // checks of the move that was done was a kill move and removes the lamb
         for (int i=0;i < jumps.length ; i++) {
             if (posDiff == jumps[i]) {
-                System.out.println("Jumpi");
+                // System.out.println("Jumpi");
                 int target = pos1 + (pos2 - pos1)/2;
                 newBoard[target] = null;
             }

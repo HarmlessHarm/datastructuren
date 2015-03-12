@@ -42,7 +42,7 @@ public abstract class Agent {
             }
         }
         if(LionsLambs.LAMB_COUNT == 0) {
-            System.out.println("No lambs left...");
+            //System.out.println("No lambs left...");
             return false;
         }
         // System.out.println("Invalid move...");
