@@ -118,7 +118,7 @@ public class LionsLambs {
     	} 
     	// checks of the move that was done was a kill move and removes the lamb
     	for (int i=0;i < jumps.length ; i++) {
-    		if (posDiff == i) {
+    		if (posDiff == jumps[i]) {
 	    		int target = pos1 + (pos2 - pos1)/2;
 	    		board[target] = null;
 	    		LAMB_KILLED++;

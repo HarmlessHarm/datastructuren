@@ -4,9 +4,9 @@ import java.lang.*;
 
 public class StateTree {
 
-    private static final int DEPTH = 1; // Gets depth
+    private static final int DEPTH = 2; // Gets depth
     public static int[] neighbours = {-1, 1,-4, 4, -5, 5, -6, 6};
-    public static int weightNearLamb = 5;
+    public static int weightNearLamb = 0;
     public static int weightLamb = 10;
 
 
@@ -14,7 +14,7 @@ public class StateTree {
 
     /* Recursive method to build a tree and choose the best path while doing so */
     private static MoveScore buildLionTree(Agent[] board, int currentDepth) {
-        System.out.println("BUILD LION TREE");
+        // System.out.println("BUILD LION TREE");
         //init vars;
         ArrayList<int[]> moves = new ArrayList<int[]>();
         ArrayList<int[]> tempMoves = new ArrayList<int[]>();
@@ -41,15 +41,15 @@ public class StateTree {
                 if (currentDepth != DEPTH) {
                     currentDepth++;
                     lambMoveScore = buildLambTree(newBoard, currentDepth);
-                    System.out.println("OUT OF LAMB TREE");
+                    // System.out.println("OUT OF LAMB TREE");
                     currentDepth--;
                 }
                 if (lambMoveScore.getScore() > moveScore.getScore()) {
                     moveScore.setScore(lambMoveScore.getScore());
                 }
                 if (moveScore.getScore() < bestMoveScore.getScore()) {
-                    System.out.println(moveScore.getScore());
                     bestMoveScore = moveScore;
+                    System.out.println("Score: "+moveScore.getScore());
                     System.out.println("BM: "+bestMoveScore.getMove()[0]+" -> "+bestMoveScore.getMove()[1]);
                 }
             }
@@ -57,7 +57,7 @@ public class StateTree {
     }
 
     private static MoveScore buildLambTree(Agent[] board, int currentDepth) {
-        System.out.println("BUILD LAMB TREE");
+        // System.out.println("BUILD LAMB TREE");
         //init vars;
         ArrayList<int[]> moves = new ArrayList<int[]>();
         ArrayList<int[]> tempMoves = new ArrayList<int[]>();
@@ -151,7 +151,7 @@ public class StateTree {
         }
         int[] jumps = {-2, 2,-8, 8, -10, 10, -12, 12};
         int posDiff = pos2 - pos1;
-        System.out.println("newBoard: "+pos1+" -> "+pos2);
+        // System.out.println("newBoard: "+pos1+" -> "+pos2);
         if (pos2 > 9000) {
             newBoard[pos1] =  new Lamb("name", pos1);
         } else {
@@ -160,7 +160,8 @@ public class StateTree {
         } 
         // checks of the move that was done was a kill move and removes the lamb
         for (int i=0;i < jumps.length ; i++) {
-            if (posDiff == i) {
+            if (posDiff == jumps[i]) {
+                System.out.println("Jumpi");
                 int target = pos1 + (pos2 - pos1)/2;
                 newBoard[target] = null;
             }
@@ -171,8 +172,8 @@ public class StateTree {
     
     /* Compares to boards and returns the best */
     private static int evaluate(Agent[] board) {
-        int[] neighbours = {-6, -5, -4, -1, 1, 4, 5, 6};
-        int numberNearLambs = 0;
+        // int[] neighbours = {-6, -5, -4, -1, 1, 4, 5, 6};
+        // int numberNearLambs = 0;
         int totalLambs = 0;
         int score;
         
@@ -183,18 +184,18 @@ public class StateTree {
             }
         }
         
-        /* Compute number of neighbouring lambs */
-        for (int i=0; i<board.length; i++) {
-            if (board[i] != null && board[i].getClass().equals(Lion.class)) {
-                for (int j=0; j<neighbours.length; j++) {
-                    if (i+j>0 && i+j<24 && board[i+j] != null && board[i+j].getClass().equals(Lamb.class)) {
-                        numberNearLambs++;
-                    }
-                }
-            }            
-        }        
+        // /* Compute number of neighbouring lambs */
+        // for (int i=0; i<board.length; i++) {
+        //     if (board[i] != null && board[i].getClass().equals(Lion.class)) {
+        //         for (int j=0; j<neighbours.length; j++) {
+        //             if (i+j>0 && i+j<24 && board[i+j] != null && board[i+j].getClass().equals(Lamb.class)) {
+        //                 numberNearLambs++;
+        //             }
+        //         }
+        //     }            
+        // }        
         
-        score = numberNearLambs*weightNearLamb + totalLambs*weightLamb;
+        score = /*numberNearLambs*weightNearLamb + */totalLambs*weightLamb;
         
         return score;
        
