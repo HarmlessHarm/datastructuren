@@ -109,7 +109,7 @@ public class StateTree {
     }
     
     /* Checks all possible moves for a player -- STILL TO BE WRITTEN */
-    private static ArrayList<int[]> getPossibleLionMoves(Agent[] board, int i) {
+    public static ArrayList<int[]> getPossibleLionMoves(Agent[] board, int i) {
         ArrayList<int[]> possibleMoves = new ArrayList<int[]>();
         // newMove = new int[2];
         for (int j=0;j < board.length ;j++ ) {
@@ -121,6 +121,7 @@ public class StateTree {
         }
         return possibleMoves;
     }
+    
     private static ArrayList<int[]> getPossibleLambMoves(Agent[] board, int i) {
         ArrayList<int[]> possibleMoves = new ArrayList<int[]>();
         // int[] newMove = new int[2];
