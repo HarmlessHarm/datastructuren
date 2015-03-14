@@ -41,7 +41,7 @@ public class LionsLambs {
 			Board.drawBoard(board);
 			
 			for (int i=0; i<board.length; i++) {
-			    if (board[i].getClass().equals(Lion.class)) {
+			    if (board[i] != null && board[i].getClass().equals(Lion.class)) {
 			        if (StateTree.getPossibleLionMoves(board, i).get(0) == null) {
 			            LIONS_ENCLOSED++;
 			        }
