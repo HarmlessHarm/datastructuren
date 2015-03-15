@@ -4,7 +4,7 @@ import java.lang.*;
 
 public class StateTree {
 
-    private static final int DEPTH = 3; // Gets depth
+    private static final int DEPTH = 5; // Gets depth
     public static int[] neighbours = {-1, 1,-4, 4, -5, 5, -6, 6};
     public static int weightNearLamb = 5;
     public static int weightLamb = 10;
