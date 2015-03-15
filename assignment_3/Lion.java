@@ -3,7 +3,6 @@ public class Lion extends Agent {
     public static Agent target;
 
     public Lion(String name, int position) {
-
         this.name = name;
         this.position = position;
 

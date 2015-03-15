@@ -1,7 +1,10 @@
+import java.util.*;
+
 public abstract class Agent {
 
     public String name;
     public int position;
+    public static ArrayList<Agent[]> boardHistory = new ArrayList<Agent[]>();
     
     public Agent() {
         //nothing
@@ -22,10 +25,35 @@ public abstract class Agent {
     /*  */
 
     public static boolean validate(Agent[] board, int pos1, int pos2, int turn) {
+        //boardHistory.add(board);
+    
         if (((pos2 < 0 || pos2 > 24) && pos2 < 9000) ||
              (pos1 < 0 || pos1 > 24 )) {
             return false;
-        }
+        }       
+        
+                
+        /* Simulate move and check whether this board position has occured before */
+        /* Agent[] copyBoard = new Agent[25];
+        for (int i=0; i<board.length; i++) {
+            copyBoard[i] = board[i];
+        }    
+        
+        if (pos2 > 9000) {
+			copyBoard[pos1] =  new Lamb("name", pos1);
+    	} else {
+	    	copyBoard[pos2] = copyBoard[pos1];
+	    	copyBoard[pos1] = null;
+    	} 
+        
+        for (int i=0; i<boardHistory.size(); i++) {
+            if (!compareBoards(copyBoard, boardHistory.get(i))) {                
+                return false;
+            }
+        } */
+        
+        /* End check */
+        
         // if pos2 > 9000 place lamb
         if (pos2 > 9000 && LionsLambs.LAMB_COUNT != 0 && turn == 1) {
             if (board[pos1] == null) {
@@ -33,7 +61,8 @@ public abstract class Agent {
             } else{
                 return false;
             }
-        } else if (board[pos1] != null && board[pos2] == null) {
+        } 
+        else if (board[pos1] != null && board[pos2] == null) {
             if((turn == 1 && board[pos1].getClass().equals(Lamb.class) && LionsLambs.LAMB_COUNT == 0) ||
                 turn == -1 && board[pos1].getClass().equals(Lion.class)) {
                 if (move(pos1, pos2) || board[pos1].specialMove(pos1, pos2)) {
@@ -41,7 +70,7 @@ public abstract class Agent {
                 }
             }
         }
-        if(LionsLambs.LAMB_COUNT == 0) {
+        if (LionsLambs.LAMB_COUNT == 0) {
             //System.out.println("No lambs left...");
             return false;
         }
@@ -116,4 +145,31 @@ public abstract class Agent {
             return false;
         }
     }
+    
+    /* Compares whether two boards are the same (array comparison) */
+    /* private static boolean compareBoards(Agent[] copyBoard, Agent[] usedBoard) {
+        int samePositions = 0;
+        
+       // System.out.println("yes");
+        
+        for (int i=0; i<copyBoard.length; i++) {
+            for (int j=0; j<usedBoard.length; j++) {
+                if (!((copyBoard[i] == null && usedBoard[j] == null) ||
+                    (copyBoard[i] != null && usedBoard[j] != null && copyBoard[i].getClass().equals(usedBoard[j].getClass())))) {
+                    return true;
+                }
+                else {
+                    samePositions++;
+                }
+            }
+        }
+        
+        
+        
+        if (samePositions == 25) {
+            return false;
+            
+        }
+        return true;
+    } */
 }

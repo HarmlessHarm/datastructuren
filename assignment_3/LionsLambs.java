@@ -41,12 +41,16 @@ public class LionsLambs {
 			Board.drawBoard(board);
 			
 			for (int i=0; i<board.length; i++) {
+			
 			    if (board[i] != null && board[i].getClass().equals(Lion.class)) {
+			        
 			        if (StateTree.getPossibleLionMoves(board, i).get(0) == null) {
 			            LIONS_ENCLOSED++;
 			        }
 			    }
 			}
+			
+			//System.out.println("check");
 			
 			if (LAMB_KILLED == 2) {
 			    WIN_STATE = -1;
@@ -64,7 +68,7 @@ public class LionsLambs {
 					pos1 = input[0];
 					pos2 = input[1];
 
-					if(board[pos1].validate(board, pos1, pos2, TURN)) {
+					if (board[pos1].validate(board, pos1, pos2, TURN)) {
 						setMove(pos1, pos2);
 						TURN = TURN * -1;
 						break;
@@ -131,7 +135,7 @@ public class LionsLambs {
     	int posDiff = pos2 - pos1;
     	System.out.println("setMove: "+pos1+" -> "+pos2+" pd: "+posDiff);
 
-    	boardHistory.add(board);
+    	//boardHistory.add(board);
     	if (pos2 > 9000) {
 			board[pos1] =  new Lamb("name", pos1);
 			LAMB_COUNT--;
@@ -143,7 +147,6 @@ public class LionsLambs {
     	// checks of the move that was done was a kill move and removes the lamb
     	for (int i=0;i < jumps.length ; i++) {
     		if (posDiff == jumps[i]) {
-    		    System.out.println("In check killing move");
 	    		int target = pos1 + (pos2 - pos1)/2;
 	    		board[target] = null;
 	    		LAMB_KILLED++;
