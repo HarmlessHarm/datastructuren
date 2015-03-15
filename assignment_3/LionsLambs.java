@@ -13,6 +13,7 @@ public class LionsLambs {
 	public static int TURN = 1;
 	public static int LAMB_COUNT = 20;
 	public static int LAMB_KILLED = 0;
+	public static int LIONS_ENCLOSED = 0;
 	public static int[] input;
 
 	public static void init() {
@@ -38,6 +39,24 @@ public class LionsLambs {
 		while (WIN_STATE == 0) {
 		    // updateBoard(); -- the board should be updated according to the positions filled
 			Board.drawBoard(board);
+			
+			for (int i=0; i<board.length; i++) {
+			    if (board[i] != null && board[i].getClass().equals(Lion.class)) {
+			        if (StateTree.getPossibleLionMoves(board, i).get(0) == null) {
+			            LIONS_ENCLOSED++;
+			        }
+			    }
+			}
+			
+			if (LAMB_KILLED == 2) {
+			    WIN_STATE = -1;
+			}
+			
+			
+			if (LIONS_ENCLOSED == 4) {
+			    WIN_STATE = 1;
+			}
+			
 			while (true) {
 				if (TURN == 1) {
 					System.out.print("Lambs player's turn: ");
@@ -64,8 +83,9 @@ public class LionsLambs {
 					System.out.println("Leo says: "+input[0]+" "+input[1]);
 					break;
 				}
-				
 			}
+			
+
 		}
 		
 		if (WIN_STATE == 1) {
@@ -106,6 +126,8 @@ public class LionsLambs {
 
     public static void setMove(int pos1, int pos2) {
     	int[] jumps = {-2, 2,-8, 8, -10, 10, -12, 12};
+    	int[] neighbours = {-6, -5, -4, -1, 1, 4, 5, 6};
+    	int neighbourLambs = 0;
     	int posDiff = pos2 - pos1;
     	System.out.println("setMove: "+pos1+" -> "+pos2+" pd: "+posDiff);
 
@@ -125,8 +147,10 @@ public class LionsLambs {
 	    		int target = pos1 + (pos2 - pos1)/2;
 	    		board[target] = null;
 	    		LAMB_KILLED++;
+	    		System.out.println(LAMB_KILLED);
     		}
-    	}
+    	}    	
+    	    	
     }
 	    	
 
