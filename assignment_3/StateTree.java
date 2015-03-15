@@ -38,6 +38,7 @@ public class StateTree {
                 int score = evaluate(newBoard);
                 MoveScore moveScore = new MoveScore(move, score);
                 MoveScore lambMoveScore = new MoveScore();
+                //System.out.println(lambMoveScore.getScore());
                 if (currentDepth != DEPTH) {
                     //MoveScore lambMoveScore = new MoveScore(); //added
                     currentDepth++;
@@ -47,12 +48,25 @@ public class StateTree {
                 }
                 if (lambMoveScore.getScore() > moveScore.getScore()) {
                     moveScore.setScore(lambMoveScore.getScore());
+                    
+                    if (currentDepth == 0) {
+                       // System.out.println("BM: " +bestMoveScore.getScore());
+                    }
+                    //System.out.println("in if 1");
                 }
                 if (moveScore.getScore() < bestMoveScore.getScore()) {
                     bestMoveScore = moveScore;
-                    //System.out.println("Score: "+moveScore.getScore());
+                    //System.out.println("in if 2");
+                   
+                    System.out.println("Score: "+moveScore.getScore());
                     //System.out.println("BM: "+bestMoveScore.getMove()[0]+" -> "+bestMoveScore.getMove()[1]);
                 }
+                
+                /*
+                
+                Op het niveau van de leeuwen moeten we 
+                
+                */
             }
             
             
@@ -203,7 +217,7 @@ public class StateTree {
 		    }
 		}
 		
-		double scoreValidMoves = Math.pow(g, (8-numberValidMoves)) + totalLambs*weightLamb;
+		double scoreValidMoves = (Math.pow(g, (8-numberValidMoves))) + totalLambs*weightLamb;
 		
 		/* Formula to compute score */
 		score = (int)scoreValidMoves;
