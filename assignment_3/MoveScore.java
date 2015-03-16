@@ -25,8 +25,7 @@ public class MoveScore {
     }
     
     public void setMove(int[] move) {
-        this.move = move;
-        
+        this.move = move;        
     }
     
     public int[] getMove() {

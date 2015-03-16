@@ -117,19 +117,19 @@ public class StateTree {
 
         Agent[] oldBoard = new Agent[25];
 
-
         if (LionsLambs.LAMB_COUNT != 0) {
             tempMoves = getPossibleLambMoves(board, 0);
             for (int k=0;k < tempMoves.size() ;k++ ) {
                 moves.add(tempMoves.get(k));
             }
         }
+        
         if (LionsLambs.LAMB_COUNT == 0) {
             for (int i=0; i<board.length; i++) {
-                if ( board[i] != null && board[i].getClass().equals(Lamb.class) ) {
-                    tempMoves = getPossibleLambMoves(board, i);                     // returns ArrayList with all possible moves a Lamb on board[i]
+                if (board[i] != null && board[i].getClass().equals(Lamb.class)) {
+                    tempMoves = getPossibleLambMoves(board, i);        // returns ArrayList with all possible moves a Lamb on board[i]
                     for (int j=0; j < tempMoves.size(); j++) {
-                        moves.add(tempMoves.get(j));                            // Adds all possible moves for Lamb to moves ArrayList moves
+                        moves.add(tempMoves.get(j));                   // Adds all possible moves for Lamb to moves ArrayList moves
                     }
                 }
             }
@@ -191,8 +191,9 @@ public class StateTree {
     public static ArrayList<int[]> getPossibleLionMoves(Agent[] board, int i) {
         ArrayList<int[]> possibleMoves = new ArrayList<int[]>();
         // newMove = new int[2];
-        for (int j=0;j < board.length ;j++ ) {
+        for (int j=0; j<board.length; j++) {            
             if (Agent.validate(board, i, j, -1)) {
+           
                 int[] newMove = {i, j};
                // System.out.println("valid: "+i+" -> "+j);
                 possibleMoves.add(newMove);
@@ -229,7 +230,7 @@ public class StateTree {
         int pos1 = move[0];
         int pos2 = move[1];
         Agent[] newBoard = new Agent[25];
-        for (int i = 0; i < board.length ;i++ ) {
+        for (int i = 0; i < board.length; i++) {
             newBoard[i] = board[i];
         }
         int[] jumps = {-2, 2,-8, 8, -10, 10, -12, 12};
