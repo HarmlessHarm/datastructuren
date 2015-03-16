@@ -7,6 +7,7 @@ public class LionsLambs {
 	
 	public static Agent[] board = new Agent[25];
 	public static ArrayList<Agent[]> boardHistory = new ArrayList<Agent[]>();
+	public static ArrayList<Integer> scoreHistory = new ArrayList<Integer>();
 	//public static Lion[] lions = new Lion[4];
 	//public static List<Lamb> lambs = new ArrayList<Lamb>();
 	public static int WIN_STATE = 0;
@@ -132,6 +133,8 @@ public class LionsLambs {
     	System.out.println("setMove: "+pos1+" -> "+pos2+" pd: "+posDiff);
 
     	boardHistory.add(board);
+    	scoreHistory.add(getBoardScore(board));
+    	// Changing board
     	if (pos2 > 9000) {
 			board[pos1] =  new Lamb("name", pos1);
 			LAMB_COUNT--;
@@ -150,7 +153,23 @@ public class LionsLambs {
 	    		System.out.println(LAMB_KILLED);
     		}
     	}    	
-    	    	
+    }
+
+    private static int getBoardScore(Agent[] board) {
+    	int totalScore = 1;
+
+
+    	for (int i=0;i<board.length ;i++ ) {
+    		if (board[i]!= null && board[i].getClass().equals(Lamb.class)) {
+    			totalScore = totalScore * 3 * i;
+    		}
+    		if (board[i] != null && board[i].getClass().equals(Lion.class)) {
+    			totalScore = totalScore * 7 * i;
+    		}
+    		if (board[i] == null) {
+    			totalScore = totalScore * 1 * i;
+    		}
+    	}
     }
 	    	
 

@@ -28,7 +28,7 @@ public class StateTree {
             if ( board[i] != null && board[i].getClass().equals(Lion.class) ) {
                 tempMoves = getPossibleLionMoves(board, i);                     // returns ArrayList with all possible moves a Lion on board[i]
                 for (int j=0; j < tempMoves.size(); j++) {
-                    moves.add(tempMoves.get(j));                            // Adds all possible moves for Lion to moves ArrayList moves
+                    moves.add(tempMoves.get(j));                                // Adds all possible moves for Lion to moves ArrayList moves
                 }
             }
         }
@@ -110,7 +110,7 @@ public class StateTree {
 
     private static MoveScore buildLambTree(Agent[] board, int currentDepth) {
         // System.out.println("BUILD LAMB TREE");
-        //init vars;
+        // init vars;
         ArrayList<int[]> moves = new ArrayList<int[]>();
         ArrayList<int[]> tempMoves = new ArrayList<int[]>();
         MoveScore bestMoveScoreLamb = new MoveScore();
@@ -261,16 +261,25 @@ public class StateTree {
         ArrayList<int[]> possibleMoves;
         int totalLambs = 0;
         int score;
+        int totalScore =1;
         
         int g = 3;
         
         
-        /* Compute total number of Lambs */
+        /* Compute total number of Lambs */ /*Compute total score of the board. null=1, Lamb=3, Lion=7*/
         for (int i=0; i<board.length; i++) {
             if (board[i] != null && board[i].getClass().equals(Lamb.class)) {
                 totalLambs++;
+                totalScore = totalScore * 3 * i;
             }
+            if (board[i] != null && board[i].getClass().equals(Lion.class)) {
+                totalScore = totalScore * 7 * i;
+            }
+            if(board[i] == null ) {
+                totalScore = totalScore * 1 * i;
+            } 
         }
+
         
         /* Compute and count number of valid moves */
         for (int i=0; i<board.length; i++) {
@@ -284,6 +293,10 @@ public class StateTree {
 		
 		/* Formula to compute score */
 		score = (int)scoreValidMoves;
+
+        if (knownBoard(totalScore, board)) {
+            score = 999999;
+        }
 		
         
         
@@ -303,6 +316,32 @@ public class StateTree {
         
         return score;
        
+    }
+
+    private static boolean knownBoard(int totalScore, Agent[] board) {
+        ArrayList<Agent[]> boardHistory = LionsLambs.boardHistory;
+        ArrayList<Integer> scoreHistory = LionsLambs.scoreHistory;
+        for (int i=0;i<scoreHistory.size() ;i++ ) {
+            if (totalScore == scoreHistory.get(i)) {
+                Agent[] checkBoard = boardHistory.get(i);
+                for (int j=0;j<checkBoard.length ;j++ ) {
+                    if (board[j] != null && checkBoard[j] != null &&
+                        !board[i].getClass().equals(checkBoard[j].getClass)) {
+                        return false;
+                    }
+                    if (board[j] == null && checkBoard[j] != null) {
+                        return false;
+                    }
+                    if (checkBoard[j] == null && board[j] != null) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+        return false;
+
+
     }
 
     public static int[] getBestMove(Agent[] board) {
