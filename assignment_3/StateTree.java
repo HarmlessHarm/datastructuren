@@ -322,10 +322,10 @@ public class StateTree {
     private static boolean knownBoard(int totalScore, Agent[] board) {
         ArrayList<Agent[]> boardHistory = LionsLambs.boardHistory;
         ArrayList<Integer> scoreHistory = LionsLambs.scoreHistory;
-        for (int i=0;i<scoreHistory.size() ;i++ ) {
+        for (int i=0; i<scoreHistory.size(); i++) {
             if (totalScore == scoreHistory.get(i)) {
                 Agent[] checkBoard = boardHistory.get(i);
-                for (int j=0;j<checkBoard.length ;j++ ) {
+                for (int j=0; j<checkBoard.length; j++) {
                     if (board[j] != null && checkBoard[j] != null &&
                         !board[i].getClass().equals(checkBoard[j].getClass())) {
                         return false;
@@ -338,7 +338,7 @@ public class StateTree {
                     }
                 }
                 return true;
-            }p
+            }
         }
         return false;
 
