@@ -140,7 +140,6 @@ public class LionsLambs {
 
     	boardHistory.add(board);
     	scoreHistory.add(getBoardScore(board));
-    	System.out.println("board: "+board+" score: "+getBoardScore(board));
 
     	// Changing board
     	if (pos2 > 9000) {
@@ -160,9 +159,6 @@ public class LionsLambs {
 	    		System.out.println(LAMB_KILLED);
     		}
     	}
-    	
-//    	boardHistory.add(board);
-//    	scoreHistory.add(getBoardScore(board));
 //    	System.out.println("board: "+board+" score: "+getBoardScore(board));
     	
     }
@@ -185,26 +181,6 @@ public class LionsLambs {
                 totalScore = totalScore + "1";
             }
         }
-        
         return totalScore;
-    
-//    	int totalScore = 0;
-
-//    	for (int i=0; i<board.length; i++) {
-//    		if (board[i]!= null && board[i].getClass().equals(Lamb.class)) {
-//    			totalScore += 3 * (i+1);
-//    		}
-//    		if (board[i] != null && board[i].getClass().equals(Lion.class)) {
-//    			totalScore += 7 * (i+1);
-//    		}
-//    		if (board[i] == null) {
-//    			totalScore += 1 * (i+1);
-//    		}
-//    	}
-//    	return totalScore;
     }
-	    	
-
-	    
-	    
 }

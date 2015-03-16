@@ -4,7 +4,7 @@ import java.lang.*;
 
 public class StateTree {
 
-    private static final int DEPTH = 1; // Gets depth
+    private static final int DEPTH = 3; // Gets depth
     public static int[] neighbours = {-1, 1,-4, 4, -5, 5, -6, 6};
     public static int weightNearLamb = 5;
     public static int weightLamb = 10;
@@ -46,6 +46,7 @@ public class StateTree {
             
 
             if (currentDepth != 0 || (currentDepth == 0 && !knownBoard(newBoard))) {
+                // System.out.println(k+" found board?: "+knownBoard(newBoard));
                 /* If max depth hasn't been reached yet, do another layer of recursion */
                 if (currentDepth != DEPTH) {
                     currentDepth++;
@@ -57,6 +58,11 @@ public class StateTree {
                     lambMoveScore.setScore(score);
                     lambMoveScore.setMove(move);
                 }
+                if (lambMoveScore.getScore() < bestMoveScoreLion.getScore()) {
+                    // System.out.println();
+                    bestMoveScoreLion.setScore(lambMoveScore.getScore());
+                    bestMoveScoreLion.setMove(move);
+                }
             }
             
             /* If the max depth has been reached, you want to compare the scores at one level and send back the lowest score
@@ -64,11 +70,6 @@ public class StateTree {
              */                
                         
             /* This will return the lowest score at the lions level. */    
-            if (lambMoveScore.getScore() < bestMoveScoreLion.getScore()) {
-                // System.out.println();
-                bestMoveScoreLion.setScore(lambMoveScore.getScore());
-                bestMoveScoreLion.setMove(move);
-            }
         }
         
         /* The lowest score will be returned after the entire for loop has been finished. This will be the lamb score for that level. */    
@@ -283,7 +284,7 @@ public class StateTree {
         ArrayList<int[]> possibleMoves;
         int totalLambs = 0;
         
-        int g = 3;
+        int g = 5;
         
         
         /* Compute total number of Lambs */ /*Compute total score of the board. null=1, Lamb=3, Lion=7*/
@@ -336,7 +337,7 @@ public class StateTree {
     }
 
     private static boolean knownBoard(Agent[] newBoard) {
-        ArrayList<Agent[]> boardHistory = LionsLambs.boardHistory;
+        // ArrayList<Agent[]> boardHistory = LionsLambs.boardHistory;
         //ArrayList<Integer> scoreHistory = LionsLambs.scoreHistory;
         ArrayList<String> scoreHistory = LionsLambs.scoreHistory;
 
@@ -375,12 +376,13 @@ public class StateTree {
         }
         
         for (int i=0; i<scoreHistory.size(); i++) {
+
             if (totalScore.equals(scoreHistory.get(i))) {
-                System.out.println("TotalScore: "+totalScore+" i: "+i);
-                return true;    
+                // System.out.println("TotalScore: "+totalScore+" i: "+i);
+                return true;
             }
-            return false;
         }
+        // System.out.println(status);
         return false;
 
 //        for (int i=0; i<scoreHistory.size(); i++) {
