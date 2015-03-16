@@ -162,11 +162,11 @@ public class LionsLambs {
     	}    	
     }
 
+    /* Computes score for a certain board position that is used to check whether board positions haven't occurred before */
     private static int getBoardScore(Agent[] board) {
     	int totalScore = 0;
 
-
-    	for (int i=0;i<board.length ;i++ ) {
+    	for (int i=0; i<board.length; i++) {
     		if (board[i]!= null && board[i].getClass().equals(Lamb.class)) {
     			totalScore += 3 * (i+1);
     		}
@@ -177,7 +177,6 @@ public class LionsLambs {
     			totalScore += 1 * (i+1);
     		}
     	}
-    	// System.out.println("HistoryScore: "+totalScore);
     	return totalScore;
     }
 	    	

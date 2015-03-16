@@ -353,6 +353,7 @@ public class StateTree {
         for (int i=0;i<scoreHistory.size() ;i++ ) {
 
             if (totalScore == scoreHistory.get(i)) {
+<<<<<<< HEAD
                 System.out.println("TotalScore: "+totalScore+" i: "+i);
 
                 Agent[] oldBoard = new Agent[25];
@@ -366,6 +367,13 @@ public class StateTree {
                         System.out.println("lalala");
                         // return false;
                         // break;
+=======
+                Agent[] checkBoard = boardHistory.get(i);
+                for (int j=0;j<checkBoard.length ;j++ ) {
+                    if (board[j] != null && checkBoard[j] != null &&
+                        !board[i].getClass().equals(checkBoard[j].getClass())) {
+                        return false;
+>>>>>>> 2898044cb7d2258a581af0400a50df411eca9591
                     }
                     if (newBoard[j] == null && oldBoard[j] != null) {
                         System.out.println("liiliili");
@@ -380,7 +388,12 @@ public class StateTree {
                     System.out.println("return true;");
                     // return true;
                 }
+<<<<<<< HEAD
             }
+=======
+                return true;
+            }p
+>>>>>>> 2898044cb7d2258a581af0400a50df411eca9591
         }
 
         return false;
