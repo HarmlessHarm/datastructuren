@@ -173,6 +173,8 @@ public class LionsLambs {
     			totalScore = totalScore * 1 * i;
     		}
     	}
+    	
+    	return totalScore;
     }
 	    	
 

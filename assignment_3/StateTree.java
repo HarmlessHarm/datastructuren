@@ -327,7 +327,7 @@ public class StateTree {
                 Agent[] checkBoard = boardHistory.get(i);
                 for (int j=0;j<checkBoard.length ;j++ ) {
                     if (board[j] != null && checkBoard[j] != null &&
-                        !board[i].getClass().equals(checkBoard[j].getClass)) {
+                        !board[i].getClass().equals(checkBoard[j].getClass())) {
                         return false;
                     }
                     if (board[j] == null && checkBoard[j] != null) {
