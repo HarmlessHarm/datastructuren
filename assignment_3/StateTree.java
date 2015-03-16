@@ -426,8 +426,13 @@ public class StateTree {
 //        return false;
     }
 
-    public static int[] getBestMove(Agent[] board) {
+    public static int[] getBestMove(Agent[] board, String player) {
         // System.out.println("BS: "+buildLionTree(board, 0).getScore() + " BM: "+buildLionTree(board, 0).getMove()[0]+" -> "+buildLionTree(board, 0).getMove()[1]); 
-        return buildLionTree(board, 0).getMove();
+        if (player.equals("lambs")) {
+            return buildLionTree(board, 0).getMove();
+        }
+        else {
+            return buildLambTree(board, 0).getMove();
+        }
     }
 }

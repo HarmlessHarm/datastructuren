@@ -12,9 +12,9 @@ public class Leopold {
 	public static final int TURN = -1; // Lions turn always -1
 
     /* AI chooses move */
-	public static int[] yourTurnSir(Agent[] board) {
+	public static int[] yourTurnSir(Agent[] board, String player) {
 		// System.out.println(StateTree.getBestMove(board));
-		return StateTree.getBestMove(board);
+		return StateTree.getBestMove(board, player);
 
 		// ArrayList<int[]> possibleMoves= new ArrayList<int[]>();
 	 //    for (int i=0; i<board.length; i++) {

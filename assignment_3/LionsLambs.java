@@ -17,6 +17,7 @@ public class LionsLambs {
 	public static int LAMB_KILLED = 0;
 	public static int LIONS_ENCLOSED = 0;
 	public static int[] input;
+	public static String player;  //M: added
 
 	public static void init() {
 		// Lions without names are not OK
@@ -29,14 +30,17 @@ public class LionsLambs {
 	}
 
 	public static void main(String[] args) {
+	    player = args[0];
 	    init();
-	    playGame();
+	    playGame(player);
 	}
 
 	// call: java LionsLambs <pos1> (<pos2>)	
 
     /* This method describes the game loop */
-	public static void playGame(){
+	public static void playGame(String player){
+	  
+	
 		int pos1, pos2;
 		// setUpGame(); -- the basic board should be drawn here
 
@@ -67,28 +71,51 @@ public class LionsLambs {
 			while (true) {
 				if (TURN == 1) {
 					System.out.print("Lambs player's turn: ");
-					input = readInput();
-					pos1 = input[0];
-					pos2 = input[1];
+					
+					if (player.equals("lambs")) {					
+					    input = readInput();
+					    pos1 = input[0];
+					    pos2 = input[1];
 
-					if (board[pos1].validate(board, pos1, pos2, TURN)) {
-						setMove(pos1, pos2);
-						TURN = TURN * -1;
-						break;
+					    if (board[pos1].validate(board, pos1, pos2, TURN)) {
+						    setMove(pos1, pos2);
+						    TURN = TURN * -1;
+						    break;
+					    }					
+					}
+					else {
+					    input = Leopold.yourTurnSir(board, player);
+					    setMove(input[0], input[1]);
+					    TURN = TURN * -1;
+					    System.out.println("Leo says: "+input[0]+" "+input[1]);
+					    break;
 					}
 				
 				} 
 				else if (TURN == -1) {
 					System.out.print("Lions player's turn: ");
 					// input = readInput();
-					input = Leopold.yourTurnSir(board);
-					//System.out.println("input: " + input[0] + "  " + input[1]);
-					setMove(input[0], input[1]);
-					TURN = TURN * -1;
+					if (player.equals("lambs")) {
+					    input = Leopold.yourTurnSir(board, player);
+					    //System.out.println("input: " + input[0] + "  " + input[1]);
+					    setMove(input[0], input[1]);
+					    TURN = TURN * -1;
 
-					// setMove(input[0], input[1])
-					System.out.println("Leo says: "+input[0]+" "+input[1]);
-					break;
+					    // setMove(input[0], input[1])
+					    System.out.println("Leo says: "+input[0]+" "+input[1]);
+					    break;
+					}
+					else {
+					    input = readInput();
+					    pos1 = input[0];
+					    pos2 = input[1];
+
+					    if (board[pos1].validate(board, pos1, pos2, TURN)) {
+						    setMove(pos1, pos2);
+						    TURN = TURN * -1;
+						    break;
+					    }					
+					}
 				}
 			}
 			
