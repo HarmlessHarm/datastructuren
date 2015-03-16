@@ -7,7 +7,8 @@ public class LionsLambs {
 	
 	public static Agent[] board = new Agent[25];
 	public static ArrayList<Agent[]> boardHistory = new ArrayList<Agent[]>();
-	public static ArrayList<Integer> scoreHistory = new ArrayList<Integer>();
+	//public static ArrayList<Integer> scoreHistory = new ArrayList<Integer>();
+	public static ArrayList<String> scoreHistory = new ArrayList<String>();
 	//public static Lion[] lions = new Lion[4];
 	//public static List<Lamb> lambs = new ArrayList<Lamb>();
 	public static int WIN_STATE = 0;
@@ -23,6 +24,8 @@ public class LionsLambs {
 		board[4] = new Lion("Leu", 4);
 		board[20] = new Lion("Love", 20);
 		board[24] = new Lion("Lejon", 24);
+//		boardHistory.add(board);
+//		scoreHistory.add(getBoardScore(board));
 	}
 
 	public static void main(String[] args) {
@@ -40,7 +43,6 @@ public class LionsLambs {
 		while (WIN_STATE == 0) {
 		    // updateBoard(); -- the board should be updated according to the positions filled
 			Board.drawBoard(board);
-			
 			for (int i=0; i<board.length; i++) {
 			
 			    if (board[i] != null && board[i].getClass().equals(Lion.class)) {
@@ -53,7 +55,7 @@ public class LionsLambs {
 			
 			//System.out.println("check");
 			
-			if (LAMB_KILLED == 2) {
+			if (LAMB_KILLED == 20) {
 			    WIN_STATE = -1;
 			}
 			
@@ -134,16 +136,18 @@ public class LionsLambs {
     	int[] neighbours = {-6, -5, -4, -1, 1, 4, 5, 6};
     	int neighbourLambs = 0;
     	int posDiff = pos2 - pos1;
-    	System.out.println("setMove: "+pos1+" -> "+pos2+" pd: "+posDiff);
+    	// System.out.println("setMove: "+pos1+" -> "+pos2+" pd: "+posDiff);
 
     	boardHistory.add(board);
     	scoreHistory.add(getBoardScore(board));
+    	System.out.println("board: "+board+" score: "+getBoardScore(board));
+
     	// Changing board
     	if (pos2 > 9000) {
 			board[pos1] =  new Lamb("name", pos1);
 			LAMB_COUNT--;
     	} else {
-    	    System.out.println(pos1 +" is emptied now");
+    	    //System.out.println(pos1 +" is emptied now");
 	    	board[pos2] = board[pos1];
 	    	board[pos1] = null;
     	} 
@@ -155,26 +159,49 @@ public class LionsLambs {
 	    		LAMB_KILLED++;
 	    		System.out.println(LAMB_KILLED);
     		}
-    	}    	
+    	}
+    	
+//    	boardHistory.add(board);
+//    	scoreHistory.add(getBoardScore(board));
+//    	System.out.println("board: "+board+" score: "+getBoardScore(board));
+    	
     }
 
     /* Computes score for a certain board position that is used to check whether board positions haven't occurred before */
-    private static int getBoardScore(Agent[] board) {
-    	int totalScore = 1;
+    //private static int getBoardScore(Agent[] board) {
+    private static String getBoardScore(Agent[] board) {
+        String totalScore = "";
 
-    	for (int i=0; i<board.length; i++) {
-    		if (board[i]!= null && board[i].getClass().equals(Lamb.class)) {
-    			totalScore = totalScore * 3 * i;
-    		}
-    		if (board[i] != null && board[i].getClass().equals(Lion.class)) {
-    			totalScore = totalScore * 7 * i;
-    		}
-    		if (board[i] == null) {
-    			totalScore = totalScore * 1 * i;
-    		}
-    	}
-    	
-    	return totalScore;
+        /* Compute the score of the board */
+        for (int k=0; k<board.length; k++) {
+            if (board[k] != null && board[k].getClass().equals(Lamb.class)) {
+                totalScore = totalScore + "3";
+                
+            }
+            if (board[k] != null && board[k].getClass().equals(Lion.class)) {
+                totalScore = totalScore + "7";
+            }
+            if(board[k] == null ) {
+                totalScore = totalScore + "1";
+            }
+        }
+        
+        return totalScore;
+    
+//    	int totalScore = 0;
+
+//    	for (int i=0; i<board.length; i++) {
+//    		if (board[i]!= null && board[i].getClass().equals(Lamb.class)) {
+//    			totalScore += 3 * (i+1);
+//    		}
+//    		if (board[i] != null && board[i].getClass().equals(Lion.class)) {
+//    			totalScore += 7 * (i+1);
+//    		}
+//    		if (board[i] == null) {
+//    			totalScore += 1 * (i+1);
+//    		}
+//    	}
+//    	return totalScore;
     }
 	    	
 

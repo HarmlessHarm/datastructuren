@@ -4,7 +4,7 @@ import java.lang.*;
 
 public class StateTree {
 
-    private static final int DEPTH = 5; // Gets depth
+    private static final int DEPTH = 1; // Gets depth
     public static int[] neighbours = {-1, 1,-4, 4, -5, 5, -6, 6};
     public static int weightNearLamb = 5;
     public static int weightLamb = 10;
@@ -14,11 +14,13 @@ public class StateTree {
 
     /* Recursive method to build a tree and choose the best path while doing so */
     private static MoveScore buildLionTree(Agent[] board, int currentDepth) {
+    
+       
         // System.out.println("BUILD LION TREE");
         //init vars;
         ArrayList<int[]> moves = new ArrayList<int[]>();
         ArrayList<int[]> tempMoves = new ArrayList<int[]>();
-        int[] testMove = {0,5};
+        int[] testMove = {24,23};
         MoveScore bestMoveScoreLion = new MoveScore(testMove, 10000000);
         
         
@@ -39,15 +41,22 @@ public class StateTree {
             int[] move = moves.get(k);
             Agent[] newBoard = new Agent[25];
             newBoard = newBoard(board, move);
-            int score = evaluate(newBoard);
-            MoveScore moveScore = new MoveScore(move, score);
+            // int score = evaluate(newBoard);
             MoveScore lambMoveScore = new MoveScore();
             
-            /* If max depth hasn't been reached yet, do another layer of recursion */
-            if (currentDepth != DEPTH) {
-                currentDepth++;
-                lambMoveScore = buildLambTree(newBoard, currentDepth);
-                currentDepth--;
+
+            if (currentDepth != 0 || (currentDepth == 0 && !knownBoard(newBoard))) {
+                /* If max depth hasn't been reached yet, do another layer of recursion */
+                if (currentDepth != DEPTH) {
+                    currentDepth++;
+                    lambMoveScore = buildLambTree(newBoard, currentDepth);
+                    currentDepth--;
+                }
+                if (currentDepth == DEPTH) {
+                    int score = evaluate(newBoard);
+                    lambMoveScore.setScore(score);
+                    lambMoveScore.setMove(move);
+                }
             }
             
             /* If the max depth has been reached, you want to compare the scores at one level and send back the lowest score
@@ -55,8 +64,10 @@ public class StateTree {
              */                
                         
             /* This will return the lowest score at the lions level. */    
-            if (moveScore.getScore() < bestMoveScoreLion.getScore()) {
-                bestMoveScoreLion = moveScore;
+            if (lambMoveScore.getScore() < bestMoveScoreLion.getScore()) {
+                // System.out.println();
+                bestMoveScoreLion.setScore(lambMoveScore.getScore());
+                bestMoveScoreLion.setMove(move);
             }
         }
         
@@ -109,11 +120,13 @@ public class StateTree {
     }
 
     private static MoveScore buildLambTree(Agent[] board, int currentDepth) {
+
         // System.out.println("BUILD LAMB TREE");
         // init vars;
         ArrayList<int[]> moves = new ArrayList<int[]>();
         ArrayList<int[]> tempMoves = new ArrayList<int[]>();
         MoveScore bestMoveScoreLamb = new MoveScore();
+
 
         Agent[] oldBoard = new Agent[25];
 
@@ -140,21 +153,29 @@ public class StateTree {
             int[] move = moves.get(k);
             Agent[] newBoard = new Agent[25];
             newBoard = newBoard(board, move);
-            int score = evaluate(newBoard);
-            MoveScore moveScore = new MoveScore(move, score);
+            // MoveScore moveScore = new MoveScore(move, score);
             MoveScore lionMoveScore = new MoveScore();
-            
-            /* If the maximum layer of recursion hasn't been reached yet, do another layer of recursion */
-            if (currentDepth != DEPTH) {
-                currentDepth++;
-                lionMoveScore = buildLionTree(newBoard, currentDepth); // here it starts the recursion
-                currentDepth--;
-            }
-            
-            /* If the maximum layer has been reached, we want to return the highest score, as that is the best move for the lambs */
-            
-            if (moveScore.getScore() > bestMoveScoreLamb.getScore()) {
-                bestMoveScoreLamb = moveScore;
+            if (currentDepth != 0 || (currentDepth == 0 && !knownBoard(newBoard))) {
+                
+                /* If the maximum layer of recursion hasn't been reached yet, do another layer of recursion */
+                if (currentDepth != DEPTH) {
+                    currentDepth++;
+                    lionMoveScore = buildLionTree(newBoard, currentDepth); // here it starts the recursion
+                    currentDepth--;
+                }
+                if (currentDepth == DEPTH) {
+                    int score = evaluate(newBoard);
+                    lionMoveScore.setScore(score);
+                    lionMoveScore.setMove(move);
+                }
+                
+                /* If the maximum layer has been reached, we want to return the highest score, as that is the best move for the lambs */
+                
+                if (lionMoveScore.getScore() > bestMoveScoreLamb.getScore()) {
+                    // System.out.println("BEST SCORE: "+ );
+                    bestMoveScoreLamb.setScore(lionMoveScore.getScore());
+                    bestMoveScoreLamb.setMove(move);
+                }
             }
         }
         
@@ -261,8 +282,6 @@ public class StateTree {
         int numberValidMoves = 0;
         ArrayList<int[]> possibleMoves;
         int totalLambs = 0;
-        int score;
-        int totalScore =1;
         
         int g = 3;
         
@@ -271,33 +290,30 @@ public class StateTree {
         for (int i=0; i<board.length; i++) {
             if (board[i] != null && board[i].getClass().equals(Lamb.class)) {
                 totalLambs++;
-                totalScore = totalScore * 3 * i;
             }
             if (board[i] != null && board[i].getClass().equals(Lion.class)) {
-                totalScore = totalScore * 7 * i;
+                possibleMoves = getPossibleLionMoves(board, i);
+                numberValidMoves += possibleMoves.size();
             }
-            if(board[i] == null ) {
-                totalScore = totalScore * 1 * i;
-            } 
         }
 
         
         /* Compute and count number of valid moves */
-        for (int i=0; i<board.length; i++) {
-		    if (board[i] != null && board[i].getClass().equals(Lion.class)) {
-		        possibleMoves = getPossibleLionMoves(board, i);
-		        numberValidMoves += possibleMoves.size();
-		    }
-		}
+  //       for (int i=0; i<board.length; i++) {
+		//     if (board[i] != null && board[i].getClass().equals(Lion.class)) {
+		//         possibleMoves = getPossibleLionMoves(board, i);
+		//         numberValidMoves += possibleMoves.size();
+		//     }
+		// }
 		
 		double scoreValidMoves = (Math.pow(g, (8-numberValidMoves))) + totalLambs*weightLamb;
 		
 		/* Formula to compute score */
-		score = (int)scoreValidMoves;
+		return (int)scoreValidMoves;
 
-        if (knownBoard(totalScore, board)) {
-            score = 999999;
-        }
+        // if (knownBoard(totalScore, board)) {
+        //     score = 999999;
+        // }
 		
         
         
@@ -315,38 +331,103 @@ public class StateTree {
         
         // score = /*numberNearLambs*weightNearLamb + */totalLambs*weightLamb;
         
-        return score;
+
        
     }
 
-    private static boolean knownBoard(int totalScore, Agent[] board) {
+    private static boolean knownBoard(Agent[] newBoard) {
         ArrayList<Agent[]> boardHistory = LionsLambs.boardHistory;
-        ArrayList<Integer> scoreHistory = LionsLambs.scoreHistory;
-        for (int i=0; i<scoreHistory.size(); i++) {
-            if (totalScore == scoreHistory.get(i)) {
-                Agent[] checkBoard = boardHistory.get(i);
-                for (int j=0; j<checkBoard.length; j++) {
-                    if (board[j] != null && checkBoard[j] != null &&
-                        !board[i].getClass().equals(checkBoard[j].getClass())) {
-                        return false;
-                    }
-                    if (board[j] == null && checkBoard[j] != null) {
-                        return false;
-                    }
-                    if (checkBoard[j] == null && board[j] != null) {
-                        return false;
-                    }
-                }
-                return true;
+        //ArrayList<Integer> scoreHistory = LionsLambs.scoreHistory;
+        ArrayList<String> scoreHistory = LionsLambs.scoreHistory;
+
+//        System.out.println("BH size: "+boardHistory.size());
+//        System.out.println("SH size: "+boardHistory.size());
+
+//        int totalScore = 0;
+
+//        /* Compute the score of the board */
+//        for (int k=0; k<newBoard.length; k++) {
+//            if (newBoard[k] != null && newBoard[k].getClass().equals(Lamb.class)) {
+//                totalScore += 3 * (k + 1);
+//            }
+//            if (newBoard[k] != null && newBoard[k].getClass().equals(Lion.class)) {
+//                totalScore += 7 * (k + 1);
+//            }
+//            if(newBoard[k] == null ) {
+//                totalScore += 1 * (k + 1);
+//            }
+//        }
+
+        String totalScore = "";
+
+        /* Compute the score of the board */
+        for (int k=0; k<newBoard.length; k++) {
+            if (newBoard[k] != null && newBoard[k].getClass().equals(Lamb.class)) {
+                totalScore = totalScore + "3";
+                
             }
+            if (newBoard[k] != null && newBoard[k].getClass().equals(Lion.class)) {
+                totalScore = totalScore + "7";
+            }
+            if(newBoard[k] == null ) {
+                totalScore = totalScore + "1";
+            }
+        }
+        
+        for (int i=0; i<scoreHistory.size(); i++) {
+            if (totalScore.equals(scoreHistory.get(i))) {
+                System.out.println("TotalScore: "+totalScore+" i: "+i);
+                return true;    
+            }
+            return false;
         }
         return false;
 
+//        for (int i=0; i<scoreHistory.size(); i++) {
+//            if (totalScore == scoreHistory.get(i)) {
+//                System.out.println("TotalScore: "+totalScore+" i: "+i);
+//                
+//                Agent[] oldBoard = new Agent[25];                
+//                for (int l=0; l<25; l++) {
+//                    oldBoard[l] = LionsLambs.boardHistory.get(i)[l]; //changed this
+//                }
+//                
+//                System.out.println("Draw boards to check whether they're the same:");
+//                Board.drawBoard(newBoard);
+//                Board.drawBoard(oldBoard);
+////                
+//                for (int j=0; j<oldBoard.length; j++) {
+//                    //System.out.println("oldBoard: "+oldBoard[j]+" newBoard: "+newBoard[j]);
+//                    if (newBoard[j] != null && oldBoard[j] != null &&
+//                        !newBoard[i].getClass().equals(oldBoard[j].getClass())) {
+//                        System.out.println("lalala");
+//                        // return false;
+//                        break;
+//                    }
+//                    if (newBoard[j] == null && oldBoard[j] != null) {
+//                        System.out.println("liiliili");
+//                        // return false;
+//                        break;
+//                    }
+//                    if (oldBoard[j] == null && newBoard[j] != null) {
+//                        System.out.println("lululul  "+newBoard[j]);
+//                        // return false;
+//                        break;
+//                    }
+//                    System.out.println("return true;");
+//                    return true;
+//                }            
 
+//                //return true;
+//            }
+
+//            return false;
+//        }
+//        return false;
     }
 
     public static int[] getBestMove(Agent[] board) {
-        System.out.println("BS: "+buildLionTree(board, 0).getScore() + " BM: "+buildLionTree(board, 0).getMove()[0]+" -> "+buildLionTree(board, 0).getMove()[1]); 
+        // System.out.println("BS: "+buildLionTree(board, 0).getScore() + " BM: "+buildLionTree(board, 0).getMove()[0]+" -> "+buildLionTree(board, 0).getMove()[1]); 
         return buildLionTree(board, 0).getMove();
     }
 }
