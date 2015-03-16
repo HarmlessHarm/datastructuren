@@ -23,6 +23,8 @@ public class LionsLambs {
 		board[4] = new Lion("Leu", 4);
 		board[20] = new Lion("Love", 20);
 		board[24] = new Lion("Lejon", 24);
+		// boardHistory.add(board);
+		// scoreHistory.add(getBoardScore(board));
 	}
 
 	public static void main(String[] args) {
@@ -53,7 +55,7 @@ public class LionsLambs {
 			
 			//System.out.println("check");
 			
-			if (LAMB_KILLED == 2) {
+			if (LAMB_KILLED == 20) {
 			    WIN_STATE = -1;
 			}
 			
@@ -134,10 +136,12 @@ public class LionsLambs {
     	int[] neighbours = {-6, -5, -4, -1, 1, 4, 5, 6};
     	int neighbourLambs = 0;
     	int posDiff = pos2 - pos1;
-    	System.out.println("setMove: "+pos1+" -> "+pos2+" pd: "+posDiff);
+    	// System.out.println("setMove: "+pos1+" -> "+pos2+" pd: "+posDiff);
 
     	boardHistory.add(board);
     	scoreHistory.add(getBoardScore(board));
+    	System.out.println("board: "+board+" score: "+getBoardScore(board));
+
     	// Changing board
     	if (pos2 > 9000) {
 			board[pos1] =  new Lamb("name", pos1);
@@ -159,20 +163,22 @@ public class LionsLambs {
     }
 
     private static int getBoardScore(Agent[] board) {
-    	int totalScore = 1;
+    	int totalScore = 0;
 
 
     	for (int i=0;i<board.length ;i++ ) {
     		if (board[i]!= null && board[i].getClass().equals(Lamb.class)) {
-    			totalScore = totalScore * 3 * i;
+    			totalScore += 3 * (i+1);
     		}
     		if (board[i] != null && board[i].getClass().equals(Lion.class)) {
-    			totalScore = totalScore * 7 * i;
+    			totalScore += 7 * (i+1);
     		}
     		if (board[i] == null) {
-    			totalScore = totalScore * 1 * i;
+    			totalScore += 1 * (i+1);
     		}
     	}
+    	// System.out.println("HistoryScore: "+totalScore);
+    	return totalScore;
     }
 	    	
 
