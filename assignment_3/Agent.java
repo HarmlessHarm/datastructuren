@@ -15,7 +15,7 @@ public abstract class Agent {
         this.position = position;
     } */
 
-    public abstract boolean specialMove(int pos1, int pos2);
+    public abstract boolean specialMove(int pos1, int pos2, Agent[] board);
     // public abstract boolean validateAI(int pos1, int pos2); 
 
     /*public int setPosition() {
@@ -23,7 +23,6 @@ public abstract class Agent {
     } */
   
     /*  */
-
     public static boolean validate(Agent[] board, int pos1, int pos2, int turn) {
         //boardHistory.add(board);
     
@@ -65,7 +64,7 @@ public abstract class Agent {
         else if (board[pos1] != null && board[pos2] == null) {
             if((turn == 1 && board[pos1].getClass().equals(Lamb.class) && LionsLambs.LAMB_COUNT == 0) ||
                 turn == -1 && board[pos1].getClass().equals(Lion.class)) {
-                if (move(pos1, pos2) || board[pos1].specialMove(pos1, pos2)) {
+                if (move(pos1, pos2) || board[pos1].specialMove(pos1, pos2, board)) {
                     return true;
                 }
             }

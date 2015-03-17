@@ -30,8 +30,46 @@ public class LionsLambs {
 	}
 
 	public static void main(String[] args) {
-	    player = args[0];
+	    // player = args[0];
+	    boolean bool = false;
+	    String input;
+
 	    init();
+	    System.out.println("WELCOME! My name is Leopold, I'm a superiour");
+	    System.out.println("AI designed to play this game.");
+	    System.out.println("Do you dare to play against me?");
+	    while (bool == false) {
+		    System.out.print("(yes/no): ");
+		    input = stringRead();
+		    if (input.equals("y") || input.equals("yes")) {
+		    	System.out.println("Would you like to play as mighty lions?");
+		    	System.out.println("Or wee little lambs?");
+		    	while (bool == false) {
+			    	System.out.print("(Lions/Lambs): ");
+			    	input = stringRead();
+			    	if (input.equals("lions") || input.equals("lion")) {
+			    		System.out.println("Good luck! You'll need it...");
+			    		player = "lions";
+			    		bool = true;
+			    	} else if (input.equals("lambs") || input.equals("lamb")) {
+			    		System.out.println("Good luck! You'll need it...");
+			    		player = "lambs";
+			    		bool = true;
+			    	} else {
+			    		System.out.println("C'mon choose already!");
+			    	}
+		    	}
+		    } else if (input.equals("n") || input.equals("no")) {
+		    	player = "two";
+		    	bool = true;
+		    } else if (input.equals("ai")) {
+		    	player = "ai";
+		    	bool = true;
+		    } 
+		    else {
+		    	System.out.println("C'mon choose already!");
+		    }
+	    }
 	    playGame(player);
 	}
 
@@ -46,7 +84,11 @@ public class LionsLambs {
 
 		while (WIN_STATE == 0) {
 		    // updateBoard(); -- the board should be updated according to the positions filled
+			System.out.println("");
 			Board.drawBoard(board);
+			System.out.println("Lambs remaining: "+LAMB_COUNT);
+			System.out.println("Lambs killed   : "+LAMB_KILLED);
+			// System.out.println("");
 			for (int i=0; i<board.length; i++) {
 			
 			    if (board[i] != null && board[i].getClass().equals(Lion.class)) {
@@ -61,11 +103,15 @@ public class LionsLambs {
 			
 			
 			while (true) {
+
 				if (TURN == 1) {
 					System.out.print("Lambs player's turn: ");
 					
-					if (player.equals("lambs")) {					
+					if (player.equals("lambs") || player.equals("two")) {					
 					    input = readInput();
+					    while (input == null) {
+					    	input = readInput();
+					    }
 					    pos1 = input[0];
 					    pos2 = input[1];
 
@@ -75,43 +121,52 @@ public class LionsLambs {
 						    break;
 					    }					
 					}
-					else {
-					    input = Leopold.yourTurnSir(board, player);
+					if (player.equals("lions") || player.equals("ai")){
+					    input = Leopold.yourTurnSir(board);
 					    setMove(input[0], input[1]);
 					    TURN = TURN * -1;
-					    System.out.println("Leo says: "+input[0]+" "+input[1]);
+					    System.out.print(" Leo says: "+input[0]+" ");
+					    if (input[1] < 9000) {
+					    	System.out.println(input[1]);
+					    }else {
+					    	System.out.println("");
+					    }
 					    break;
 					}
 				
-				} 
-				else if (TURN == -1) {
+				}
+
+				if (TURN == -1) {
 					System.out.print("Lions player's turn: ");
 					// input = readInput();
-					if (player.equals("lambs")) {
-					    input = Leopold.yourTurnSir(board, player);
+					if (player.equals("lions") || player.equals("two")) {
+					    input = readInput();
+					    while (input == null) {
+					    	input = readInput();
+					    }
+					    pos1 = input[0];
+					    pos2 = input[1];
+
+					    if (board[pos1].validate(board, pos1, pos2, TURN)) {
+						    setMove(pos1, pos2);
+						    TURN = TURN * -1;
+						    break;
+					    }					
+					} 
+					if (player.equals("lambs") || player.equals("ai")) {
+					    input = Leopold.yourTurnSir(board);
 					    //System.out.println("input: " + input[0] + "  " + input[1]);
 					    setMove(input[0], input[1]);
 					    TURN = TURN * -1;
 
 					    // setMove(input[0], input[1])
-					    System.out.println("Leo says: "+input[0]+" "+input[1]);
+					    System.out.println(" Leo says: "+input[0]+" "+input[1]);
 					    break;
-					}
-					else {
-					    input = readInput();
-					    pos1 = input[0];
-					    pos2 = input[1];
-
-					    if (board[pos1].validate(board, pos1, pos2, TURN)) {
-						    setMove(pos1, pos2);
-						    TURN = TURN * -1;
-						    break;
-					    }					
 					}
 				}
 			}
-			
-			if (LAMB_KILLED == 2) {
+
+			if (LAMB_KILLED == 20) {
 			    WIN_STATE = -1;
 			}
 			
@@ -122,7 +177,7 @@ public class LionsLambs {
 			
 
 		}
-		
+		Board.drawBoard(board);
 		if (WIN_STATE == 1) {
 			System.out.println("Lambs win!");
 			System.exit(1);
@@ -154,9 +209,31 @@ public class LionsLambs {
 			return intIn;
 		} 
 		catch (IOException ioe) {
-			System.out.println("When does this error show!?");
+			System.out.println(ioe);
 			return null;
       	}
+      	catch (NumberFormatException nfe) {
+      		System.out.println("Please enter an input with only integers");
+      		return null;
+      	}
+	}
+
+	public static String stringRead() {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String[] input;
+		try {
+			input = br.readLine().split("\\s");
+			input[0] = input[0].toLowerCase();
+			return input[0];
+		} 
+		catch (IOException ioe) {
+			System.out.println(ioe);
+			return null;
+      	}
+      	// catch (NumberFormatException nfe) {
+      	// 	System.out.println("Please enter an input with only integers");
+      	// 	return null;
+      	// }
 	}
 
     public static void setMove(int pos1, int pos2) {

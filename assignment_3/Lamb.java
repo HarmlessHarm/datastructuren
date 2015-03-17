@@ -12,7 +12,7 @@ public class Lamb extends Agent {
         this.pos1 = pos1;
     }
     
-    public boolean specialMove(int pos1, int pos2) {
+    public boolean specialMove(int pos1, int pos2, Agent[] board) {
     	return false;
     }
 

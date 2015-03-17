@@ -9,10 +9,10 @@ public class Lion extends Agent {
     }
     
     /* Method for the special moves: place lamb in game and lion jump */
-    public boolean specialMove(int pos1, int pos2) {
+    public boolean specialMove(int pos1, int pos2, Agent[] board) {
         int posDif = pos2 - pos1;
         int posTar = posDif/2 + pos1;
-        target = LionsLambs.board[posTar];
+        target = board[posTar];
         // System.out.println("specMove tar@ "+posTar);
         //System.out.println(posDif);
 
