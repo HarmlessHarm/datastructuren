@@ -8,7 +8,19 @@ public class StateTree {
     public static int weightNearLamb = 5;
     public static int weightLamb = 400;
 
-    /* Recursive method to build a tree and choose the best path while doing so */
+    /**
+     * Builds the a sub state tree with all lion moves.
+     * First get all possible moves for each lion, then loops through
+     * each move, validating and calculating a new board for each move.
+     * Enters "lamb" recursion if the target depth isn't reached yet.
+     * If target depth is reached evaluate the board created in the recursion.
+     * If new score is better then best score so far replaces the best with new score and move
+     * If a new score is the same as the best score one of the two moves is chosen at random
+     *
+     * @param   board           the board array
+     * @param   currentDepth    current depth in state tree
+     * @return                  the best MoveScore found in the tree
+     */
     private static MoveScore buildLionTree(Agent[] board, int currentDepth) {
 
         ArrayList<int[]> moves = new ArrayList<int[]>();
@@ -28,7 +40,6 @@ public class StateTree {
         }
         for (int k=0; k < moves.size(); k++) {
             
-            /* new insight minimax implementation */
             int[] move = moves.get(k);
             Agent[] newBoard = new Agent[25];
             newBoard = newBoard(board, move);
@@ -71,6 +82,20 @@ public class StateTree {
         return bestMoveScoreLion;
     }
 
+    /**
+     * Builds the a sub state tree with all lamb moves.
+     * First get all possible moves for each lamb, then loops through
+     * each move, validating and calculating a new board for each move.
+     * Enters "lion" recursion if the target depth isn't reached yet.
+     * If target depth is reached evaluate the board created in the recursion.
+     * If new score is better then best score so far replaces the best with new score and move
+     * If a new score is the same as the best score one of the two moves is chosen at random
+     * If the best score at the end is -1 it means the lamb is checkmate -> game over
+     *
+     * @param   board           the board array
+     * @param   currentDepth    current depth in state tree
+     * @return                  the best MoveScore found in the tree
+     */
     private static MoveScore buildLambTree(Agent[] board, int currentDepth) {
 
         ArrayList<int[]> moves = new ArrayList<int[]>();
@@ -142,7 +167,14 @@ public class StateTree {
         return bestMoveScoreLamb;
     }
     
-    /* Checks all possible moves for a player -- STILL TO BE WRITTEN */
+    /**
+     * Get all possible moves of a piece at position i on the board by looping over the board
+     * and checking for every position if its a valid target
+     *
+     * @param   board   the board array
+     * @param   i       the index of the certain piece on the board
+     * @return          Arraylist with all possible moves for the certain piece
+     */
     public static ArrayList<int[]> getPossibleLionMoves(Agent[] board, int i) {
         ArrayList<int[]> possibleMoves = new ArrayList<int[]>();
 
@@ -157,6 +189,16 @@ public class StateTree {
         return possibleMoves;
     }
     
+    /**
+     * Get all possible moves of a piece at position i on the board by looping over the board
+     * and checking for every position if its a valid target
+     * If there are still lambs to be placed on the board loops over the board and checking if
+     * a lamb can be placed
+     *
+     * @param   board   the board array
+     * @param   i       the index of the certain piece on the board
+     * @return          Arraylist with all possible moves for the certain piece
+     */
     private static ArrayList<int[]> getPossibleLambMoves(Agent[] board, int i) {
         ArrayList<int[]> possibleMoves = new ArrayList<int[]>();
         if (LionsLambs.LAMB_COUNT != 0) {
@@ -178,7 +220,15 @@ public class StateTree {
         return possibleMoves;
     }
     
-    /* Simulates a move and returns the board after doing the move */
+    /**
+     * Simulates a new board situation with a move. Needs to make a copy of the old board
+     * by looping through the board, otherwise the board object would be copied instead of
+     * only the content
+     *
+     * @param   board   old board situation
+     * @param   move    move to be applied on the old board
+     * @return          new board situation
+     */
     private static Agent[] newBoard(Agent[] board, int[] move) {
         int pos1 = move[0];
         int pos2 = move[1];
