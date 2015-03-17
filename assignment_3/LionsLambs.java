@@ -59,14 +59,6 @@ public class LionsLambs {
 			
 			//System.out.println("check");
 			
-			if (LAMB_KILLED == 20) {
-			    WIN_STATE = -1;
-			}
-			
-			
-			if (LIONS_ENCLOSED == 4) {
-			    WIN_STATE = 1;
-			}
 			
 			while (true) {
 				if (TURN == 1) {
@@ -117,6 +109,15 @@ public class LionsLambs {
 					    }					
 					}
 				}
+			}
+			
+			if (LAMB_KILLED == 2) {
+			    WIN_STATE = -1;
+			}
+			
+			
+			if (LIONS_ENCLOSED == 4) {
+			    WIN_STATE = 1;
 			}
 			
 

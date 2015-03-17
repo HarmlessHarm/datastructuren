@@ -4,10 +4,10 @@ import java.lang.*;
 
 public class StateTree {
 
-    private static final int DEPTH = 3; // Gets depth
+    private static final int DEPTH = 4; // Gets depth
     public static int[] neighbours = {-1, 1,-4, 4, -5, 5, -6, 6};
     public static int weightNearLamb = 5;
-    public static int weightLamb = 10;
+    public static int weightLamb = 400;
 
 
     // private static int[] bestMove;
@@ -57,9 +57,10 @@ public class StateTree {
                     int score = evaluate(newBoard);
                     lambMoveScore.setScore(score);
                     lambMoveScore.setMove(move);
+                    // System.out.println("score: "+score+" move: "+move[0]+","+move[1]);
                 }
                 if (lambMoveScore.getScore() < bestMoveScoreLion.getScore()) {
-                    // System.out.println();
+                    // System.out.println("");
                     bestMoveScoreLion.setScore(lambMoveScore.getScore());
                     bestMoveScoreLion.setMove(move);
                 }
@@ -280,11 +281,11 @@ public class StateTree {
     private static int evaluate(Agent[] board) {
         // int[] neighbours = {-6, -5, -4, -1, 1, 4, 5, 6};
         // int numberNearLambs = 0;
-        int numberValidMoves = 0;
+        double numberValidMoves = 0;
         ArrayList<int[]> possibleMoves;
         int totalLambs = 0;
         
-        int g = 5;
+        int g = 3;
         
         
         /* Compute total number of Lambs */ /*Compute total score of the board. null=1, Lamb=3, Lion=7*/
@@ -294,23 +295,25 @@ public class StateTree {
             }
             if (board[i] != null && board[i].getClass().equals(Lion.class)) {
                 possibleMoves = getPossibleLionMoves(board, i);
-                numberValidMoves += possibleMoves.size();
+                numberValidMoves += Math.pow(g, (8-possibleMoves.size()));
+                // System.out.println(numberValidMoves);
             }
         }
 
         
         /* Compute and count number of valid moves */
   //       for (int i=0; i<board.length; i++) {
-		//     if (board[i] != null && board[i].getClass().equals(Lion.class)) {
-		//         possibleMoves = getPossibleLionMoves(board, i);
-		//         numberValidMoves += possibleMoves.size();
-		//     }
-		// }
-		
-		double scoreValidMoves = (Math.pow(g, (8-numberValidMoves))) + totalLambs*weightLamb;
-		
+        //     if (board[i] != null && board[i].getClass().equals(Lion.class)) {
+        //         possibleMoves = getPossibleLionMoves(board, i);
+        //         numberValidMoves += possibleMoves.size();
+        //     }
+        // }
+		// double scoreValidMoves = Math.pow(g, (8-numberValidMoves));
+        double lambScore = totalLambs * weightLamb;
+		int score = (int)numberValidMoves + (int)lambScore;
+		// System.out.println("mvsScore: "+numberValidMoves+" lambScore: "+lambScore+" totScore: "+score);
 		/* Formula to compute score */
-		return (int)scoreValidMoves;
+		return score;
 
         // if (knownBoard(totalScore, board)) {
         //     score = 999999;
@@ -337,6 +340,7 @@ public class StateTree {
     }
 
     private static boolean knownBoard(Agent[] newBoard) {
+        System.out.print(".");
         // ArrayList<Agent[]> boardHistory = LionsLambs.boardHistory;
         //ArrayList<Integer> scoreHistory = LionsLambs.scoreHistory;
         ArrayList<String> scoreHistory = LionsLambs.scoreHistory;
