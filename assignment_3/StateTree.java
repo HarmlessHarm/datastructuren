@@ -254,18 +254,26 @@ public class StateTree {
         return newBoard;
     }
     
-    /* Compares to boards and returns the best */
+    /**
+     * Computes a score for this board. Score gets lower the better the board
+     * for the lions.
+     *
+     * Compares to boards and returns the best 
+     * @param   board   board array
+     * @return  score   board score
+     *
+     */
     private static int evaluate(Agent[] board) {
 
         double numberValidMoves = 0;
         ArrayList<int[]> possibleMoves;
-        int totalLambs = 0;
-        
+        int totalLambs = 0;        
         int g = 3;
         
         
-        /* Compute total number of Lambs */ 
-        /*Compute total score of the board. null=1, Lamb=3, Lion=7*/
+        /* Compute total number of Lambs 
+         *Compute total score of the board. null=1, Lamb=3, Lion=7
+         */
         for (int i=0; i<board.length; i++) {
             if (board[i] != null && board[i].getClass().equals(Lamb.class)) {
                 totalLambs++;
@@ -280,10 +288,17 @@ public class StateTree {
         /* Compute and count number of valid moves */
         double lambScore = totalLambs * weightLamb;
 		int score = (int)numberValidMoves + (int)lambScore;
-		/* Formula to compute score */
 		return score;       
     }
 
+    /**
+     * Gives a string array that is unique for every board state. 
+     * Returns true if a scoreHistory array contains this score.
+     *
+     * @param   newBoard    board array
+     * @return  boolean     whether board is known or not 
+     *   
+     */
     private static boolean knownBoard(Agent[] newBoard) {
         System.out.print(".");
         ArrayList<String> scoreHistory = LionsLambs.scoreHistory;
@@ -305,7 +320,6 @@ public class StateTree {
         }
         
         for (int i=0; i<scoreHistory.size(); i++) {
-
             if (totalScore.equals(scoreHistory.get(i))) {
                 return true;
             }
@@ -313,10 +327,19 @@ public class StateTree {
         return false;
     }
 
+    /**
+     * Returns random int
+     *
+     * @return  Math.random()   random integer smaller than 5
+    */
     private static boolean randBool() {
         return Math.random() < 0.5;
     }
 
+    /**
+     * Sets depth depending on what user enters. Gives warning is depth is very high.
+     * @param   depth   depth chosen by player     
+    */
     public static void setDepth(int depth) {
         DEPTH = depth;
         if (DEPTH > 4) {
@@ -324,6 +347,12 @@ public class StateTree {
         }
     }
 
+    /**
+    * Return best move for the AI. Starts lion tree of lamb tree depending on the turn.
+    * 
+    * @param    board   the board Array
+    * @return           the best move score found in the tree
+    */
     public static int[] getBestMove(Agent[] board) {
         if (LionsLambs.TURN == -1) {
             return buildLionTree(board, 0).getMove();
