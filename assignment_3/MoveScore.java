@@ -8,6 +8,7 @@ public class MoveScore {
        
     public MoveScore() {
         //constructor
+        this.score = -1;
     }
     
     public MoveScore(int[] move, int score) {

@@ -3,9 +3,6 @@ import java.util.*;
 
 public class Leopold {
 
-	//public static Agent[] board = new Agent[25];
-	//public static Lion[] lions = new Lion[4];
-	//public static Lambs[] lambs;
 	
 	public static int[] leopoldsMove = new int[2];
 	public static int[] neighbours = {-1, 1,-4, 4, -5, 5, -6, 6};

@@ -1,38 +1,52 @@
-import java.applet.*;
 import java.io.*;
 import java.util.*;
-import java.lang.*;
 
 public class LionsLambs {
 	
+	/**
+	 * board representation board stores Agent objects which can be either Lions or Lambs
+	 * scoreHistory stores all the scores of the boards ever used
+	 */
 	public static Agent[] board = new Agent[25];
-	public static ArrayList<Agent[]> boardHistory = new ArrayList<Agent[]>();
-	//public static ArrayList<Integer> scoreHistory = new ArrayList<Integer>();
 	public static ArrayList<String> scoreHistory = new ArrayList<String>();
-	//public static Lion[] lions = new Lion[4];
-	//public static List<Lamb> lambs = new ArrayList<Lamb>();
+
+	/**
+	 * Global variables used to track the game state
+	 */
 	public static int WIN_STATE = 0;
 	public static int TURN = 1;
 	public static int LAMB_COUNT = 20;
 	public static int LAMB_KILLED = 0;
-	public static int LIONS_ENCLOSED = 0;
-	public static int[] input;
-	public static String player;  //M: added
 
+	/**
+	 * Initialises board, places a Lion object on each corner
+	 */
 	public static void init() {
 		// Lions without names are not OK
-		board[0] = new Lion("Leo", 0);
-		board[4] = new Lion("Leu", 4);
-		board[20] = new Lion("Love", 20);
-		board[24] = new Lion("Lejon", 24);
-//		boardHistory.add(board);
-//		scoreHistory.add(getBoardScore(board));
+		board[0] = new Lion("Leo");
+		board[4] = new Lion("Leu");
+		board[20] = new Lion("Love");
+		board[24] = new Lion("Lejon");
 	}
 
+	/**
+	 * @args if arguments are given in the form of integers, use this as target depth in the state tree
+	 * 
+	 */
 	public static void main(String[] args) {
-	    // player = args[0];
+
+		if (args.length != 0) {
+			try {
+				int depth = Integer.parseInt(args[0]);
+				StateTree.setDepth(depth);
+			}
+			catch (NumberFormatException e) {
+				System.out.println("Set custom depth by adding an int in arguments");
+			}
+		}
+
 	    boolean bool = false;
-	    String input;
+	    String input, player;
 
 	    init();
 	    System.out.println("WELCOME! My name is Leopold, I'm a superiour");
@@ -73,34 +87,16 @@ public class LionsLambs {
 	    playGame(player);
 	}
 
-	// call: java LionsLambs <pos1> (<pos2>)	
-
     /* This method describes the game loop */
-	public static void playGame(String player){
-	  
-	
+	public static void playGame(String player){	
 		int pos1, pos2;
-		// setUpGame(); -- the basic board should be drawn here
+		int[] input;
 
 		while (WIN_STATE == 0) {
-		    // updateBoard(); -- the board should be updated according to the positions filled
 			System.out.println("");
 			Board.drawBoard(board);
 			System.out.println("Lambs remaining: "+LAMB_COUNT);
 			System.out.println("Lambs killed   : "+LAMB_KILLED);
-			// System.out.println("");
-			for (int i=0; i<board.length; i++) {
-			
-			    if (board[i] != null && board[i].getClass().equals(Lion.class)) {
-			        
-			        if (StateTree.getPossibleLionMoves(board, i).get(0) == null) {
-			            LIONS_ENCLOSED++;
-			        }
-			    }
-			}
-			
-			//System.out.println("check");
-			
 			
 			while (true) {
 
@@ -125,7 +121,7 @@ public class LionsLambs {
 					    input = Leopold.yourTurnSir(board);
 					    setMove(input[0], input[1]);
 					    TURN = TURN * -1;
-					    System.out.print(" Leo says: "+input[0]+" ");
+					    System.out.print(" Leopold says: "+input[0]+" ");
 					    if (input[1] < 9000) {
 					    	System.out.println(input[1]);
 					    }else {
@@ -138,7 +134,6 @@ public class LionsLambs {
 
 				if (TURN == -1) {
 					System.out.print("Lions player's turn: ");
-					// input = readInput();
 					if (player.equals("lions") || player.equals("two")) {
 					    input = readInput();
 					    while (input == null) {
@@ -155,12 +150,10 @@ public class LionsLambs {
 					} 
 					if (player.equals("lambs") || player.equals("ai")) {
 					    input = Leopold.yourTurnSir(board);
-					    //System.out.println("input: " + input[0] + "  " + input[1]);
 					    setMove(input[0], input[1]);
 					    TURN = TURN * -1;
 
-					    // setMove(input[0], input[1])
-					    System.out.println(" Leo says: "+input[0]+" "+input[1]);
+					    System.out.println(" Leopold says: "+input[0]+" "+input[1]);
 					    break;
 					}
 				}
@@ -170,8 +163,18 @@ public class LionsLambs {
 			    WIN_STATE = -1;
 			}
 			
+			ArrayList<int[]> tempMoves = new ArrayList<int[]>();
+			ArrayList<int[]> moves = new ArrayList<int[]>();
+			for (int i=0; i<board.length; i++) {
+	            if ( board[i] != null && board[i].getClass().equals(Lion.class) ) {
+	                tempMoves = StateTree.getPossibleLionMoves(board, i);
+	                for (int j=0; j < tempMoves.size(); j++) {
+	                    moves.add(tempMoves.get(j));
+	                }
+	            }
+	        }
 			
-			if (LIONS_ENCLOSED == 4) {
+			if (moves.size() == 0) {
 			    WIN_STATE = 1;
 			}
 			
@@ -230,10 +233,6 @@ public class LionsLambs {
 			System.out.println(ioe);
 			return null;
       	}
-      	// catch (NumberFormatException nfe) {
-      	// 	System.out.println("Please enter an input with only integers");
-      	// 	return null;
-      	// }
 	}
 
     public static void setMove(int pos1, int pos2) {
@@ -241,9 +240,7 @@ public class LionsLambs {
     	int[] neighbours = {-6, -5, -4, -1, 1, 4, 5, 6};
     	int neighbourLambs = 0;
     	int posDiff = pos2 - pos1;
-    	// System.out.println("setMove: "+pos1+" -> "+pos2+" pd: "+posDiff);
 
-    	boardHistory.add(board);
     	scoreHistory.add(getBoardScore(board));
 
     	// Changing board
@@ -251,7 +248,6 @@ public class LionsLambs {
 			board[pos1] =  new Lamb("name", pos1);
 			LAMB_COUNT--;
     	} else {
-    	    //System.out.println(pos1 +" is emptied now");
 	    	board[pos2] = board[pos1];
 	    	board[pos1] = null;
     	} 
@@ -261,15 +257,11 @@ public class LionsLambs {
 	    		int target = pos1 + (pos2 - pos1)/2;
 	    		board[target] = null;
 	    		LAMB_KILLED++;
-	    		System.out.println(LAMB_KILLED);
     		}
-    	}
-//    	System.out.println("board: "+board+" score: "+getBoardScore(board));
-    	
+    	}    	
     }
 
     /* Computes score for a certain board position that is used to check whether board positions haven't occurred before */
-    //private static int getBoardScore(Agent[] board) {
     private static String getBoardScore(Agent[] board) {
         String totalScore = "";
 
