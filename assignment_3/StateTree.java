@@ -4,7 +4,7 @@ import java.lang.*;
 
 public class StateTree {
 
-    private static final int DEPTH = 4; // Gets depth
+    private static final int DEPTH = 2; // Gets depth
     public static int[] neighbours = {-1, 1,-4, 4, -5, 5, -6, 6};
     public static int weightNearLamb = 5;
     public static int weightLamb = 400;
@@ -73,6 +73,7 @@ public class StateTree {
             /* This will return the lowest score at the lions level. */    
         }
         
+       System.out.println("BS LION: "+bestMoveScoreLion.getScore() + " DEPTH: "+currentDepth);
         /* The lowest score will be returned after the entire for loop has been finished. This will be the lamb score for that level. */    
         return bestMoveScoreLion;
             
@@ -182,6 +183,7 @@ public class StateTree {
         }
         
         /* The move with the highest score will be returned */
+        System.out.println("BM LAMB: "+bestMoveScoreLamb.getScore() + " DEPTH: "+currentDepth);
         return bestMoveScoreLamb;
         
         
@@ -292,6 +294,7 @@ public class StateTree {
         for (int i=0; i<board.length; i++) {
             if (board[i] != null && board[i].getClass().equals(Lamb.class)) {
                 totalLambs++;
+                System.out.println(totalLambs);
             }
             if (board[i] != null && board[i].getClass().equals(Lion.class)) {
                 possibleMoves = getPossibleLionMoves(board, i);
@@ -310,7 +313,7 @@ public class StateTree {
         // }
 		// double scoreValidMoves = Math.pow(g, (8-numberValidMoves));
         double lambScore = totalLambs * weightLamb;
-		int score = (int)numberValidMoves + (int)lambScore;
+		int score = /*(int)numberValidMoves +*/ (int)lambScore;
 		// System.out.println("mvsScore: "+numberValidMoves+" lambScore: "+lambScore+" totScore: "+score);
 		/* Formula to compute score */
 		return score;
