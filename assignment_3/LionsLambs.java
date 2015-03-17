@@ -1,6 +1,9 @@
 import java.io.*;
 import java.util.*;
 
+/**
+ * Game class, gets user input manages board states and communicates with AI
+ */
 public class LionsLambs {
 	
 	/**
@@ -30,8 +33,9 @@ public class LionsLambs {
 	}
 
 	/**
-	 * @args if arguments are given in the form of integers, use this as target depth in the state tree
-	 * 
+	 * If arguments are given in the form of integers, use this as target depth in the state tree
+	 * In conversation with Leopold type "ai" when Leopold asks if you want to play with him to
+	 * let him play both sides.
 	 */
 	public static void main(String[] args) {
 
@@ -44,11 +48,12 @@ public class LionsLambs {
 				System.out.println("Set custom depth by adding an int in arguments");
 			}
 		}
+	    init();
 
 	    boolean bool = false;
-	    String input, player;
+	    String input;
+	    String player = "";
 
-	    init();
 	    System.out.println("WELCOME! My name is Leopold, I'm a superiour");
 	    System.out.println("AI designed to play this game.");
 	    System.out.println("Do you dare to play against me?");
@@ -87,7 +92,14 @@ public class LionsLambs {
 	    playGame(player);
 	}
 
-    /* This method describes the game loop */
+    /**
+     * Game loop, draws board, gives updates to player about game state.
+     * The main game loop continues until a player has won.
+     * The sub game loop continues until a valid move has been made by a player
+     * after which the TURN is changed and the loop is broken.	
+     *
+     * @param player A string with the player choice of the player
+     */
 	public static void playGame(String player){	
 		int pos1, pos2;
 		int[] input;
@@ -99,19 +111,17 @@ public class LionsLambs {
 			System.out.println("Lambs killed   : "+LAMB_KILLED);
 			
 			while (true) {
-
 				if (TURN == 1) {
 					System.out.print("Lambs player's turn: ");
 					
 					if (player.equals("lambs") || player.equals("two")) {					
-					    input = readInput();
+					    input = null;
 					    while (input == null) {
 					    	input = readInput();
 					    }
 					    pos1 = input[0];
 					    pos2 = input[1];
-
-					    if (board[pos1].validate(board, pos1, pos2, TURN)) {
+					    if (board[pos1].validate(board, pos1, pos2, TURN) && checkBoardHistory(pos1, pos2)) {
 						    setMove(pos1, pos2);
 						    TURN = TURN * -1;
 						    break;
@@ -124,25 +134,23 @@ public class LionsLambs {
 					    System.out.print(" Leopold says: "+input[0]+" ");
 					    if (input[1] < 9000) {
 					    	System.out.println(input[1]);
-					    }else {
+					    } else {
 					    	System.out.println("");
 					    }
 					    break;
 					}
-				
 				}
-
 				if (TURN == -1) {
 					System.out.print("Lions player's turn: ");
 					if (player.equals("lions") || player.equals("two")) {
-					    input = readInput();
+					    input = null;
 					    while (input == null) {
 					    	input = readInput();
 					    }
 					    pos1 = input[0];
 					    pos2 = input[1];
 
-					    if (board[pos1].validate(board, pos1, pos2, TURN)) {
+					    if (board[pos1].validate(board, pos1, pos2, TURN) && checkBoardHistory(pos1, pos2)) {
 						    setMove(pos1, pos2);
 						    TURN = TURN * -1;
 						    break;
@@ -159,10 +167,12 @@ public class LionsLambs {
 				}
 			}
 
+			// when 20 lambs are killed, game over
 			if (LAMB_KILLED == 20) {
 			    WIN_STATE = -1;
 			}
-			
+
+			// checks if the lions have any valid moves left, if not, game over
 			ArrayList<int[]> tempMoves = new ArrayList<int[]>();
 			ArrayList<int[]> moves = new ArrayList<int[]>();
 			for (int i=0; i<board.length; i++) {
@@ -173,13 +183,11 @@ public class LionsLambs {
 	                }
 	            }
 	        }
-			
 			if (moves.size() == 0) {
 			    WIN_STATE = 1;
 			}
-			
-
 		}
+		// Draws winning board and shows who has won
 		Board.drawBoard(board);
 		if (WIN_STATE == 1) {
 			System.out.println("Lambs win!");
@@ -192,7 +200,12 @@ public class LionsLambs {
 		}
 	}
 
-    /* Reads the users input - moves */
+    /**
+     * Reads user integer input used to determine moves
+	 * When only one integer is given the second integer is set to 9001 to indicate
+	 * the placement of a lamb at position one
+	 * @return		Integer array with the desired move
+     */
 	public static int[] readInput() {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String[] input;
@@ -221,6 +234,10 @@ public class LionsLambs {
       	}
 	}
 
+	/**
+	 * Reads user string input used for the starting dialog, casts input to lowercase
+	 * @return		String with user input
+	 */
 	public static String stringRead() {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String[] input;
@@ -234,24 +251,26 @@ public class LionsLambs {
 			return null;
       	}
 	}
-
+	/**
+	 * Edits the board, calculating if a lamb has been killed by looking if the 
+	 * move was a jump. Adds the score of the board to the history.
+	 *
+	 * @param	pos1	starting position of piece
+	 * @param	pos2	final position of piece
+	 */
     public static void setMove(int pos1, int pos2) {
     	int[] jumps = {-2, 2,-8, 8, -10, 10, -12, 12};
-    	int[] neighbours = {-6, -5, -4, -1, 1, 4, 5, 6};
-    	int neighbourLambs = 0;
     	int posDiff = pos2 - pos1;
 
     	scoreHistory.add(getBoardScore(board));
 
-    	// Changing board
     	if (pos2 > 9000) {
-			board[pos1] =  new Lamb("name", pos1);
+			board[pos1] =  new Lamb("name");
 			LAMB_COUNT--;
     	} else {
 	    	board[pos2] = board[pos1];
 	    	board[pos1] = null;
     	} 
-    	// checks of the move that was done was a kill move and removes the lamb
     	for (int i=0;i < jumps.length ; i++) {
     		if (posDiff == jumps[i]) {
 	    		int target = pos1 + (pos2 - pos1)/2;
@@ -261,7 +280,13 @@ public class LionsLambs {
     	}    	
     }
 
-    /* Computes score for a certain board position that is used to check whether board positions haven't occurred before */
+    /**
+     * Computes the score of the board by concatinating certain values for each piece.
+     * This ensures a unique for each board combination
+     *
+     * @param	board 	the board array
+     * @return			score string of the board
+     */
     private static String getBoardScore(Agent[] board) {
         String totalScore = "";
 
@@ -279,5 +304,39 @@ public class LionsLambs {
             }
         }
         return totalScore;
+    }
+    /**
+     * Checks if a certain move creates a board combination which has been used before
+     *
+     * @param	pos1	starting position of the move
+     * @param	pos2	final position of a piece
+     */
+    private static boolean checkBoardHistory(int pos1, int pos2) {
+    	
+    	int[] jumps = {-2, 2,-8, 8, -10, 10, -12, 12};
+    	int posDiff = pos2 - pos1;
+    	Agent[] newBoard = new Agent[25];
+        for (int i = 0; i < board.length; i++) {
+            newBoard[i] = board[i];
+        }
+    	if (pos2 > 9000) {
+			newBoard[pos1] =  new Lamb("name");
+    	} else {
+	    	newBoard[pos2] = newBoard[pos1];
+	    	newBoard[pos1] = null;
+    	} 
+    	for (int i=0;i < jumps.length ; i++) {
+    		if (posDiff == jumps[i]) {
+	    		int target = pos1 + (pos2 - pos1)/2;
+	    		newBoard[target] = null;
+    		}
+    	}
+    	String boardScore = getBoardScore(newBoard);
+    	for (int i=0; i<scoreHistory.size(); i++) {
+            if (boardScore.equals(scoreHistory.get(i))) {
+                return false;
+            }
+        }
+        return true;
     }
 }

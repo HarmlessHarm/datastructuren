@@ -189,7 +189,7 @@ public class StateTree {
         int[] jumps = {-2, 2,-8, 8, -10, 10, -12, 12};
         int posDiff = pos2 - pos1;
         if (pos2 > 9000) {
-            newBoard[pos1] =  new Lamb("name", pos1);
+            newBoard[pos1] =  new Lamb("name");
         } else {
             newBoard[pos2] = newBoard[pos1];
             newBoard[pos1] = null;
