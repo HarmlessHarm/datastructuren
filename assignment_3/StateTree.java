@@ -50,7 +50,6 @@ public class StateTree {
                 /* If max depth hasn't been reached yet, do another layer of recursion */
                 if (currentDepth != DEPTH) {
                     currentDepth++;
-
                     lambMoveScore = buildLambTree(newBoard, currentDepth);
                     currentDepth--;
 
